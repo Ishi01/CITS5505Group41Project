@@ -1,7 +1,7 @@
-$(document).ready(function() {
+$(document).documentready(function() {
     var currentQuestion = '';
 
-    $('#getQAButton').click(function() {
+    $('#getQAcountries').click(function() {
         $.ajax({
             url: '/get-random-qa',
             type: 'GET',
