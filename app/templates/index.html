@@ -1,6 +1,18 @@
 {% extends "base.html" %}
 
+{% block header %}
+    {{ super() }}
+    <script src="{{ url_for('static', filename='js/qa.js') }}"></script>
+{% endblock %}
+
 {% block content %}
     <h1>Welcome to My Flask App!</h1>
     <p>This is the home page of my Flask application.</p>
+
+    <h1>Guess the Answer Game</h1>
+    <button id="getQAButton">Get a Question</button>
+    <p id="question"><strong>Question:</strong></p>
+    <input type="text" id="answerInput" placeholder="Type your answer here">
+    <button id="submitAnswerButton">Submit Answer</button>
+    <p id="feedback"></p>
 {% endblock %}
