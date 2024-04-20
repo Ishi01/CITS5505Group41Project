@@ -34,6 +34,8 @@ def get_random_qa():
     print(request.headers)
     if 'index' in referer_url:
         category = 'countries'
+    elif 'world' in referer_url:
+        category = 'countries'
     elif 'periodictable' in referer_url:
         category = 'elements'
     else:
@@ -48,6 +50,8 @@ def check_answer():
 
     referer_url = request.headers.get('Referer')
     if 'index' in referer_url:
+        category = 'countries'
+    elif 'world' in referer_url:
         category = 'countries'
     elif 'periodictable' in referer_url:
         category = 'elements'
@@ -68,4 +72,9 @@ def periodic_table():
         svg_content = file.read()
     return render_template('periodic_table.html', svg_content=svg_content)
 
-
+@app.route('/world')
+def world():
+    svg_path = os.path.join(current_app.root_path, 'static', 'world.svg')
+    with open(svg_path, 'r') as file:
+        svg_content = file.read()
+    return render_template('world.html', svg_content=svg_content)

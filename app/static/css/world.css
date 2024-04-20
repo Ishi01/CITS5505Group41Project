@@ -1,0 +1,9 @@
+svg * {
+    user-select: none;
+}
+
+.container {
+    display: grid;
+    place-items: center;
+    margin: 0;
+}
