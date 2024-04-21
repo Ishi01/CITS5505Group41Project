@@ -1,0 +1,13 @@
+svg * {
+    user-select: none;
+}
+
+svg g text {
+    pointer-events: none;
+}
+
+.container {
+    display: grid;
+    place-items: center;
+    margin: 0;
+}

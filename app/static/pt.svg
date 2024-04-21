@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 21.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 800 450" style="enable-background:new 0 0 800 450;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#FFFFFF;}
+	.st1{fill:#FFFFFF;stroke:#000000;}
+	.st2{font-family:'ArialMT';}
+	.st3{font-size:12px;}
+	.st4{font-size:14px;}
+	.top{z-index:1000;}
+</style>
+<g transform="translate(-.5,-56.5)">
+	<path class="st0" d="M144,387v-36h36v36H144z"/>
+	<path class="st0" d="M144,347v-36h36v36H144z"/>
+	<g class="top">
+		<g id="Unclass" transform="translate(384,387)">
+			<path id="Mt" class="st1" d="M0,0v-36h36V0H0z"/>
+			<path id="Ds" class="st1" d="M40,0v-36h36V0H40z"/>
+			<path id="Rg" class="st1" d="M80,0v-36h36V0H80z"/>
+			<path id="Nh" class="st1" d="M160,0v-36h36V0H160z"/>
+			<path id="Fl" class="st1" d="M200,0v-36h36V0H200z"/>
+			<path id="Mc" class="st1" d="M240,0v-36h36V0H240z"/>
+			<path id="Lv" class="st1" d="M280,0v-36h36V0H280z"/>
+			<path id="Ts" class="st1" d="M320,0v-36h36V0H320z"/>
+			<path id="Og" class="st1" d="M360,0v-36h36V0H360z"/>
+		</g>
+		<g id="NonMetals">
+			<path id="H" class="st1" d="M64,147v-36h36v36H64z"/>
+			<path id="Se" class="st1" d="M664,267v-36h36v36H664z"/>
+			<path id="P" class="st1" d="M624,227v-36h36v36H624z"/>
+			<path id="S" class="st1" d="M664,227v-36h36v36H664z"/>
+			<path id="C" class="st1" d="M584,187v-36h36v36H584z"/>
+			<path id="N" class="st1" d="M624,187v-36h36v36H624z"/>
+			<path id="O" class="st1" d="M664,187v-36h36v36H664z"/>
+		</g>
+		<g id="AlkaliMetals" transform="translate(64)">
+			<path id="Fr" class="st1" d="M0,387v-36h36v36H0z"/>
+			<path id="Cs" class="st1" d="M0,347v-36h36v36H0z"/>
+			<path id="K" class="st1" d="M0,267v-36h36v36H0z"/>
+			<path id="Na" class="st1" d="M0,227v-36h36v36H0z"/>
+			<path id="Li" class="st1" d="M0,187v-36h36v36H0z"/>
+			<path id="Rb" class="st1" d="M0,307v-36h36v36H0z"/>
+		</g>
+		<g id="EarthMetals" transform="translate(104,187)">
+			<path id="Be" class="st1" d="M0,0v-36h36V0H0z"/>
+			<path id="Mg" class="st1" d="M0,40V4h36v36H0z"/>
+			<path id="Ca" class="st1" d="M0,80V44h36v36H0z"/>
+			<path id="Sr" class="st1" d="M0,120V84h36v36H0z"/>
+			<path id="Ba" class="st1" d="M0,160v-36h36v36H0z"/>
+			<path id="Ra" class="st1" d="M0,200v-36h36v36H0z"/>
+		</g>
+		<g id="SemiMetals">
+			<path id="B" class="st1" d="M544,187v-36h36v36H544z"/>
+			<path id="Si" class="st1" d="M584,227v-36h36v36H584z"/>
+			<path id="Ge" class="st1" d="M584,267v-36h36v36H584z"/>
+			<path id="As" class="st1" d="M624,267v-36h36v36H624z"/>
+			<path id="Sb" class="st1" d="M624,307v-36h36v36H624z"/>
+			<path id="Te" class="st1" d="M664,307v-36h36v36H664z"/>
+			<path id="Po" class="st1" d="M664,347v-36h36v36H664z"/>
+		</g>
+		<g id="Halogens" transform="translate(704,187)">
+			<path id="F" class="st1" d="M0,0v-36h36V0H0z"/>
+			<path id="Cl" class="st1" d="M0,40V4h36v36H0z"/>
+			<path id="Br" class="st1" d="M0,80V44h36v36H0z"/>
+			<path id="I" class="st1" d="M0,120V84h36v36H0z"/>
+			<path id="At" class="st1" d="M0,160v-36h36v36H0z"/>
+		</g>
+		<g id="InertGases" transform="translate(744,147)">
+			<path id="He" class="st1" d="M0,0v-36h36V0H0z"/>
+			<path id="Ne" class="st1" d="M0,40V4h36v36H0z"/>
+			<path id="Ar" class="st1" d="M0,80V44h36v36H0z"/>
+			<path id="Kr" class="st1" d="M0,120V84h36v36H0z"/>
+			<path id="Xe" class="st1" d="M0,160v-36h36v36H0z"/>
+			<path id="Rn" class="st1" d="M0,200v-36h36v36H0z"/>
+		</g>
+		<g id="PTMetals">
+			<path id="Al" class="st1" d="M544,227v-36h36v36H544z"/>
+			<path id="Ga" class="st1" d="M544,267v-36h36v36H544z"/>
+			<path id="In" class="st1" d="M544,307v-36h36v36H544z"/>
+			<path id="Tl" class="st1" d="M544,347v-36h36v36H544z"/>
+			<path id="Sn" class="st1" d="M584,307v-36h36v36H584z"/>
+			<path id="Pb" class="st1" d="M584,347v-36h36v36H584z"/>
+			<path id="Bi" class="st1" d="M624,347v-36h36v36H624z"/>
+		</g>
+		<g id="TransMetals" transform="translate(184,267)">
+			<path id="Rf" class="st1" d="M0,120V84h36v36H0z"/>
+			<path id="Db" class="st1" d="M40,120V84h36v36H40z"/>
+			<path id="Sg" class="st1" d="M80,120V84h36v36H80z"/>
+			<path id="Bh" class="st1" d="M120,120V84h36v36H120z"/>
+			<path id="Hs" class="st1" d="M160,120V84h36v36H160z"/>
+			<path id="Cn" class="st1" d="M320,120V84h36v36H320z"/>
+			<path id="Hf" class="st1" d="M0,80V44h36v36H0z"/>
+			<path id="Ta" class="st1" d="M40,80V44h36v36H40z"/>
+			<path id="W" class="st1" d="M80,80V44h36v36H80z"/>
+			<path id="Re" class="st1" d="M120,80V44h36v36H120z"/>
+			<path id="Os" class="st1" d="M160,80V44h36v36H160z"/>
+			<path id="Ir" class="st1" d="M200,80V44h36v36H200z"/>
+			<path id="Pt" class="st1" d="M240,80V44h36v36H240z"/>
+			<path id="Au" class="st1" d="M280,80V44h36v36H280z"/>
+			<path id="Hg" class="st1" d="M320,80V44h36v36H320z"/>
+			<path id="Y" class="st1" d="M-40,40V4h36v36H-40z"/>
+			<path id="Zr" class="st1" d="M0,40V4h36v36H0z"/>
+			<path id="Nb" class="st1" d="M40,40V4h36v36H40z"/>
+			<path id="Mo" class="st1" d="M80,40V4h36v36H80z"/>
+			<path id="Tc" class="st1" d="M120,40V4h36v36H120z"/>
+			<path id="Ru" class="st1" d="M160,40V4h36v36H160z"/>
+			<path id="Rh" class="st1" d="M200,40V4h36v36H200z"/>
+			<path id="Pd" class="st1" d="M240,40V4h36v36H240z"/>
+			<path id="Ag" class="st1" d="M280,40V4h36v36H280z"/>
+			<path id="Cd" class="st1" d="M320,40V4h36v36H320z"/>
+			<path id="Sc" class="st1" d="M-40,0v-36h36V0H-40z"/>
+			<path id="Ti" class="st1" d="M0,0v-36h36V0H0z"/>
+			<path id="V" class="st1" d="M40,0v-36h36V0H40z"/>
+			<path id="Cr" class="st1" d="M80,0v-36h36V0H80z"/>
+			<path id="Mn" class="st1" d="M120,0v-36h36V0H120z"/>
+			<path id="Fe" class="st1" d="M160,0v-36h36V0H160z"/>
+			<path id="Co" class="st1" d="M200,0v-36h36V0H200z"/>
+			<path id="Ni" class="st1" d="M240,0v-36h36V0H240z"/>
+			<path id="Cu" class="st1" d="M280,0v-36h36V0H280z"/>
+			<path id="Zn" class="st1" d="M320,0v-36h36V0H320z"/>
+		</g>
+		<g id="Lanths" transform="translate(184,447)">
+			<path id="La" class="st1" d="M0,0v-36h36V0H0z"/>
+			<path id="Ce" class="st1" d="M40,0v-36h36V0H40z"/>
+			<path id="Pr" class="st1" d="M80,0v-36h36V0H80z"/>
+			<path id="Nd" class="st1" d="M120,0v-36h36V0H120z"/>
+			<path id="Pm" class="st1" d="M160,0v-36h36V0H160z"/>
+			<path id="Sm" class="st1" d="M200,0v-36h36V0H200z"/>
+			<path id="Eu" class="st1" d="M240,0v-36h36V0H240z"/>
+			<path id="Gd" class="st1" d="M280,0v-36h36V0H280z"/>
+			<path id="Tb" class="st1" d="M320,0v-36h36V0H320z"/>
+			<path id="Dy" class="st1" d="M360,0v-36h36V0H360z"/>
+			<path id="Ho" class="st1" d="M400,0v-36h36V0H400z"/>
+			<path id="Er" class="st1" d="M440,0v-36h36V0H440z"/>
+			<path id="Tm" class="st1" d="M480,0v-36h36V0H480z"/>
+			<path id="Yb" class="st1" d="M520,0v-36h36V0H520z"/>
+			<path id="Lu" class="st1" d="M560,0v-36h36V0H560z"/>
+		</g>
+		<g id="Actins" transform="translate(184,487)">
+			<path id="Ac" class="st1" d="M0,0v-36h36V0H0z"/>
+			<path id="Th" class="st1" d="M40,0v-36h36V0H40z"/>
+			<path id="Pa" class="st1" d="M80,0v-36h36V0H80z"/>
+			<path id="U" class="st1" d="M120,0v-36h36V0H120z"/>
+			<path id="Np" class="st1" d="M160,0v-36h36V0H160z"/>
+			<path id="Pu" class="st1" d="M200,0v-36h36V0H200z"/>
+			<path id="Am" class="st1" d="M240,0v-36h36V0H240z"/>
+			<path id="Cm" class="st1" d="M280,0v-36h36V0H280z"/>
+			<path id="Bk" class="st1" d="M320,0v-36h36V0H320z"/>
+			<path id="Cf" class="st1" d="M360,0v-36h36V0H360z"/>
+			<path id="Es" class="st1" d="M400,0v-36h36V0H400z"/>
+			<path id="Fm" class="st1" d="M440,0v-36h36V0H440z"/>
+			<path id="Md" class="st1" d="M480,0v-36h36V0H480z"/>
+			<path id="No" class="st1" d="M520,0v-36h36V0H520z"/>
+			<path id="Lr" class="st1" d="M560,0v-36h36V0H560z"/>
+		</g>
+	</g>
+	<g>
+		<text transform="matrix(1 0 0 1 77.6631 94)" class="st2 st3">1</text>
+		<text transform="matrix(1 0 0 1 117.6631 94)" class="st2 st3">2</text>
+		<text transform="matrix(1 0 0 1 157.6631 94)" class="st2 st3">3</text>
+		<text transform="matrix(1 0 0 1 197.6631 94)" class="st2 st3">4</text>
+		<text transform="matrix(1 0 0 1 237.6631 94)" class="st2 st3">5</text>
+		<text transform="matrix(1 0 0 1 277.6631 94)" class="st2 st3">6</text>
+		<text transform="matrix(1 0 0 1 317.6631 94)" class="st2 st3">7</text>
+		<text transform="matrix(1 0 0 1 357.6631 94)" class="st2 st3">8</text>
+		<text transform="matrix(1 0 0 1 397.6631 94)" class="st2 st3">9</text>
+		<text transform="matrix(1 0 0 1 434.3262 94)" class="st2 st3">10</text>
+		<text transform="matrix(1 0 0 1 474.7715 94)" class="st2 st3">11</text>
+		<text transform="matrix(1 0 0 1 514.3262 94)" class="st2 st3">12</text>
+		<text transform="matrix(1 0 0 1 554.3262 94)" class="st2 st3">13</text>
+		<text transform="matrix(1 0 0 1 594.3262 94)" class="st2 st3">14</text>
+		<text transform="matrix(1 0 0 1 634.3262 94)" class="st2 st3">15</text>
+		<text transform="matrix(1 0 0 1 674.3262 94)" class="st2 st3">16</text>
+		<text transform="matrix(1 0 0 1 714.3262 94)" class="st2 st3">17</text>
+		<text transform="matrix(1 0 0 1 754.3262 94)" class="st2 st3">18</text>
+		<text transform="matrix(1 0 0 1 38.6631 134)" class="st2 st3">1</text>
+		<text transform="matrix(1 0 0 1 38.6631 174)" class="st2 st3">2</text>
+		<text transform="matrix(1 0 0 1 38.6631 214)" class="st2 st3">3</text>
+		<text transform="matrix(1 0 0 1 38.6631 254)" class="st2 st3">4</text>
+		<text transform="matrix(1 0 0 1 38.6631 294)" class="st2 st3">5</text>
+		<text transform="matrix(1 0 0 1 38.6631 334)" class="st2 st3">6</text>
+		<text transform="matrix(1 0 0 1 38.6631 374)" class="st2 st3">7</text>
+		<g>
+			<text transform="matrix(1 0 0 1 758.6631 125)" class="st2 st3">2</text>
+			<text transform="matrix(1 0 0 1 78.6631 125)" class="st2 st3">1</text>
+			<text transform="matrix(1 0 0 1 754.3301 141)" class="st2 st3">He</text>
+			<text transform="matrix(1 0 0 1 77.667 141)" class="st2 st3">H</text>
+			<text transform="matrix(1 0 0 1 118.6631 165)" class="st2 st3">4</text>
+			<text transform="matrix(1 0 0 1 558.6631 165)" class="st2 st3">5</text>
+			<text transform="matrix(1 0 0 1 598.6631 165)" class="st2 st3">6</text>
+			<text transform="matrix(1 0 0 1 638.6631 165)" class="st2 st3">7</text>
+			<text transform="matrix(1 0 0 1 678.6631 165)" class="st2 st3">8</text>
+			<text transform="matrix(1 0 0 1 718.6631 165)" class="st2 st3">9</text>
+			<text transform="matrix(1 0 0 1 755.3262 165)" class="st2 st3">10</text>
+			<text transform="matrix(1 0 0 1 78.6631 165)" class="st2 st3">3</text>
+			<text transform="matrix(1 0 0 1 114.6611 181)" class="st2 st3">Be</text>
+			<text transform="matrix(1 0 0 1 557.998 181)" class="st2 st3">B</text>
+			<text transform="matrix(1 0 0 1 597.667 181)" class="st2 st3">C</text>
+			<text transform="matrix(1 0 0 1 637.667 181)" class="st2 st3">N</text>
+			<text transform="matrix(1 0 0 1 677.333 181)" class="st2 st3">O</text>
+			<text transform="matrix(1 0 0 1 718.335 181)" class="st2 st3">F</text>
+			<text transform="matrix(1 0 0 1 754.3301 181)" class="st2 st3">Ne</text>
+			<text transform="matrix(1 0 0 1 77.3301 181)" class="st2 st3">Li</text>
+			<text transform="matrix(1 0 0 1 115.3262 205)" class="st2 st3">12</text>
+			<text transform="matrix(1 0 0 1 555.3262 205)" class="st2 st3">13</text>
+			<text transform="matrix(1 0 0 1 595.3262 205)" class="st2 st3">14</text>
+			<text transform="matrix(1 0 0 1 635.3262 205)" class="st2 st3">15</text>
+			<text transform="matrix(1 0 0 1 675.3262 205)" class="st2 st3">16</text>
+			<text transform="matrix(1 0 0 1 715.3262 205)" class="st2 st3">17</text>
+			<text transform="matrix(1 0 0 1 755.3262 205)" class="st2 st3">18</text>
+			<text transform="matrix(1 0 0 1 75.7715 205)" class="st2 st3">11</text>
+			<text transform="matrix(1 0 0 1 113.665 221)" class="st2 st3">Mg</text>
+			<text transform="matrix(1 0 0 1 556.665 221)" class="st2 st3">Al</text>
+			<text transform="matrix(1 0 0 1 596.665 221)" class="st2 st3">Si</text>
+			<text transform="matrix(1 0 0 1 637.998 221)" class="st2 st3">P</text>
+			<text transform="matrix(1 0 0 1 677.998 221)" class="st2 st3">S</text>
+			<text transform="matrix(1 0 0 1 716.334 221)" class="st2 st3">Cl</text>
+			<text transform="matrix(1 0 0 1 756 221)" class="st2 st3">Ar</text>
+			<text transform="matrix(1 0 0 1 74.3301 221)" class="st2 st3">Na</text>
+			<text transform="matrix(1 0 0 1 115.3262 245)" class="st2 st3">20</text>
+			<text transform="matrix(1 0 0 1 155.3262 245)" class="st2 st3">21</text>
+			<text transform="matrix(1 0 0 1 195.3262 245)" class="st2 st3">22</text>
+			<text transform="matrix(1 0 0 1 235.3262 245)" class="st2 st3">23</text>
+			<text transform="matrix(1 0 0 1 275.3262 245)" class="st2 st3">24</text>
+			<text transform="matrix(1 0 0 1 315.3262 245)" class="st2 st3">25</text>
+			<text transform="matrix(1 0 0 1 355.3262 245)" class="st2 st3">26</text>
+			<text transform="matrix(1 0 0 1 395.3262 245)" class="st2 st3">27</text>
+			<text transform="matrix(1 0 0 1 435.3262 245)" class="st2 st3">28</text>
+			<text transform="matrix(1 0 0 1 475.3262 245)" class="st2 st3">29</text>
+			<text transform="matrix(1 0 0 1 515.3262 245)" class="st2 st3">30</text>
+			<text transform="matrix(1 0 0 1 555.3262 245)" class="st2 st3">31</text>
+			<text transform="matrix(1 0 0 1 595.3262 245)" class="st2 st3">32</text>
+			<text transform="matrix(1 0 0 1 635.3262 245)" class="st2 st3">33</text>
+			<text transform="matrix(1 0 0 1 675.3262 245)" class="st2 st3">34</text>
+			<text transform="matrix(1 0 0 1 715.3262 245)" class="st2 st3">35</text>
+			<text transform="matrix(1 0 0 1 755.3262 245)" class="st2 st3">36</text>
+			<text transform="matrix(1 0 0 1 75.3262 245)" class="st2 st3">19</text>
+			<text transform="matrix(1 0 0 1 114.3301 261)" class="st2 st3">Ca</text>
+			<text transform="matrix(1 0 0 1 154.998 261)" class="st2 st3">Sc</text>
+			<text transform="matrix(1 0 0 1 197.2246 261)" class="st2 st3">Ti</text>
+			<text transform="matrix(1 0 0 1 237.998 261)" class="st2 st3">V</text>
+			<text transform="matrix(1 0 0 1 275.6689 261)" class="st2 st3">Cr</text>
+			<text transform="matrix(1 0 0 1 313.665 261)" class="st2 st3">Mn</text>
+			<text transform="matrix(1 0 0 1 354.998 261)" class="st2 st3">Fe</text>
+			<text transform="matrix(1 0 0 1 394.3301 261)" class="st2 st3">Co</text>
+			<text transform="matrix(1 0 0 1 436.334 261)" class="st2 st3">Ni</text>
+			<text transform="matrix(1 0 0 1 474.3301 261)" class="st2 st3">Cu</text>
+			<text transform="matrix(1 0 0 1 514.998 261)" class="st2 st3">Zn</text>
+			<text transform="matrix(1 0 0 1 553.9961 261)" class="st2 st3">Ga</text>
+			<text transform="matrix(1 0 0 1 593.9961 261)" class="st2 st3">Ge</text>
+			<text transform="matrix(1 0 0 1 634.998 261)" class="st2 st3">As</text>
+			<text transform="matrix(1 0 0 1 674.6611 261)" class="st2 st3">Se</text>
+			<text transform="matrix(1 0 0 1 716 261)" class="st2 st3">Br</text>
+			<text transform="matrix(1 0 0 1 756 261)" class="st2 st3">Kr</text>
+			<text transform="matrix(1 0 0 1 77.998 261)" class="st2 st3">K</text>
+			<text transform="matrix(1 0 0 1 115.3262 285)" class="st2 st3">38</text>
+			<text transform="matrix(1 0 0 1 155.3262 285)" class="st2 st3">39</text>
+			<text transform="matrix(1 0 0 1 195.3262 285)" class="st2 st3">40</text>
+			<text transform="matrix(1 0 0 1 235.3262 285)" class="st2 st3">41</text>
+			<text transform="matrix(1 0 0 1 275.3262 285)" class="st2 st3">42</text>
+			<text transform="matrix(1 0 0 1 315.3262 285)" class="st2 st3">43</text>
+			<text transform="matrix(1 0 0 1 355.3262 285)" class="st2 st3">44</text>
+			<text transform="matrix(1 0 0 1 395.3262 285)" class="st2 st3">45</text>
+			<text transform="matrix(1 0 0 1 435.3262 285)" class="st2 st3">46</text>
+			<text transform="matrix(1 0 0 1 475.3262 285)" class="st2 st3">47</text>
+			<text transform="matrix(1 0 0 1 515.3262 285)" class="st2 st3">48</text>
+			<text transform="matrix(1 0 0 1 555.3262 285)" class="st2 st3">49</text>
+			<text transform="matrix(1 0 0 1 595.3262 285)" class="st2 st3">50</text>
+			<text transform="matrix(1 0 0 1 635.3262 285)" class="st2 st3">51</text>
+			<text transform="matrix(1 0 0 1 675.3262 285)" class="st2 st3">52</text>
+			<text transform="matrix(1 0 0 1 715.3262 285)" class="st2 st3">53</text>
+			<text transform="matrix(1 0 0 1 755.3262 285)" class="st2 st3">54</text>
+			<text transform="matrix(1 0 0 1 75.3262 285)" class="st2 st3">37</text>
+			<text transform="matrix(1 0 0 1 474.6611 301)" class="st2 st3">Ag</text>
+			<text transform="matrix(1 0 0 1 116 301)" class="st2 st3">Sr</text>
+			<text transform="matrix(1 0 0 1 157.998 301)" class="st2 st3">Y</text>
+			<text transform="matrix(1 0 0 1 196.3369 301)" class="st2 st3">Zr</text>
+			<text transform="matrix(1 0 0 1 234.3301 301)" class="st2 st3">Nb</text>
+			<text transform="matrix(1 0 0 1 273.665 301)" class="st2 st3">Mo</text>
+			<text transform="matrix(1 0 0 1 316 301)" class="st2 st3">Tc</text>
+			<text transform="matrix(1 0 0 1 354.3301 301)" class="st2 st3">Ru</text>
+			<text transform="matrix(1 0 0 1 394.3301 301)" class="st2 st3">Rh</text>
+			<text transform="matrix(1 0 0 1 434.6611 301)" class="st2 st3">Pd</text>
+			<text transform="matrix(1 0 0 1 514.3301 301)" class="st2 st3">Cd</text>
+			<text transform="matrix(1 0 0 1 556.9961 301)" class="st2 st3">In</text>
+			<text transform="matrix(1 0 0 1 594.6611 301)" class="st2 st3">Sn</text>
+			<text transform="matrix(1 0 0 1 634.6611 301)" class="st2 st3">Sb</text>
+			<text transform="matrix(1 0 0 1 675.6631 301)" class="st2 st3">Te</text>
+			<text transform="matrix(1 0 0 1 720.333 301)" class="st2 st3">I</text>
+			<text transform="matrix(1 0 0 1 754.6611 301)" class="st2 st3">Xe</text>
+			<text transform="matrix(1 0 0 1 74.3301 301)" class="st2 st3">Rb</text>
+			<text transform="matrix(1 0 0 1 115.3262 325)" class="st2 st3">56</text>
+			<text transform="matrix(1 0 0 1 195.3262 325)" class="st2 st3">72</text>
+			<text transform="matrix(1 0 0 1 235.3262 325)" class="st2 st3">73</text>
+			<text transform="matrix(1 0 0 1 275.3262 325)" class="st2 st3">74</text>
+			<text transform="matrix(1 0 0 1 315.3262 325)" class="st2 st3">75</text>
+			<text transform="matrix(1 0 0 1 355.3262 325)" class="st2 st3">76</text>
+			<text transform="matrix(1 0 0 1 395.3262 325)" class="st2 st3">77</text>
+			<text transform="matrix(1 0 0 1 435.3262 325)" class="st2 st3">78</text>
+			<text transform="matrix(1 0 0 1 475.3262 325)" class="st2 st3">79</text>
+			<text transform="matrix(1 0 0 1 515.3262 325)" class="st2 st3">80</text>
+			<text transform="matrix(1 0 0 1 555.3262 325)" class="st2 st3">81</text>
+			<text transform="matrix(1 0 0 1 595.3262 325)" class="st2 st3">82</text>
+			<text transform="matrix(1 0 0 1 635.3262 325)" class="st2 st3">83</text>
+			<text transform="matrix(1 0 0 1 675.3262 325)" class="st2 st3">84</text>
+			<text transform="matrix(1 0 0 1 715.3262 325)" class="st2 st3">85</text>
+			<text transform="matrix(1 0 0 1 755.3262 325)" class="st2 st3">86</text>
+			<text transform="matrix(1 0 0 1 75.3262 325)" class="st2 st3">55</text>
+			<text transform="matrix(1 0 0 1 114.6611 341)" class="st2 st3">Ba</text>
+			<text transform="matrix(1 0 0 1 196 341)" class="st2 st3">Hf</text>
+			<text transform="matrix(1 0 0 1 235.6631 341)" class="st2 st3">Ta</text>
+			<text transform="matrix(1 0 0 1 276.3369 341)" class="st2 st3">W</text>
+			<text transform="matrix(1 0 0 1 314.3301 341)" class="st2 st3">Re</text>
+			<text transform="matrix(1 0 0 1 354.333 341)" class="st2 st3">Os</text>
+			<text transform="matrix(1 0 0 1 398.335 341)" class="st2 st3">Ir</text>
+			<text transform="matrix(1 0 0 1 436.3311 341)" class="st2 st3">Pt</text>
+			<text transform="matrix(1 0 0 1 474.6611 341)" class="st2 st3">Au</text>
+			<text transform="matrix(1 0 0 1 514.3301 341)" class="st2 st3">Hg</text>
+			<text transform="matrix(1 0 0 1 557.002 341)" class="st2 st3">Tl</text>
+			<text transform="matrix(1 0 0 1 594.6611 341)" class="st2 st3">Pb</text>
+			<text transform="matrix(1 0 0 1 636.665 341)" class="st2 st3">Bi</text>
+			<text transform="matrix(1 0 0 1 674.6611 341)" class="st2 st3">Po</text>
+			<text transform="matrix(1 0 0 1 716.3311 341)" class="st2 st3">At</text>
+			<text transform="matrix(1 0 0 1 754.3301 341)" class="st2 st3">Rn</text>
+			<text transform="matrix(1 0 0 1 74.667 341)" class="st2 st3">Cs</text>
+			<text transform="matrix(1 0 0 1 115.3262 365)" class="st2 st3">88</text>
+			<text transform="matrix(1 0 0 1 191.9893 365)" class="st2 st3">104</text>
+			<text transform="matrix(1 0 0 1 231.9893 365)" class="st2 st3">105</text>
+			<text transform="matrix(1 0 0 1 271.9893 365)" class="st2 st3">106</text>
+			<text transform="matrix(1 0 0 1 311.9893 365)" class="st2 st3">107</text>
+			<text transform="matrix(1 0 0 1 351.9893 365)" class="st2 st3">108</text>
+			<text transform="matrix(1 0 0 1 391.9893 365)" class="st2 st3">109</text>
+			<text transform="matrix(1 0 0 1 432.4346 365)" class="st2 st3">110</text>
+			<text transform="matrix(1 0 0 1 472.8799 365)" class="st2 st3">111</text>
+			<text transform="matrix(1 0 0 1 512.4346 365)" class="st2 st3">112</text>
+			<text transform="matrix(1 0 0 1 552.4346 365)" class="st2 st3">113</text>
+			<text transform="matrix(1 0 0 1 592.4346 365)" class="st2 st3">114</text>
+			<text transform="matrix(1 0 0 1 632.4346 365)" class="st2 st3">115</text>
+			<text transform="matrix(1 0 0 1 672.4346 365)" class="st2 st3">116</text>
+			<text transform="matrix(1 0 0 1 712.4346 365)" class="st2 st3">117</text>
+			<text transform="matrix(1 0 0 1 752.4346 365)" class="st2 st3">118</text>
+			<text transform="matrix(1 0 0 1 75.3262 365)" class="st2 st3">87</text>
+			<text transform="matrix(1 0 0 1 274.6611 381)" class="st2 st3">Sg</text>
+			<text transform="matrix(1 0 0 1 474.3301 381)" class="st2 st3">Rg</text>
+			<text transform="matrix(1 0 0 1 596.9932 381)" class="st2 st3">Fl</text>
+			<text transform="matrix(1 0 0 1 634.9932 381)" class="st2 st3">Mc</text>
+			<text transform="matrix(1 0 0 1 114.3301 381)" class="st2 st3">Ra</text>
+			<text transform="matrix(1 0 0 1 196 381)" class="st2 st3">Rf</text>
+			<text transform="matrix(1 0 0 1 234.3301 381)" class="st2 st3">Db</text>
+			<text transform="matrix(1 0 0 1 314.6611 381)" class="st2 st3">Bh</text>
+			<text transform="matrix(1 0 0 1 354.667 381)" class="st2 st3">Hs</text>
+			<text transform="matrix(1 0 0 1 395.335 381)" class="st2 st3">Mt</text>
+			<text transform="matrix(1 0 0 1 434.667 381)" class="st2 st3">Ds</text>
+			<text transform="matrix(1 0 0 1 514.3301 381)" class="st2 st3">Cn</text>
+			<text transform="matrix(1 0 0 1 554.6631 381)" class="st2 st3">Nh</text>
+			<text transform="matrix(1 0 0 1 675.9932 381)" class="st2 st3">Lv</text>
+			<text transform="matrix(1 0 0 1 716.3301 381)" class="st2 st3">Ts</text>
+			<text transform="matrix(1 0 0 1 754.9932 381)" class="st2 st3">Og</text>
+			<text transform="matrix(1 0 0 1 76.3369 381)" class="st2 st3">Fr</text>
+			<text transform="matrix(1 0 0 1 195.3262 425)" class="st2 st3">57</text>
+			<text transform="matrix(1 0 0 1 235.3262 425)" class="st2 st3">58</text>
+			<text transform="matrix(1 0 0 1 275.3262 425)" class="st2 st3">59</text>
+			<text transform="matrix(1 0 0 1 315.3262 425)" class="st2 st3">60</text>
+			<text transform="matrix(1 0 0 1 355.3262 425)" class="st2 st3">61</text>
+			<text transform="matrix(1 0 0 1 395.3262 425)" class="st2 st3">62</text>
+			<text transform="matrix(1 0 0 1 435.3262 425)" class="st2 st3">63</text>
+			<text transform="matrix(1 0 0 1 475.3262 425)" class="st2 st3">64</text>
+			<text transform="matrix(1 0 0 1 515.3262 425)" class="st2 st3">65</text>
+			<text transform="matrix(1 0 0 1 555.3262 425)" class="st2 st3">66</text>
+			<text transform="matrix(1 0 0 1 595.3262 425)" class="st2 st3">67</text>
+			<text transform="matrix(1 0 0 1 635.3262 425)" class="st2 st3">68</text>
+			<text transform="matrix(1 0 0 1 675.3262 425)" class="st2 st3">69</text>
+			<text transform="matrix(1 0 0 1 715.3262 425)" class="st2 st3">70</text>
+			<text transform="matrix(1 0 0 1 755.3262 425)" class="st2 st3">71</text>
+			<text transform="matrix(1 0 0 1 554.667 441)" class="st2 st3">Dy</text>
+			<text transform="matrix(1 0 0 1 195.3262 441)" class="st2 st3">La</text>
+			<text transform="matrix(1 0 0 1 234.3301 441)" class="st2 st3">Ce</text>
+			<text transform="matrix(1 0 0 1 276 441)" class="st2 st3">Pr</text>
+			<text transform="matrix(1 0 0 1 314.3301 441)" class="st2 st3">Nd</text>
+			<text transform="matrix(1 0 0 1 353 441)" class="st2 st3">Pm</text>
+			<text transform="matrix(1 0 0 1 393 441)" class="st2 st3">Sm</text>
+			<text transform="matrix(1 0 0 1 434.6611 441)" class="st2 st3">Eu</text>
+			<text transform="matrix(1 0 0 1 473.9961 441)" class="st2 st3">Gd</text>
+			<text transform="matrix(1 0 0 1 514.998 441)" class="st2 st3">Tb</text>
+			<text transform="matrix(1 0 0 1 594.3301 441)" class="st2 st3">Ho</text>
+			<text transform="matrix(1 0 0 1 636 441)" class="st2 st3">Er</text>
+			<text transform="matrix(1 0 0 1 673.3369 441)" class="st2 st3">Tm</text>
+			<text transform="matrix(1 0 0 1 714.6611 441)" class="st2 st3">Yb</text>
+			<text transform="matrix(1 0 0 1 755.3262 441)" class="st2 st3">Lu</text>
+			<text transform="matrix(1 0 0 1 195.3262 465)" class="st2 st3">89</text>
+			<text transform="matrix(1 0 0 1 235.3262 465)" class="st2 st3">90</text>
+			<text transform="matrix(1 0 0 1 275.3262 465)" class="st2 st3">91</text>
+			<text transform="matrix(1 0 0 1 315.3262 465)" class="st2 st3">92</text>
+			<text transform="matrix(1 0 0 1 355.3262 465)" class="st2 st3">93</text>
+			<text transform="matrix(1 0 0 1 395.3262 465)" class="st2 st3">94</text>
+			<text transform="matrix(1 0 0 1 435.3262 465)" class="st2 st3">95</text>
+			<text transform="matrix(1 0 0 1 475.3262 465)" class="st2 st3">96</text>
+			<text transform="matrix(1 0 0 1 515.3262 465)" class="st2 st3">97</text>
+			<text transform="matrix(1 0 0 1 555.3262 465)" class="st2 st3">98</text>
+			<text transform="matrix(1 0 0 1 595.3262 465)" class="st2 st3">99</text>
+			<text transform="matrix(1 0 0 1 631.9893 465)" class="st2 st3">100</text>
+			<text transform="matrix(1 0 0 1 671.9893 465)" class="st2 st3">101</text>
+			<text transform="matrix(1 0 0 1 711.9893 465)" class="st2 st3">102</text>
+			<text transform="matrix(1 0 0 1 751.9893 465)" class="st2 st3">103</text>
+			<text transform="matrix(1 0 0 1 194.998 481)" class="st2 st3">Ac</text>
+			<text transform="matrix(1 0 0 1 234.998 481)" class="st2 st3">Th</text>
+			<text transform="matrix(1 0 0 1 274.6611 481)" class="st2 st3">Pa</text>
+			<text transform="matrix(1 0 0 1 317.667 481)" class="st2 st3">U</text>
+			<text transform="matrix(1 0 0 1 354.3301 481)" class="st2 st3">Np</text>
+			<text transform="matrix(1 0 0 1 394.6611 481)" class="st2 st3">Pu</text>
+			<text transform="matrix(1 0 0 1 433 481)" class="st2 st3">Am</text>
+			<text transform="matrix(1 0 0 1 472.6689 481)" class="st2 st3">Cm</text>
+			<text transform="matrix(1 0 0 1 514.998 481)" class="st2 st3">Bk</text>
+			<text transform="matrix(1 0 0 1 556 481)" class="st2 st3">Cf</text>
+			<text transform="matrix(1 0 0 1 594.998 481)" class="st2 st3">Es</text>
+			<text transform="matrix(1 0 0 1 633.3369 481)" class="st2 st3">Fm</text>
+			<text transform="matrix(1 0 0 1 673.665 481)" class="st2 st3">Md</text>
+			<text transform="matrix(1 0 0 1 714.3301 481)" class="st2 st3">No</text>
+			<text transform="matrix(1 0 0 1 756.665 481)" class="st2 st3">Lr</text>
+			<text transform="matrix(1 0 0 1 10 93)" class="st2 st3">Group</text>
+			<text transform="matrix(1 0 0 1 20 108)" class="st2 st3">Period</text>
+		</g>
+		<g>
+			<text transform="matrix(1 0 0 1 92.7109 434)" class="st2 st4">Lanthanides</text>
+			<text transform="matrix(1 0 0 1 112.1934 472)" class="st2 st4">Actinides</text>
+		</g>
+	</g>
+	<path d="M11.5,97h1v10h-2l2.5,4l2.5-4h-2V97"/>
+	<path d="M52,88.5v1h10v-2l4,2.5l-4,2.5v-2H52"/>
+</g>
+</svg>
