@@ -1,4 +1,4 @@
-$(document).documentready(function() {
+$(document).ready(function() {
     var currentQuestion = '';
 
     $('#getQAcountries').click(function() {
