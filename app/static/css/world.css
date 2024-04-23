@@ -3,7 +3,88 @@ svg * {
 }
 
 .container {
-    display: grid;
-    place-items: center;
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    padding: 3px;
+    margin-bottom: 10px;
+    background-color: rgba(0, 0, 0, 0.02);
+    border-radius: 4px 4px 0 0;
+    width: 80%;
+    max-width: 600px;
+    z-index: 1000;
+  }
+  
+  #getQAcountries {
+    padding: 10px 20px;
+    font-size: 18px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 20px;
+  }
+  
+  #question {
+    font-size: 35px;
+    font-weight: bold;
+    color: rgb(0, 0, 0);
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.05);
+  }
+  
+  #answerInput {
+    padding: 10px;
+    font-size: 18px;
+    width: 90%;
+    border: none;
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }
+  
+  #submitAnswerButton {
+    padding: 10px 20px;
+    font-size: 18px;
+    background-color: #008CBA;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  #feedback {
+    font-size: 24px;
+    color: rgb(0, 0, 0);
+    margin-top: 4px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  }
+
+html, body {
+    height: 100%;
+    width: 100%;
     margin: 0;
+    padding: 0;
+    background-color: #e0f7fa;
 }
+
+#svg-container {
+    will-change: transform; /* Optimizes the container for animations */
+    border:none;
+}
+
+
+svg {
+    position: fixed; /* Allows precise positioning */
+    width: 100vw;
+    height: 100vh;
+    display: block; /* to remove bottom margin/gap */
+    background-color: #e0f7fa; /* very light blue background */
+    border: none;
+}
+svg:active {
+    cursor: grabbing;
+}
+
