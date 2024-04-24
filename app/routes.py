@@ -2,6 +2,8 @@ from flask import Flask, jsonify, render_template, request, current_app
 import random
 import os
 from app import app
+from app.forms import LoginForm
+from flask import flash, redirect, url_for
 
 @app.route('/')
 @app.route('/index')
@@ -78,3 +80,13 @@ def world():
     with open(svg_path, 'r') as file:
         svg_content = file.read()
     return render_template('world.html', svg_content=svg_content)
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        flash('Login requested for user {}, remember_me={}'.format(
+            form.username.data, form.remember_me.data))
+        return redirect(url_for('index'))
+    return render_template('login.html', title='Sign In', form=form)
