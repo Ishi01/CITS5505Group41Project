@@ -3,7 +3,7 @@ $(document).ready(function() {
 
     $('#getQAcountries').click(function() {
         $.ajax({
-            url: '/get-random-qa',
+            url: '/get-random-qa#countries',
             type: 'GET',
             success: function(response) {
                 $('#question').text(response.question);

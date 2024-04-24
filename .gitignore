@@ -7,6 +7,11 @@ __pycache__/
 # SVG Editor
 editsvg.ipynb
 
+#venv
+venv_windows/
+venv_macos/
+venv*/
+
 # Python
 *.py[cod]
 *$py.class
