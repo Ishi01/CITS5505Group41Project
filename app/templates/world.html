@@ -2,17 +2,22 @@
 
 {% block header %}
     {{ super() }}
-    <script src="{{ url_for('static', filename='js/qa.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/world.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/world.css') }}" />
 {% endblock %}
 
 {% block content %}
-    <h1>Welcome to My Flask App!</h1>
-    <p>This is the home page of my Flask application.</p>
-
-    <h1>Guess the Answer Game</h1>
+<div id="svg-container">
+    {{ svg_content | safe }}
+</div>
+<div class="container">
     <button id="getQAcountries">Get a Question</button>
     <p id="question"><strong>Question:</strong></p>
     <input type="text" id="answerInput" placeholder="Type your answer here">
     <button id="submitAnswerButton">Submit Answer</button>
     <p id="feedback"></p>
+</div>
+    
+
+
 {% endblock %}

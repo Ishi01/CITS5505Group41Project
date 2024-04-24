@@ -1,15 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <script src="{{ url_for('static', filename='jquery-3.7.1.min.js') }}"></script>
+    {% block header %}
     {% if title %}
     <title>{{ title }} - My Flask App</title>
     {% else %}
     <title>Welcome to My Flask App</title>
     {% endif %}
+    {% endblock %}
+    
 </head>
+
 <body>
     <div>
         <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('periodic_table') }}">Periodic Table</a>
+        <a href="{{ url_for('world') }}">World Map</a>
     </div>
     <hr>
     {% block content %}{% endblock %}

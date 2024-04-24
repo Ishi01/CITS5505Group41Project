@@ -4,6 +4,9 @@ instance/
 *.pyc
 __pycache__/
 
+# SVG Editor
+editsvg.ipynb
+
 # Python
 *.py[cod]
 *$py.class
