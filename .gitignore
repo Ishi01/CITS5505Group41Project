@@ -80,3 +80,4 @@ venv.bak/
 .dmypy.json
 dmypy.json
 .pyre/
+.DS_Store
