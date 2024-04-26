@@ -14,12 +14,10 @@ pip install flask
    
 ```
 pip install -r requirements_macos.txt  # For macOS
-
 ```
 or
 ```
 pip install -r requirements_windows.txt  # For Windows
-
 ```
 
 3. Run the Flask application:
