@@ -80,7 +80,7 @@ $(document).ready(function() {
 
     let svg = $('svg'); // Assuming there's only one SVG element
     let scale = 1;
-    const zoomFactor = 0.2; // Set the zoom factor
+    const zoomFactor = 0.1; // Reduced zoom factor for finer control
     const maxScale = 6; // Maximum zoom level
     const minScale = 0.8; // Minimum zoom level
     let isPanning = false;
@@ -88,43 +88,49 @@ $(document).ready(function() {
     let startY = 0;
     let translateX = 0;
     let translateY = 0;
-    
+
     // Function to update the transform properties of the SVG
     function updateTransform() {
         svg.css('transform', `translate(${translateX}px, ${translateY}px) scale(${scale})`);
     }
-    
-    // Prevent default behavior for an event
+
+    // Prevent default behavior and stop propagation
     function stopEvent(e) {
         e.stopPropagation();
         e.preventDefault();
     }
-    
+
+    // Normalize wheel event delta
+    function normalizeWheelDelta(e) {
+        if (e.originalEvent.deltaMode === 1) { // Line mode (typical for mouse wheel)
+            return e.originalEvent.deltaY * 15; // Arbitrary factor for normalization
+        } else { // Pixel mode (typical for trackpads)
+            return e.originalEvent.deltaY;
+        }
+    }
+
     // Mouse wheel zoom
     svg.on('wheel', function(e) {
         stopEvent(e); // Stop scrolling and other default behaviors
-        var oldScale = scale; // Store the old scale
-        // Determine the zoom direction and adjust the scale
-        scale *= e.originalEvent.deltaY < 0 ? 1 + zoomFactor : 1 / (1 + zoomFactor);
-    
-        // Constrain scale to the maximum and minimum zoom levels
+        const deltaY = normalizeWheelDelta(e);
+        var oldScale = scale;
+        scale *= deltaY < 0 ? 1 + zoomFactor : 1 / (1 + zoomFactor);
+
         scale = Math.min(Math.max(scale, minScale), maxScale);
-    
-        // Calculate the factor by which the scale changed
         var scaleChange = scale / oldScale;
-    
-        // Get the center coordinates of the screen
+
         var centerX = e.clientX - window.innerWidth / 2;
         var centerY = e.clientY - window.innerHeight / 2;
-        console.log(centerX, centerY);
-        console.log(window.innerWidth, window.innerHeight);
-    
-        // Calculate new translations to zoom into the center of the screen
-        translateX = scaleChange * (translateX - centerX) + centerX + 20;
+
+        translateX = scaleChange * (translateX - centerX) + centerX;
         translateY = scaleChange * (translateY - centerY) + centerY;
-        updateTransform(); // Apply the new transformations
+        updateTransform();
     });
-        
+
+    // Disable text selection during panning
+    svg.on('mousedown touchstart', function(e) {
+        svg.css('user-select', 'none');
+    });
 
     // Mouse down to start panning
     svg.on('mousedown', function(e) {
@@ -134,9 +140,6 @@ $(document).ready(function() {
             startX = e.clientX - translateX;
             startY = e.clientY - translateY;
             svg.css('cursor', 'grabbing');
-            translateX = e.clientX - startX;
-            translateY = e.clientY - startY;
-            updateTransform();
         }
     });
 
@@ -151,7 +154,7 @@ $(document).ready(function() {
 
     // Mouse up to end panning
     $(document).on('mouseup', function(e) {
-        if (e.button === 0 && isPanning) { // Left mouse button
+        if (isPanning) {
             isPanning = false;
             svg.css('cursor', 'grab');
         }
@@ -165,9 +168,9 @@ $(document).ready(function() {
         }
     });
 
-    // Touch support for mobile devices
+    // Touch events for panning on mobile devices
     svg.on('touchstart', function(e) {
-        e.preventDefault();
+        stopEvent(e);
         if (e.touches.length === 1) {
             let touch = e.touches[0];
             isPanning = true;
