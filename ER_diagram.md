@@ -13,7 +13,7 @@ erDiagram
     games {
         INTEGER id PK
         DATATIME timestamp
-        INTEGER result
+        INTEGER score
         INTEGER users_id FK
         %%  relation attribute: player %%
     }

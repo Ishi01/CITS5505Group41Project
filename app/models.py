@@ -21,7 +21,7 @@ class User(db.Model):
 
 class Game(db.Model):
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
-    result: so.Mapped[int] = so.mapped_column(sa.Integer)
+    score: so.Mapped[int] = so.mapped_column(sa.Integer)
     timestamp: so.Mapped[datetime] = so.mapped_column(
         index=True, default=lambda: datetime.now(timezone.utc))
     user_id: so.Mapped[int] = so.mapped_column(sa.ForeignKey(User.id),
@@ -30,4 +30,4 @@ class Game(db.Model):
     player: so.Mapped[User] = so.relationship(back_populates='games')
 
     def __repr__(self):
-        return '<Game {}>'.format(self.result)
+        return '<Game {}>'.format(self.score)
