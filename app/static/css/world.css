@@ -8,7 +8,7 @@ svg * {
     left: 50%;
     transform: translateX(-50%);
     text-align: center;
-    padding: 3px;
+    padding: 2px;
     margin-bottom: 10px;
     background-color: rgba(0, 0, 0, 0.02);
     border-radius: 4px 4px 0 0;
@@ -29,7 +29,7 @@ svg * {
   }
   
   #question {
-    font-size: 35px;
+    font-size: 24px;
     font-weight: bold;
     color: rgb(0, 0, 0);
     margin-bottom: 20px;
@@ -37,29 +37,42 @@ svg * {
   }
   
   #answerInput {
-    padding: 10px;
-    font-size: 18px;
+    padding: 8px;
+    font-size: 16px;
     width: 90%;
     border: none;
     border-radius: 5px;
-    margin-bottom: 10px;
+    margin-bottom: 6px;
   }
   
   #submitAnswerButton {
-    padding: 10px 20px;
+    padding: 10px 18px;
     font-size: 18px;
     background-color: #008CBA;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 2px;
+    margin-bottom: 0px;
+    cursor: pointer;
+  }
+
+  #modeSwitchButton {
+    padding: 10px 18px;
+    font-size: 18px;
+    background-color: #ba5a00;
+    color: white;
+    border: none;
+    border-radius: 2px;
+    margin-bottom: 0px;
     cursor: pointer;
   }
   
   #feedback {
-    font-size: 24px;
+    font-size: 18px;
     color: rgb(0, 0, 0);
-    margin-top: 4px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    margin-top: 0px;
+    margin-bottom: 2px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.05);
   }
 
 html, body {
@@ -67,23 +80,31 @@ html, body {
     width: 100%;
     margin: 0;
     padding: 0;
-    background-color: #e0f7fa;
+    background-color: #e0f7fa; /* background-color: #e0f7fa;  very light blue background */
+    overflow: hidden;
 }
 
 #svg-container {
     will-change: transform; /* Optimizes the container for animations */
-    border:none;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
 }
-
 
 svg {
-    position: fixed; /* Allows precise positioning */
-    width: 100vw;
-    height: 100vh;
-    display: block; /* to remove bottom margin/gap */
-    background-color: #e0f7fa; /* very light blue background */
-    border: none;
+  width: 100vw; /* 100% of the viewport width */
+  height: 100vh; /* 100% of the viewport height */
+  display: block; /* remove any margins or paddings */
+  position: fixed; /* optional: to ensure it always stays full screen */
+  background-color: #e0f7fa; /* very light blue background */
+  top: 0;
+  left: 0;
+  overflow: hidden;
 }
+
 svg:active {
     cursor: grabbing;
 }

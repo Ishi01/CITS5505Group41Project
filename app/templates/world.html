@@ -3,6 +3,7 @@
 {% block header %}
     {{ super() }}
     <script src="{{ url_for('static', filename='js/world.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/svgMovement.js') }}"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/world.css') }}" />
 {% endblock %}
 
@@ -16,6 +17,7 @@
       <input type="text" id="answerInput" placeholder="Type your answer here">
       <button id="getQAcountries">Get a Question</button>
       <button id="submitAnswerButton">Submit Answer</button>
+      <button id="modeSwitchButton">Prototype Swap</button>
     </div>
     <p id="feedback"></p>
   </div>
