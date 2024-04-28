@@ -2,27 +2,75 @@ $(document).ready(function() {
     var selectedPaths = []; // Array to store the currently selected paths
     var currentMode = 0; // Default mode
 
+    attachInputHandlers();
+
+    function attachInputHandlers() {
+        // Remove previous handlers to avoid duplicates
+        $('#answerInput').off('input'); 
+        $('#answerInput').off('keypress');
+        $('#svg-container svg path').off('click');
+        $('#svg-container svg path').off('dblclick');
+
+        if (currentMode === 0) {
+            $('#answerInput').on('input', function() {
+                resetSVGStyles(); // Reset all highlights first
+                highlightPathFromInput_Mode0(); // Then apply new highlight based on the mode
+            });
+            $('#svg-container svg path').on('dblclick', function() {
+                $('#submitAnswerButton').trigger('click'); // Simulate a click on the submit button
+            });
+            $('#svg-container svg path').on('click', function() {
+                selectPathMode0(this);
+                resetSVGStyles(this);
+            });
+        } 
+        else if (currentMode === 1) {
+            $('#answerInput').on('input', function() {
+                resetSVGStyles(); // Reset all highlights first
+                highlightPathFromInput_Mode1(); // Then apply new highlight based on the mode
+            });
+            $('#answerInput').on('keypress', function(event) {
+                if (event.which == 13) { // 13 is the keycode for Enter
+                    console.log('Current mode is 1');
+                    let inputVal = $('#answerInput').val().replace(/ /g, '_'); // Convert spaces to underscores
+                    let pathClass = $('#svg-container svg path.' + inputVal);
+                    if (!selectedPaths.includes(pathClass)) {
+                        selectedPaths.push(pathClass);
+                    }
+                    resetSVGStyles(); // Then apply new highlight
+                }
+            });
+            $('#svg-container svg path').on('click', function() {
+                selectPathMode1(this);
+                resetSVGStyles(this);
+            });
+        }
+    }
+
     // Function to reset SVG path styles to default
-    function resetSVGStyles() {
+    function resetSVGStyles(path) {
         $('#svg-container svg path').css({
             'fill': '',
             'stroke': '',
             'stroke-width': ''
         });
-        selectedPaths.forEach(function(path) {
-            $(path).css({
+
+        selectedPaths.forEach(function(selectedPath) {
+            $(selectedPath).css({
                 'fill': 'green',
                 'stroke': '#225522',
                 'stroke-width': '2'
             });
         });
+
+        highlightPath(path);
     }
 
     // Highlight a path function for mouseover
     function highlightPath(path) {
         let highlightName = '#svg-container svg path.' + $(path).attr('class');
         if (!selectedPaths.includes(highlightName)) {
-            $(path).css({
+            $(highlightName).css({
                 'fill': 'palegreen',
                 'stroke': '#225522',
                 'stroke-width': '2'
@@ -31,18 +79,24 @@ $(document).ready(function() {
     }
 
     // Apply selected style to a path
-    function selectPath(path) {
+    function selectPathMode0(path) {
         let pathClass = '#svg-container svg path.' + $(path).attr('class');
-        if (currentMode === 0) {
-            // Single selection mode
-            selectedPaths = [pathClass]; // Reset and select new path
-        } else if (currentMode === 1) {
-            // Multiple selection mode
-            if (selectedPaths.includes(pathClass)) {
-                selectedPaths = selectedPaths.filter(p => p !== pathClass); // Toggle off
-            } else {
-                selectedPaths.push(pathClass); // Add to selections
-            }
+        selectedPaths = [pathClass]; // Reset and select new path
+        var className = $(path).attr('class'); // Get the class attribute of the clicked path
+        if (className) {
+            className = className.replace(/_/g, ' '); // Replace all underscores with spaces
+            $('#answerInput').val(className); 
+        }
+        resetSVGStyles();
+    }
+
+    function selectPathMode1(path) {
+        let pathClass = '#svg-container svg path.' + $(path).attr('class');
+        // Multiple selection mode
+        if (selectedPaths.includes(pathClass)) {
+            selectedPaths = selectedPaths.filter(p => p !== pathClass); // Toggle off
+        } else {
+            selectedPaths.push(pathClass); // Add to selections
         }
         resetSVGStyles();
     }
@@ -56,23 +110,28 @@ $(document).ready(function() {
         resetSVGStyles();
     });
 
-    // Function to highlight path based on the input value
-    function highlightPathFromInput() {
+    function highlightPathFromInput_Mode0() {
         try {
-            var inputVal = $('#answerInput').val().replace(/ /g, '_'); // Convert spaces to underscores
-            var pathToHighlight = $('#svg-container svg path.' + inputVal);
-    
+            let inputVal = $('#answerInput').val().replace(/ /g, '_'); // Convert spaces to underscores
+            let pathToHighlight = $('#svg-container svg path.' + inputVal);
             if (pathToHighlight.length) {
-                if (currentMode === 1) {
-                    // In Mode 1, add the path to the selection list if it's not already included
-                    let pathClass = '#svg-container svg path.' + $(pathToHighlight[0]).attr('class');
-                    if (!selectedPaths.includes(pathClass)) {
-                        selectedPaths.push(pathClass);
-                        resetSVGStyles(); // Refresh SVG styles to reflect the new selection
-                    }
-                } else {
-                    // In Mode 0, select only the path that matches the input
-                    selectPath(pathToHighlight[0]); // Highlight the first found path
+                highlightPath(pathToHighlight); // Highlight the first found path
+            }
+        } catch (error) {
+            //console.log('Error highlighting path:', error);
+        }
+    }
+
+    function highlightPathFromInput_Mode1() {
+        try {
+            let inputVal = $('#answerInput').val().replace(/ /g, '_'); // Convert spaces to underscores
+            let pathToHighlight = $('#svg-container svg path.' + inputVal);
+            if (pathToHighlight.length) {
+                // In Mode 1, add the path to the selection list if it's not already included
+                let pathClass = '#svg-container svg path.' + $(pathToHighlight[0]).attr('class');
+                if (!selectedPaths.includes(pathClass)) {
+                    selectedPaths.push(pathClass);
+                    highlightPath(pathClass); // Refresh SVG styles to reflect the new selection
                 }
             }
         } catch (error) {
@@ -80,32 +139,12 @@ $(document).ready(function() {
         }
     }
 
-    // Attach event handler to the input box to handle changes
-    $('#answerInput').on('input', function() {
-        resetSVGStyles(); // Reset all highlights first
-        highlightPathFromInput(); // Then apply new highlight
-    });
-
-    // Handler for click to set the input value based on path ID and keep the path highlighted
-    $('#svg-container svg path').on('click', function() {
-        selectPath(this);
-        if (currentMode === 0) {
-            var className = $(this).attr('class').replace(/_/g, ' ');
-            $('#answerInput').val(className);
-        }
-    });
-
     $('#modeSwitchButton').on('click', function() {
         currentMode = (currentMode === 0 ? 1 : 0); // Toggle mode
         selectedPaths = []; // Clear selections on mode change
         resetSVGStyles();
+        attachInputHandlers(); // Re-attach input handlers based on new currentMode
         console.log('Mode switched to:', currentMode);
-    });
-
-    // Reset highlight when the answer input is modified or submitted
-    $('#answerInput').on('input', function() {
-        resetSVGStyles(); // Reset all highlights first
-        highlightPathFromInput(); // Then apply new highlight based on the mode
     });
 
     // Fetch and display a random question related to countries
