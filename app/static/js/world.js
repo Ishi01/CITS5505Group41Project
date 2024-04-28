@@ -23,6 +23,14 @@ $(document).ready(function() {
                 selectPathMode0(this);
                 resetSVGStyles(this);
             });
+            $('#answerInput').on('keypress', function(event) {
+                if (event.which == 13) { // 13 is the keycode for Enter
+                    let inputVal = $('#answerInput').val().replace(/ /g, '_'); // Convert spaces to underscores
+                    let pathClass = $('#svg-container svg path.' + inputVal);
+                    selectedPaths = [pathClass]; // Reset and select new path
+                    resetSVGStyles(); // Then apply new highlight
+                }
+            });
         } 
         else if (currentMode === 1) {
             $('#answerInput').on('input', function() {
