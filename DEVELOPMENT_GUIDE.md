@@ -10,6 +10,7 @@ This guide provides detailed instructions for setting up development environment
    python3 -m venv venv
    ```
 2. Activate the virtual environment
+   Activate the virtual environment every time you start a new terminal session.
    - On Windows:
   
     ```
@@ -47,6 +48,7 @@ This guide provides detailed instructions for setting up development environment
    ```
    flask db upgrade
    ```
+4. 
 
 ## Testing
 ## Updating Requirements
