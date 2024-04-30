@@ -6,7 +6,11 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Welcome to My Flask App!</h1>
+    {% if current_user.is_anonymous %}
+    <p>Welcome to My Flask App!</p>
+    {% else %}
+    <h1>Hi, {{ current_user.username }}! Welcome to My Flask App!</h1>
+    {% endif %}
     <p>This is the home page of my Flask application.</p>
 
     <h1>Guess the Answer Game</h1>

@@ -1,11 +1,13 @@
 $(document).ready(function() {
     var currentQuestion = '';
 
-    $('#getQAcountries').click(function() {
+    $('#getQAButton').click(function() {
+        console.log('Get QA button clicked');
         $.ajax({
             url: '/get-random-qa#countries',
             type: 'GET',
             success: function(response) {
+                console.log(response);
                 $('#question').text(response.question);
                 currentQuestion = response.question;
                 $('#answerInput').val(''); // Clear previous answer
