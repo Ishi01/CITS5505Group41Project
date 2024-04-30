@@ -80,7 +80,7 @@ def periodic_table():
     return render_template('periodic_table.html', svg_content=svg_content)
 
 @app.route('/world')
-@login_required
+# @login_required
 def world():
     svg_path = os.path.join(current_app.root_path, 'static', 'world.svg')
     with open(svg_path, 'r') as file:
