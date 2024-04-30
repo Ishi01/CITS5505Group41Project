@@ -12,6 +12,9 @@ venv_windows/
 venv_macos/
 venv*/
 
+# Database
+*.db
+
 # Python
 *.py[cod]
 *$py.class
