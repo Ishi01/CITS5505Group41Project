@@ -2,22 +2,29 @@
 
 CITS5505 Agile Web Develoment Group Project
 
-# Flask Application Setup Guide
+## Project Overview
 
-## Installation
+## Quick Start
 
-1. Install Flask using pip:
+1. Install Flask :
 ```
 pip install flask
 ```
-2. Install project dependencies from `requirements.txt`:
+2. Install Dependencies 
+   
 ```
-pip install -r requirements.txt
+pip install -r requirements_macos.txt  # For macOS
 ```
-## Running the Application
+or
+```
+pip install -r requirements_windows.txt  # For Windows
+```
 
-2. Run the Flask application:
+3. Run the Flask application:
 ```
 python -m flask run
 ```
-3. Open your web browser and visit `http://localhost:5000` to access the application.
+Open your web browser and visit `http://localhost:5000` to access the application.
+
+## Contributing
+See [DEVELOPMENT_GUIDE.md](DEVELOPMENT_GUIDE.md) for details on how to contribute to this project.
