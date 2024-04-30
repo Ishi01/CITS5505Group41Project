@@ -20,7 +20,7 @@ $(document).ready(function () {
     console.log(window.innerHeight / originalHeight);
 
     // Set initial scale based on which dimension (height or width) is the limiting factor
-    let scale = Math.max(1.9 * (window.innerWidth / originalWidth), 1.9 * (window.innerHeight / originalHeight));
+    let scale = Math.max(1.94 * (window.innerWidth / originalWidth), 1.94 * (window.innerHeight / originalHeight));
 
     // Set max and min scale based on the initial scale logic
     let maxScale = 12 * Math.min(window.innerWidth / originalWidth, window.innerHeight / originalHeight);
