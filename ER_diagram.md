@@ -17,4 +17,12 @@ erDiagram
         INTEGER users_id FK
         %%  relation attribute: player %%
     }
+
+    quiz_questions {
+        INTEGER question_id PK
+        VARCHAR(200) question_text
+        VARCHAR(200) answer
+
+        %%  relation attribute: player %%
+    }
 ```
