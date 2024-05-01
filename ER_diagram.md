@@ -23,6 +23,5 @@ erDiagram
         VARCHAR(200) question_text
         VARCHAR(200) answer
 
-        %%  relation attribute: player %%
     }
 ```
