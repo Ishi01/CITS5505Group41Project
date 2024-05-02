@@ -20,6 +20,7 @@ erDiagram
 
     quiz_questions {
         INTEGER question_id PK
+        VARCHAR(50) category
         VARCHAR(200) question_text
         VARCHAR(200) answer
 
