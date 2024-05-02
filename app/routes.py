@@ -6,7 +6,7 @@ from app.forms import LoginForm, RegistrationForm
 from flask import flash, redirect, url_for
 from flask_login import current_user, login_user, logout_user, login_required
 import sqlalchemy as sa
-from app.models import User
+from app.models import User, QuizQuestion
 from urllib.parse import urlsplit
 
 
@@ -15,62 +15,55 @@ from urllib.parse import urlsplit
 def index():
     return render_template('index.html', title='Home')
 
-qa_dict = {
-    'countries': {
-        "Where is the Eiffel Tower found?": "France",
-        "Where is the Statue of Liberty found?": "United States",
-        "Where is the Taj Mahal found?": "India"
-    },
-    'elements': {
-        "Which element has the highest melting point and is used in light bulb filaments?": "W",  # Tungsten
-        "What is the lightest and most abundant element in the universe?": "H",                  # Hydrogen
-        "Which element is the best conductor of electricity and is commonly used in jewelry?": "Ag",  # Silver
-        "Which element is used in balloons to make them float and is also used in cryogenics?": "He",  # Helium
-        "What is the primary element that makes up 78% of the Earth's atmosphere?": "N",         # Nitrogen
-        "Which element is used in rechargeable batteries and electric vehicles?": "Li",          # Lithium
-        "Which element is used to purify water and also used in the production of PVC?": "Cl",    # Chlorine
-        "Which heavy metal is used in thermometers and also in dental amalgams?": "Hg",          # Mercury
-        "Which semiconductor element is essential for solar cells and computer chips?": "Si",    # Silicon
-        "Which element, discovered by Martin Klaproth in 1789, is used in nuclear power generation?": "U" # Uranium
-    }
-}
-
 @app.route('/get-random-qa')
 def get_random_qa():
     referer_url = request.headers.get('Referer')
-    print(request.headers)
-    if 'index' in referer_url:
-        category = 'countries'
-    elif 'world' in referer_url:
+    if 'index' in referer_url or 'world' in referer_url:
         category = 'countries'
     elif 'periodictable' in referer_url:
         category = 'elements'
     else:
         return jsonify(error="Unable to determine the category from the referer"), 400
-    subdict = qa_dict[category]
-    question, answer = random.choice(list(subdict.items()))
-    return jsonify(question=question)
+
+    question = db.session.query(
+        QuizQuestion.question_text
+    ).filter_by(category=category).order_by(sa.func.random()).first()
+
+    if question:
+        return jsonify(question=question.question_text)
+    else:
+        return jsonify(error="No questions found for the category"), 404
+
 
 @app.route('/check-answer', methods=['POST'])
 def check_answer():
     data = request.json
 
     referer_url = request.headers.get('Referer')
-    if 'index' in referer_url:
-        category = 'countries'
-    elif 'world' in referer_url:
+    if 'index' in referer_url or 'world' in referer_url:
         category = 'countries'
     elif 'periodictable' in referer_url:
         category = 'elements'
     else:
         return jsonify(error="Unable to determine the category from the referer"), 400
-    
-    user_answer = data['answer']
-    question = data['question']
 
-    correct_answer = qa_dict[category][question]
-    is_correct = (user_answer.strip().lower() == correct_answer.strip().lower())
-    return jsonify(is_correct=is_correct)
+    question = data.get('question')
+    user_answer = data.get('answer')
+
+    if not question or not user_answer:
+        return jsonify(error="Question and answer are required"), 400
+
+    query = db.session.query(
+        QuizQuestion.answer
+    ).filter_by(question_text=question, category=category).first()
+
+    if query:
+        correct_answer = query.answer
+        is_correct = (user_answer.strip().lower() == correct_answer.strip().lower())
+        return jsonify(is_correct=is_correct)
+    else:
+        return jsonify(error="Question not found"), 404
+
 
 @app.route('/periodictable')
 def periodic_table():

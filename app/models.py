@@ -43,3 +43,14 @@ class Game(db.Model):
 
     def __repr__(self):
         return '<Game {}>'.format(self.score)
+
+class QuizQuestion(db.Model):
+    __tablename__ = 'quiz_questions'
+
+    question_id: so.Mapped[int] = so.mapped_column(primary_key=True)
+    category: so.Mapped[str] = so.mapped_column(sa.String(50), nullable=False)
+    question_text: so.Mapped[str] = so.mapped_column(sa.String(200), nullable=False)
+    answer: so.Mapped[str] = so.mapped_column(sa.String(200), nullable=False)
+
+    def __repr__(self):
+        return f'<QuizQuestion {self.question_text[:50]}...>'
