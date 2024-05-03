@@ -1,0 +1,45 @@
+/* color scheming */
+:root {
+    --dark_background: #0b0c10;
+    --light_background: #1f2833;
+    --color_text: #c5c6c7;
+    --color_title: #1ce3a7;
+    --link_color: #66fcf1;
+}
+
+/* reset default styling */
+
+.container-fluid{
+    background-color: var(--dark_background);
+}
+
+.navbar-dark, .navbar-dark > .container-fluid{
+    background-color: var(--light_background)!important;
+
+}
+
+/* navbar styling */
+.nav-item{
+    padding-left: 8px;
+}
+
+ .nav-item > .btn-outline-primary{
+    color: var(--link_color);
+    border-color: var(--link_color);
+}
+
+/* Background styling*/
+
+h1{
+    color: var(--color_title);
+}
+
+hr{
+    background-color: var(--dark_background);
+}
+
+
+#link{
+    color: #fff;
+    text-decoration: none;
+}
