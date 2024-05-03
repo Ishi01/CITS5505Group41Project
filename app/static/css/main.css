@@ -7,14 +7,22 @@
     --link_color: #66fcf1;
 }
 
-/* reset default styling */
+/*link styling */
+a{
+    color: var(--link_color);
+    text-decoration: none;
+}
+
+/* container and background styling */
 
 .container-fluid{
     background-color: var(--dark_background);
+    margin: 0%;
 }
 
-.navbar-dark, .navbar-dark > .container-fluid{
+.navbar-dark, .navbar-dark > .container-fluid, ul{
     background-color: var(--light_background)!important;
+    margin-block: 0%;
 
 }
 
@@ -26,18 +34,36 @@
  .nav-item > .btn-outline-primary{
     color: var(--link_color);
     border-color: var(--link_color);
+    margin-top: .2rem;
+    margin-bottom: .2rem;
 }
 
 /* Background styling*/
 
 h1{
     color: var(--color_title);
+    margin-bottom: 0%;
 }
 
 hr{
     background-color: var(--dark_background);
 }
 
+/* this auto finds text within the {{ }} style input and styles them, temp prototype since this will probably cause problems */
+p > label, #floating_text{
+    color: var(--color_text);
+    margin-bottom: .2rem;
+}
+
+p > input{
+    background-color: var(--light_background);
+    color: var(--color_text);
+}
+
+input[type="checkbox"]{
+    background-color: var(--light_background);
+    color: var(--color_text);
+}
 
 #link{
     color: #fff;
