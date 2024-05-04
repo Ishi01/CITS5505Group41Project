@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block header %}
+    {{ super() }}
+    <script src="{{ url_for('static', filename='js/pt.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pt.css') }}" />
+{% endblock %}
+
+{% block content %}
+<div id="svg-container">
+    {{ svg_content | safe }}
+</div>
+<div class="container">
+    <button id="getQAelements">Get a Question</button>
+    <p id="question"><strong>Question:</strong></p>
+    <input type="text" id="answerInput" placeholder="Type your answer here">
+    <button id="submitAnswerButton">Submit Answer</button>
+    <p id="feedback"></p>
+</div>
+    
+
+
+{% endblock %}
