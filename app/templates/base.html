@@ -9,18 +9,17 @@
     <title>Welcome to My Flask App</title>
     {% endif %}
     {% endblock %}
-    
 </head>
 
 <body>
     <div>
-        <a href="{{ url_for('index') }}">Home</a>
-        <a href="{{ url_for('world') }}">World Map</a>
-        <a href="{{ url_for('periodic_table') }}">Periodic Table</a>
+        <a href="{{ url_for('main.index') }}">Home</a>
+        <a href="{{ url_for('main.world') }}">World Map</a>
+        <a href="{{ url_for('main.periodic_table') }}">Periodic Table</a>
         {% if current_user.is_anonymous %}
-        <a href="{{ url_for('login') }}">Login</a>
+        <a href="{{ url_for('main.login') }}">Login</a>
         {% else %}
-        <a href="{{ url_for('logout') }}">Logout</a>
+        <a href="{{ url_for('main.logout') }}">Logout</a>
         {% endif %}
     </div>
     <hr>
