@@ -1,7 +1,7 @@
-from flask import Flask, jsonify, render_template, request, current_app
+from flask import Blueprint, jsonify, render_template, request, current_app
 import random
 import os
-from app import app, db
+from . import db
 from app.forms import LoginForm, RegistrationForm
 from flask import flash, redirect, url_for
 from flask_login import current_user, login_user, logout_user, login_required
@@ -9,13 +9,14 @@ import sqlalchemy as sa
 from app.models import User, QuizQuestion
 from urllib.parse import urlsplit
 
+main = Blueprint('main', __name__)
 
-@app.route('/')
-@app.route('/index')
+@main.route('/')
+@main.route('/index')
 def index():
     return render_template('index.html', title='Home')
 
-@app.route('/get-random-qa')
+@main.route('/get-random-qa')
 def get_random_qa():
     referer_url = request.headers.get('Referer')
     if 'index' in referer_url or 'world' in referer_url:
@@ -35,7 +36,7 @@ def get_random_qa():
         return jsonify(error="No questions found for the category"), 404
 
 
-@app.route('/check-answer', methods=['POST'])
+@main.route('/check-answer', methods=['POST'])
 def check_answer():
     data = request.json
 
@@ -65,14 +66,14 @@ def check_answer():
         return jsonify(error="Question not found"), 404
 
 
-@app.route('/periodictable')
+@main.route('/periodictable')
 def periodic_table():
     svg_path = os.path.join(current_app.root_path, 'static', 'pt.svg')
     with open(svg_path, 'r') as file:
         svg_content = file.read()
     return render_template('periodic_table.html', svg_content=svg_content)
 
-@app.route('/world')
+@main.route('/world')
 # @login_required
 def world():
     svg_path = os.path.join(current_app.root_path, 'static', 'world.svg')
@@ -81,7 +82,7 @@ def world():
     return render_template('world.html', svg_content=svg_content)
 
 
-@app.route('/login', methods=['GET', 'POST'])
+@main.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
         return redirect(url_for('index'))
@@ -100,12 +101,12 @@ def login():
         return redirect(next_page)
     return render_template('login.html', title='Sign In', form=form)
 
-@app.route('/logout')
+@main.route('/logout')
 def logout():
     logout_user()
     return redirect(url_for('index'))
 
-@app.route('/register', methods=['GET', 'POST'])
+@main.route('/register', methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
         return redirect(url_for('index'))

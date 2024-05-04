@@ -45,7 +45,6 @@ class Game(db.Model):
         return '<Game {}>'.format(self.score)
 
 class QuizQuestion(db.Model):
-    __tablename__ = 'quiz_questions'
 
     question_id: so.Mapped[int] = so.mapped_column(primary_key=True)
     category: so.Mapped[str] = so.mapped_column(sa.String(50), nullable=False)
