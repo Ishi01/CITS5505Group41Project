@@ -1,111 +1,205 @@
+
 svg * {
-    user-select: none;
+  user-select: none;
+}
+
+.svg-label.hidden {
+  display: none;
+}
+
+/* Initially hide labels if needed */
+.svg-label {
+  display: none;
+}
+
+
+.container {
+  position: fixed;
+  bottom: 0px;
+  /* Adjust based on the height of tabsContainer */
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  padding: 2px;
+  background-color: rgba(0, 0, 0, 0.00);
+  border-radius: 4px 4px 0 0;
+  width: 80%;
+  max-width: 600px;
+  z-index: 1001;
+  /* Ensure it remains visible above #tabsContainer */
 }
 
 .container {
-    position: fixed;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    text-align: center;
-    padding: 2px;
-    margin-bottom: 10px;
-    background-color: rgba(0, 0, 0, 0.02);
-    border-radius: 4px 4px 0 0;
-    width: 80%;
-    max-width: 600px;
-    z-index: 1000;
-  }
-  
-  #getQAcountries {
-    padding: 10px 20px;
-    font-size: 18px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-bottom: 20px;
-  }
-  
-  #question {
-    font-size: 24px;
-    font-weight: bold;
-    color: rgb(0, 0, 0);
-    margin-bottom: 20px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.05);
-  }
-  
-  #answerInput {
-    padding: 8px;
-    font-size: 16px;
-    width: 90%;
-    border: none;
-    border-radius: 5px;
-    margin-bottom: 6px;
-  }
-  
-  #submitAnswerButton {
-    padding: 10px 18px;
-    font-size: 18px;
-    background-color: #008CBA;
-    color: white;
-    border: none;
-    border-radius: 2px;
-    margin-bottom: 0px;
-    cursor: pointer;
-  }
+  pointer-events: none;
+}
 
-  #modeSwitchButton {
-    padding: 10px 18px;
-    font-size: 18px;
-    background-color: #ba5a00;
-    color: white;
-    border: none;
-    border-radius: 2px;
-    margin-bottom: 0px;
-    cursor: pointer;
-  }
-  
-  #feedback {
-    font-size: 18px;
-    color: rgb(0, 0, 0);
-    margin-top: 0px;
-    margin-bottom: 2px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.05);
-  }
+.input-container * {
+  pointer-events: auto;
+}
 
-html, body {
-    height: 100%;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    background-color: #e0f7fa; /* background-color: #e0f7fa;  very light blue background */
-    overflow: hidden;
+.container .input-container button.clickable-child {
+  pointer-events: auto;
+}
+
+#getQAcountries {
+  padding: 10px 20px;
+  font-size: 18px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+#question {
+  font-size: 24px;
+  font-weight: bold;
+  color: rgb(0, 0, 0);
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.05);
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+#answerInput {
+  padding: 8px;
+  font-size: 16px;
+  width: 90%;
+  border: none;
+  border-radius: 5px;
+  margin-bottom: 6px;
+  pointer-events: all;
+}
+
+#submitAnswerButton {
+  padding: 10px 18px;
+  font-size: 18px;
+  background-color: #008CBA;
+  color: white;
+  border: none;
+  border-radius: 2px;
+  margin-bottom: 0px;
+  cursor: pointer;
+}
+
+#modeSwitchButton {
+  padding: 10px 18px;
+  font-size: 18px;
+  background-color: #ba5a00;
+  color: white;
+  border: none;
+  border-radius: 2px;
+  margin-bottom: 0px;
+  cursor: pointer;
+}
+
+#feedback {
+  font-size: 18px;
+  color: rgb(0, 0, 0);
+  margin-top: 0px;
+  margin-bottom: 2px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #0fe0f9;
+  /* background-color: #e0f7fa;  very light blue background */
+  overflow: hidden;
 }
 
 #svg-container {
-    will-change: transform; /* Optimizes the container for animations */
-    border: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100vh;
+  will-change: transform;
+  /* Optimizes the container for animations */
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
 }
 
 svg {
-  width: 100vw; /* 100% of the viewport width */
-  height: 100vh; /* 100% of the viewport height */
-  display: block; /* remove any margins or paddings */
-  position: fixed; /* optional: to ensure it always stays full screen */
-  background-color: #e0f7fa; /* very light blue background */
+  width: 100vw;
+  /* 100% of the viewport width */
+  height: 100vh;
+  /* 100% of the viewport height */
+  display: block;
+  /* remove any margins or paddings */
+  position: flex;
+  /* optional: to ensure it always stays full screen */
+  background-color: #e0f7fa;
+  /* very light blue background */
   top: 0;
   left: 0;
   overflow: hidden;
 }
 
 svg:active {
-    cursor: grabbing;
+  cursor: grabbing;
 }
 
+#tabsContainer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0);
+  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+
+.country-tab {
+  margin: 5px;
+  padding: 5px 10px;
+  background-color: #007BFF;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  /* Animate the transform and opacity */
+  pointer-events: all;
+}
+
+
+.country-tab:hover {
+  background-color: #0056b3;
+}
+
+/* Media query for mobile devices */
+@media screen and (max-width: 850px) {
+  .container {
+    width: 52%;
+    max-width: none;
+    padding: 0px;
+  }
+  #question {
+    font-size: 14px;
+  }
+  #answerInput {
+    font-size: 12px;
+    padding: 1px;
+    border-radius: 0px;
+    margin-bottom: 1px;
+  }
+  #getQAcountries {
+    font-size: 14px;
+    padding: 2px 4px;
+
+  }
+  #submitAnswerButton {
+    font-size: 14px;
+    padding: 2px 4px;
+  }
+}

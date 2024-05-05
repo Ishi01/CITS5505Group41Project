@@ -19,7 +19,10 @@ qa_dict = {
     'countries': {
         "Where is the Eiffel Tower found?": "France",
         "Where is the Statue of Liberty found?": "United States",
-        "Where is the Taj Mahal found?": "India"
+        "Where is the Taj Mahal found?": "India",
+        "Which countries are known for their tulip fields?": ["Netherlands", "Turkey"],
+        "Which countries are known for their pyramids?": ["Egypt", "Mexico"],
+        "What countries fought in the War of 1812?": ["United States", "United Kingdom"],
     },
     'elements': {
         "Which element has the highest melting point and is used in light bulb filaments?": "W",  # Tungsten
@@ -35,6 +38,7 @@ qa_dict = {
     }
 }
 
+
 @app.route('/get-random-qa')
 def get_random_qa():
     referer_url = request.headers.get('Referer')
@@ -49,27 +53,30 @@ def get_random_qa():
         return jsonify(error="Unable to determine the category from the referer"), 400
     subdict = qa_dict[category]
     question, answer = random.choice(list(subdict.items()))
-    return jsonify(question=question)
+        
+    return jsonify(question=question, type=str(type(answer)))
 
 @app.route('/check-answer', methods=['POST'])
 def check_answer():
     data = request.json
-
+    print(data)
+    print("??")
     referer_url = request.headers.get('Referer')
-    if 'index' in referer_url:
-        category = 'countries'
-    elif 'world' in referer_url:
-        category = 'countries'
-    elif 'periodictable' in referer_url:
-        category = 'elements'
-    else:
+    print(referer_url)
+    category = 'countries' if 'world' in referer_url else 'elements' if 'elements' in referer_url else None
+    if category is None:
         return jsonify(error="Unable to determine the category from the referer"), 400
-    
+
     user_answer = data['answer']
     question = data['question']
 
     correct_answer = qa_dict[category][question]
-    is_correct = (user_answer.strip().lower() == correct_answer.strip().lower())
+    if isinstance(correct_answer, list):
+        is_correct = set(map(str.lower, user_answer)) == set([ans.lower() for ans in correct_answer])
+    else:
+        is_correct = (len(user_answer) == 1 and user_answer[0].strip().lower() == correct_answer.strip().lower())
+
+
     return jsonify(is_correct=is_correct)
 
 @app.route('/periodictable')
