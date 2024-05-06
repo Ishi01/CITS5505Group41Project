@@ -22,7 +22,7 @@ $(document).ready(function () {
         $('#answerInput').off('input keypress');
         $('#svg-container svg path').off('click dblclick touchstart touchend')
 
-        function handleTouchEnd(event) {
+        function handleTouchEnd(event, currentMode) {
             // Prevent firing click event immediately after touchend
             event.preventDefault();
             let now = new Date().getTime();
@@ -32,7 +32,12 @@ $(document).ready(function () {
                 $('#submitAnswerButton').trigger('click');
             } else {
                 // Handle single tap
-                selectPath(this);
+                if(currentMode === 0) {
+                    selectPathMode0(this);
+                }
+                else if (currentMode === 1) {
+                    selectPathMode1(this);
+                }
                 resetSVGStyles(this);
             }
             lastTouchTime = now;
@@ -50,7 +55,7 @@ $(document).ready(function () {
                 resetSVGStyles(this);
             });
             $('#svg-container svg path').on('dblclick touchend', function (event) {
-                handleTouchEnd.call(this, event);
+                handleTouchEnd.call(this, event, currentMode);
             });    
             $('#answerInput').on('keypress', function (event) {
                 if (event.which == 13) { // 13 is the keycode for Enter
@@ -78,7 +83,8 @@ $(document).ready(function () {
                 }
             });
             $('#svg-container svg path').on('click touchend', function (event) {
-                handleTouchEnd.call(this, event);
+                selectPathMode1(this);
+                resetSVGStyles(this);
             });
         }
     }
