@@ -38,7 +38,6 @@ $(document).ready(function () {
                 else if (currentMode === 1) {
                     selectPathMode1(this);
                 }
-                resetSVGStyles(this);
             }
             lastTouchTime = now;
         }
@@ -52,7 +51,6 @@ $(document).ready(function () {
             });
             $('#svg-container svg path').on('click', function () {
                 selectPathMode0(this);
-                resetSVGStyles(this);
             });
             $('#svg-container svg path').on('dblclick touchend', function (event) {
                 handleTouchEnd.call(this, event, currentMode);
@@ -84,15 +82,15 @@ $(document).ready(function () {
             });
             $('#svg-container svg path').on('click touchend', function (event) {
                 selectPathMode1(this);
-                resetSVGStyles(this);
             });
         }
     }
 
     // Function to reset SVG path styles to default
     function resetSVGStyles(path) {
-        let className = $(path).attr('class');
+        //let className = $(path).attr('class');
         $('#svg-container svg path').each(function () {
+            let className = $(this).attr('class');
             if (selectOnly.includes(className) || selectOnly.length == 0) {
                 $(this).css({
                     'fill': '',
@@ -101,13 +99,16 @@ $(document).ready(function () {
                 });
             }
         });
-
+        
         for (selectedPath of selectedPaths) {
-            $(selectedPath).css({
-                'fill': 'green',
-                'stroke': '#225522',
-                'stroke-width': '2'
-            });
+            let className = $(selectedPath).attr('class');
+            if (selectOnly.includes(className) || selectOnly.length == 0) {
+                $(selectedPath).css({
+                    'fill': 'green',
+                    'stroke': '#225522',
+                    'stroke-width': '2'
+                });
+            }
         }
     }
 
@@ -115,6 +116,8 @@ $(document).ready(function () {
     function highlightPath(path) {
         let className = $(path).attr('class');
         if (selectOnly.includes(className) || selectOnly.length == 0) {
+          //  console.log(className);
+          //  console.log(selectOnly.length);
             let highlightName = '#svg-container svg path.' + className;
             if (!selectedPaths.includes(highlightName)) {
                 $(highlightName).css({
@@ -129,27 +132,31 @@ $(document).ready(function () {
     // Apply selected style to a path
     function selectPathMode0(path) {
         let pathClass = '#svg-container svg path.' + $(path).attr('class');
-        selectedPaths = [pathClass]; // Reset and select new path
-        var className = $(path).attr('class'); // Get the class attribute of the clicked path
-        if (className) {
-            className = className.replace(/_/g, ' '); // Replace all underscores with spaces
-            $('#answerInput').val(className);
-            updateSelectedCountriesDisplay(className);
+        let className = $(path).attr('class'); // Get the class attribute of the clicked path
+        if (selectOnly.includes(className) || selectOnly.length == 0) {
+            selectedPaths = [pathClass]; // Reset and select new path
+            if (className) {
+                className = className.replace(/_/g, ' '); // Replace all underscores with spaces
+                $('#answerInput').val(className);
+                updateSelectedCountriesDisplay(className);
+            }
+            resetSVGStyles(this);
         }
-        resetSVGStyles();
     }
 
     function selectPathMode1(path) {
         let countryName = $(path).attr('class');
         let pathClass = '#svg-container svg path.' + countryName;
-        if (selectedPaths.includes(pathClass)) {
-            selectedPaths = selectedPaths.filter(p => p !== pathClass); // Toggle off
-            updateSelectedCountriesDisplay(countryName);
-        } else {
-            selectedPaths.push(pathClass);
-            updateSelectedCountriesDisplay(countryName);
+        if (selectOnly.includes(className) || selectOnly.length == 0) {
+            if (selectedPaths.includes(pathClass)) {
+                selectedPaths = selectedPaths.filter(p => p !== pathClass); // Toggle off
+                updateSelectedCountriesDisplay(countryName);
+            } else {
+                selectedPaths.push(pathClass);
+                updateSelectedCountriesDisplay(countryName);
+            }
+            resetSVGStyles(this);
         }
-        resetSVGStyles();
     }
 
     function updateSelectedCountriesDisplay(country) {
@@ -201,6 +208,7 @@ $(document).ready(function () {
     });
 
     $('#svg-container svg path').on('mouseout', function () {
+        
         resetSVGStyles(this);
     });
 
@@ -306,17 +314,21 @@ $(document).ready(function () {
     $('#zoomToEurope').on('click', function () {
         console.log("before")
         // Example viewBox values for Europe, these would need to be adjusted to your specific SVG
-        viewBox.x = 0;
-        viewBox.y = 0;
-        scale = minScale;
-        updateTransform();
-        $('#svg-container svg').attr('viewBox', '500 -50 1000 500');
+        viewBox.x = 750;
+        viewBox.y = 150;
+        //viewBox.width = 450;
+        //viewBox.height = 300;
+        scaleSVG = 6;
+        viewBox.width = boundBox.widthMax / scaleSVG;
+        viewBox.height = boundBox.heightMax / scaleSVG;
+        //2;
+        updateViewBox();
+      //  $('#svg-container svg').attr('viewBox', '500 -50 1000 500');
         $('svg path').each(function () {
             var pathClass = $(this).attr('class');
-            var formattedClass = pathClass.replace(/_/g, ' '); // Replace underscores with spaces
-
+           // var formattedClass = pathClass.replace(/_/g, ' '); // Replace underscores with spaces
             // Check if the class of the path is not in the list of European countries
-            if ($.inArray(formattedClass, europeanCountries) === -1) {
+            if ($.inArray(pathClass, europeanCountries) === -1) {
                 // Apply CSS if not found in the list
                 $(this).css({
                     'stroke-width': '0.4083586658048981',
@@ -367,7 +379,7 @@ $(document).ready(function () {
     function updateViewBox(scale = 1) {
        // console.trace("updateViewBox function called");
         let rawNewRatio = window.innerHeight / window.innerWidth;
-        let newRatio = Math.max(rawNewRatio, 0.9);
+        let newRatio = Math.max(Math.min(rawNewRatio, 1.4), 0.9);
         if (newRatio !== browserRatio) {
             browserRatio = newRatio;
             scaleSVG *= browserRatio < 0 ? 1 + zoomFactor : 1 / (1 + zoomFactor);
@@ -449,22 +461,20 @@ $(document).ready(function () {
         let cursorX = e.clientX - svg.offset().left; // Cursor's x-coordinate relative to the SVG
         let cursorY = e.clientY - svg.offset().top;  // Cursor's y-coordinate relative to the SVG
 
-        // Calculate new viewBox dimensions
-        let newWidth = boundBox.widthMax / scaleSVG;
-        let newHeight = boundBox.heightMax / scaleSVG;
-
-        console.log('newWidth:', newWidth, 'newHeight:', newHeight, 'scaleSVG:', scaleSVG);
-
         let scaleChange = scaleSVG / oldScale;
-
-        viewBox.width = newWidth;
-        viewBox.height = newHeight;
 
         let oldX = viewBox.x;
         let oldY = viewBox.y;
 
         // Adjust viewBox to keep the zoom centered on the cursor
         if (deltaY < 0) { // Zooming in
+
+            let newWidth = boundBox.widthMax / scaleSVG;
+            let newHeight = boundBox.heightMax / scaleSVG;
+
+            viewBox.width = newWidth;
+            viewBox.height = newHeight;
+
             let svgPoint = getSVGPoint(svg, e.clientX, e.clientY);
             let cursorPercentX = ((svgPoint.svgX - viewBox.x) / viewBox.width) - 0.5;
             let cursorPercentY = ((svgPoint.svgY - viewBox.y) / viewBox.height) - 0.5;
@@ -478,16 +488,27 @@ $(document).ready(function () {
             //console.log('svgPoint.svgX:', svgPoint.svgX, 'svgPoint.svgY:', svgPoint.svgY, 'viewBox.x:', viewBox.x, 'viewBox.y:', viewBox.y, 'scaleSVG:', scaleSVG, 'scaleChange:', scaleChange);
         } else { // Zooming out
             // Calculate the new viewBox dimensions based on the scale change
-            let newWidth = Math.min(viewBox.width / scaleChange, boundBox.widthMax);
-            let newHeight = Math.min(viewBox.height / scaleChange, boundBox.heightMax);
+          //  console.log()
+            console.log("Before", viewBox.width, viewBox.height);
+        //    let newWidth = Math.min(viewBox.width / scaleChange, boundBox.widthMax);
+         //   let newHeight = Math.min(viewBox.height / scaleChange, boundBox.heightMax);
+            let newWidth = Math.min(boundBox.widthMax / scaleSVG, boundBox.widthMax / minScale);
+            let newHeight = Math.min(boundBox.heightMax / scaleSVG, boundBox.heightMax / minScale);
 
-            // Calculate the linear interpolation factor for moving towards the offsets
-            let lerpFactor = 0.01; // You can adjust this factor to control the speed of convergence
-
+            console.log("After", viewBox.width, viewBox.height);
             // Interpolate towards the origin (0,0) for xOffset and yOffset
-            viewBox.x = boundBox.xOffset - (boundBox.xOffset - viewBox.x * scaleChange) * 0.95;
-            viewBox.y = boundBox.yOffset - (boundBox.yOffset - viewBox.y * scaleChange) * 0.95;
+          //  viewBox.x = boundBox.xOffset*0.05 + viewBox.x*0.99;// - (boundBox.xOffset - viewBox.x * scaleChange) * 0.95;
+          //  viewBox.y = boundBox.yOffset*0.05 + viewBox.y*0.99;// - (boundBox.yOffset - viewBox.y * scaleChange) * 0.95;
 
+            if(scaleSVG === minScale) {
+                const transitionFactor = 0.25; // Adjust this value to control the transition speed
+                viewBox.x = boundBox.xOffset * transitionFactor + viewBox.x * (1 - transitionFactor);
+                viewBox.y = boundBox.yOffset * transitionFactor + viewBox.y * (1 - transitionFactor);
+            } else {
+                const transitionFactor = 0.05; // Adjust this value to control the transition speed
+                viewBox.x = boundBox.xOffset * transitionFactor + viewBox.x * (1 - transitionFactor);
+                viewBox.y = boundBox.yOffset * transitionFactor + viewBox.y * (1 - transitionFactor);
+            }
             // Update the dimensions of the viewBox
             viewBox.width = newWidth;
             viewBox.height = newHeight;
@@ -582,8 +603,6 @@ $(document).ready(function () {
         }
     });
 
-    let touchX = 0, touchY = 0;
-
     // Touch events
     svg.on('touchstart', function (e) {
         if (e.touches.length === 1) {
@@ -606,31 +625,6 @@ $(document).ready(function () {
         }
     });
 
-    $('#zoomtoEurope').on('click', function () {
-        console.log("before")
-        // Example viewBox values for Europe, these would need to be adjusted to your specific SVG
-        viewBox.x = 0;
-        viewBox.y = 0;
-        updateViewBox();
-        $('#svg-container svg').attr('viewBox', '500 -50 1000 500');
-        console.log("?");
-        $('svg path').each(function () {
-            var pathClass = $(this).attr('class');
-            // Check if the class of the path is not in the list of European countries
-            if ($.inArray(pathClass, europeanCountries) === -1) {
-                // Apply CSS if not found in the list
-                $(this).css({
-                    'stroke-width': '0.4083586658048981',
-                    'stroke': '#333',
-                    'stroke-opacity': '1',
-                    'fill': '#fff7ec',
-                    'fill-opacity': '1'
-                });
-            }
-        });
-    });
-
-
     $(window).resize(function () {
         adjustContainerMargin(); // Call this function to adjust margins whenever the window is resized
     });
@@ -643,9 +637,4 @@ $(document).ready(function () {
 
     // Trigger this adjustment when tabs are added or removed
     $(document).on('tabs-update', adjustContainerMargin); // Custom event when tabs change
-
-
-
-
-
 });
