@@ -27,5 +27,7 @@ def create_app():
             
     from app.routes import main
     app.register_blueprint(main)
+    from app.worldmap import worldmap
+    app.register_blueprint(worldmap)
     
     return app

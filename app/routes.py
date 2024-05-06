@@ -76,15 +76,6 @@ def periodic_table():
         svg_content = file.read()
     return render_template('periodic_table.html', svg_content=svg_content)
 
-@main.route('/world')
-# @login_required
-def world():
-    svg_path = os.path.join(current_app.root_path, 'static', 'world.svg')
-    with open(svg_path, 'r') as file:
-        svg_content = file.read()
-    return render_template('world.html', svg_content=svg_content)
-
-
 @main.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:

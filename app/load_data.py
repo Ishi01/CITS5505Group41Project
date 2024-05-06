@@ -17,6 +17,18 @@ def load_quiz_questions():
                     "Which countries are known for their tulip fields?": ["Netherlands", "Turkey"],
                     "Which countries are known for their pyramids?": ["Egypt", "Mexico"],
                     "What countries fought in the War of 1812?": ["United States", "United Kingdom"]
+                },
+                'europe': {
+                    "Which European country is home to the ancient city of Troy?": ["Turkey"],
+                    "In which European Union country is the Acropolis located?": ["Greece"],
+                    "Which European country has the most UNESCO World Heritage sites?": ["Italy"],
+                    "Which European country was the birthplace of the Renaissance?": ["Italy"],
+                    "Which two European countries are separated by the Pyrenees mountains?": ["Spain", "France"],
+                    "Which European country is known for the legend of Dracula?": ["Romania"],
+                    "What European country is known for the creation of the Nobel Prize?": ["Sweden"],
+                    "Which European country is renowned for its historic fjords?": ["Norway"],
+                    "Which European country is known for inventing the printing press?": ["Germany"],
+                    "Which country is recognized for founding the first university in Europe?": ["Italy"]
                 }
             },
             'elements': {

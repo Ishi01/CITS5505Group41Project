@@ -3,6 +3,7 @@ $(document).ready(function () {
     var selectedPaths = []; // Array to store the currently selected paths
     var currentMode = 0; // Default mode
     var selectOnly = [];
+    let lastTouchTime = 0; // to store the time of the last touch
 
     attachInputHandlers();
 
@@ -16,7 +17,7 @@ $(document).ready(function () {
             event.preventDefault();
             let now = new Date().getTime();
             let timeSinceLastTouch = now - lastTouchTime;
-            if (timeSinceLastTouch < 500 && timeSinceLastTouch > 0) {
+            if (timeSinceLastTouch < 300 && timeSinceLastTouch > 0) {
                 // Trigger double click if it's a quick successive touch
                 $('#submitAnswerButton').trigger('click');
             } else {
@@ -30,8 +31,6 @@ $(document).ready(function () {
             }
             lastTouchTime = now;
         }
-
-        let lastTouchTime = 0; // to store the time of the last touch
 
         if (currentMode === 0) {
             $('#answerInput').on('input', function () {
@@ -122,14 +121,22 @@ $(document).ready(function () {
     function selectPathMode0(path) {
         let pathClass = '#svg-container svg path.' + $(path).attr('class');
         let className = $(path).attr('class'); // Get the class attribute of the clicked path
-        if (selectOnly.includes(className) || selectOnly.length == 0) {
-            selectedPaths = [pathClass]; // Reset and select new path
-            if (className) {
-                className = className.replace(/_/g, ' '); // Replace all underscores with spaces
-                $('#answerInput').val(className);
-                updateSelectedCountriesDisplay(className);
-            }
+        if (selectedPaths[0] == pathClass) {
+            selectedPaths = [];
             resetSVGStyles(this);
+            className = className.replace(/_/g, ' '); // Replace all underscores with spaces
+            $('#answerInput').val(className);
+            updateSelectedCountriesDisplay(className);
+        } else {
+            if (selectOnly.includes(className) || selectOnly.length == 0) {
+                selectedPaths = [pathClass]; // Reset and select new path
+                if (className) {
+                    className = className.replace(/_/g, ' '); // Replace all underscores with spaces
+                    $('#answerInput').val(className);
+                    updateSelectedCountriesDisplay(className);
+                }
+                resetSVGStyles(this);
+            }
         }
     }
 
@@ -149,31 +156,45 @@ $(document).ready(function () {
     }
 
     function updateSelectedCountriesDisplay(country) {
-        if (!$('#tab-' + country.replace(/\s+/g, '-')).length) { // Check if the tab does not already exist
+        var countryId = 'tab-' + country.replace(/\s+/g, '-');
+        if (!$('#' + countryId).length) {
+            if (currentMode === 0) {
+                // Single tab mode: clear existing tabs before adding a new one
+                $('.country-tab').remove();
+                selectedCountries = []; // Clear the array as only one country can be selected
+            }
+            // Proceed to add new tab
             var tab = $('<div/>', {
-                id: 'tab-' + country.replace(/\s+/g, '-'),
+                id: countryId,
                 class: 'country-tab',
                 text: country,
                 click: function () {
-                    $(this).remove();
-                    adjustTabsPosition(); // Adjust the remaining tabs' positions
+                    $(this).remove(); // Remove the tab from UI
+                    selectedPaths = selectedPaths.filter(c => c !== country); // Update selectedCountries
+                    adjustTabsPosition(); // Adjust the positions of remaining tabs
+                    $(document).trigger('tabs-update'); // Notify the document about the update
                 }
             }).css({
                 transform: 'scale(0)',
                 opacity: 0
             }).appendTo('#tabsContainer');
+
             // Animate the tab to scale up and fade in
             setTimeout(function () {
                 tab.css({
                     transform: 'scale(1)',
                     opacity: 1
                 });
-            }, 10); // Timeout ensures the CSS is applied after the tab is rendered
-            adjustTabsPosition(); // Adjust positions of all tabs to accommodate the new one
-            $(document).trigger('tabs-update');
+            }, 10);
+
+            selectedPaths.push(country); // Add new country to the array
         } else {
-            $('#tab-' + country.replace(/\s+/g, '-')).remove(); // Remove the tab if it already exists
+            // If the tab exists and the mode allows multiple tabs, or it's the only tab in single mode
+            $('#' + countryId).remove();
+            selectedPaths = selectedPaths.filter(c => c !== country); // Update selectedCountries
         }
+        adjustTabsPosition(); // Adjust positions after adding or removing tabs
+        $(document).trigger('tabs-update'); // Notify the document about the update
     }
 
     function adjustTabsPosition() {
@@ -184,6 +205,14 @@ $(document).ready(function () {
         } else {
             $('#tabsContainer').css('justify-content', 'center');
         }
+    }
+
+    function removeAllTabs() {
+        $('.country-tab').each(function () {
+            $(this).remove(); // Remove each tab
+        });
+        adjustTabsPosition(); // Adjust the positions in case you need to realign other elements
+        $(document).trigger('tabs-update'); // Notify the document that all tabs have been removed
     }
 
     $('.country-tab').click(function () {
@@ -233,43 +262,65 @@ $(document).ready(function () {
     //              Buttons             //
     //////////////////////////////////////
 
-    $('#modeSwitchButton').on('click', function () {
-        currentMode = (currentMode === 0 ? 1 : 0); // Toggle mode
-        selectedPaths = []; // Clear selections on mode change
-        resetSVGStyles();
-        attachInputHandlers(); // Re-attach input handlers based on new currentMode
-        console.log('Mode switched to:', currentMode);
-    });
-
-    // Get Random Question Button & Response Handling
-    $('#getQAcountries').on('click', function () {
+    $('#startGame').on('click', function () {
+        $(this).hide(); // Hide the startGame button
+        $('#pass').show(); // Show the pass button
         $.ajax({
-            url: '/get-random-qa#countries',
+            url: '/start-game-session#countries',
             type: 'GET',
             success: function (response) {
-                $('#question').text(response.question); // Display the question
-                $('#answerInput').val(''); // Clear previous answer
-                $('#feedback').text(''); // Clear previous feedback
-
-                currentMode = response.is_multiple_choice ? 1 : 0;
-                selectedPaths = [];
-                resetSVGStyles();
-                attachInputHandlers();
-                if(response.location == "Europe") {
-                    zoneEurope();    
-                } else {
-                    zoneGlobal();
-                    resetSVGStyles();
+                if (response.success) {
+                    var serverStartTime = response.start_time * 1000; // Convert to milliseconds
+                    var timerInterval = setInterval(function() {
+                        var currentTime = Date.now();
+                        var elapsedTime = currentTime - serverStartTime;
+                        var seconds = Math.floor(elapsedTime / 1000); // Convert milliseconds to seconds
+                        $('#timer').text(seconds + 's');
+                    }, 1000); // Update the timer every second
+                    getNextQuestion();  // Start the game by fetching the first question
                 }
-                selectedPath = null; // Clear selected path
             },
             error: function (error) {
-                console.log("Error fetching question:", error);
+                console.log("Error starting game session:", error);
             }
         });
     });
 
-    // Submit Answer Button & Response Handling
+    function getNextQuestion() {
+        $.ajax({
+            url: '/get-next-question#countries',
+            type: 'GET',
+            success: function (response) {
+                if (response.error) {
+                    alert('Game Over or Error: ' + response.error);
+                } else {
+                    $('#question').text(response.question);
+                    $('#answerInput').val('');
+                    $('#feedback').text('');
+                    
+                    currentMode = response.is_multiple_choice ? 1 : 0;
+                    removeAllTabs();
+                    selectedPaths = [];
+                    resetSVGStyles();
+                    attachInputHandlers();
+                    if(response.location == "Europe") {
+                        zoneEurope();    
+                    } else {
+                        zoneGlobal();
+                        resetSVGStyles();
+                    }
+                }
+            },
+            error: function (error) {
+                console.log("Error fetching next question:", error);
+            }
+        });
+    }
+
+    $('#pass').on('click', function () {
+        getNextQuestion();
+    });
+
     $('#submitAnswerButton').on('click', function () {
         var answerData;
 
@@ -279,37 +330,44 @@ $(document).ready(function () {
                 question: $('#question').text()
             };
         } else {
-            var selectedCountries = selectedPaths.map(function (path) {
-                return $(path).attr('class').replace(/\_/g, ' ');  // Convert class to country name
+            let selectedAnswerCountries = selectedPaths.map(function (path) {
+                let $path = $(path);
+                if ($path.length) {
+                    return $path.attr('class').replace(/\_/g, ' ');  // Convert class to country name
+                } else {
+                    return null;
+                }
+            });
+            // Filter out any null values from the resulting array
+            selectedAnswerCountries = selectedAnswerCountries.filter(function (country) {
+                return country !== null;
             });
 
             answerData = {
-                answer: selectedCountries,
+                answer: selectedAnswerCountries,
                 question: $('#question').text()
             };
         }
 
         $.ajax({
-            url: '/check-answer#countries',
+            url: '/game-answer#countries',
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(answerData),
             success: function (response) {
-                $('#feedback').text(response.is_correct ? 'Correct!' : 'Incorrect. Try again!');
-                resetSVGStyles();
-                selectedPath = null; // Clear selected path on submission
+                if (response.is_correct) {
+                    $('#feedback').text('Correct!');
+                    getNextQuestion();  // Fetch next question only on correct answer
+                } else {
+                    $('#feedback').text('Incorrect. Try again!');
+                    // Optionally reset or end the game here
+                }
+
             },
             error: function (error) {
                 console.log("Error checking answer:", error);
             }
         });
-    });
-
-
-
-    // Original button click event refactored to use the new function
-    $('#zoomToEurope').on('click', function () {
-        zoneEurope();
     });
 
     //////////////////////////////////////
@@ -344,12 +402,12 @@ $(document).ready(function () {
         scaleSVG = regionViewBox.scale;
         viewBox.width = boundBox.widthMax / scaleSVG;
         viewBox.height = boundBox.heightMax / scaleSVG;
-    
+
         updateViewBox();
-    
+
         $('svg path').each(function () {
             var pathClass = $(this).attr('class');
-            if(regionCountries.length != 0) {
+            if (regionCountries.length != 0) {
                 if ($.inArray(pathClass, regionCountries) === -1) {
                     $(this).css({
                         'stroke-width': '0.4083586658048981',
@@ -654,7 +712,7 @@ $(document).ready(function () {
     // Function to adjust margins dynamically based on the number of tabs
     function adjustContainerMargin() {
         var tabsHeight = $('#tabsContainer').outerHeight(true); // true includes margin in the calculation
-        $('.container').css('margin-bottom', tabsHeight + 'px'); // Apply bottom margin to '.container'
+        $('.container').css('margin-top', tabsHeight + 'px'); // Apply bottom margin to '.container'
     }
 
     // Trigger this adjustment when tabs are added or removed

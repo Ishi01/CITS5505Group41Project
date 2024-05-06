@@ -1,31 +1,34 @@
 {% extends "base.html" %}
 
 {% block header %}
-    {{ super() }}
-    <script src="{{ url_for('static', filename='js/world.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/svgMovement.js') }}"></script>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/world.css') }}" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, orientation=portrait">
+{{ super() }}
+
+{% if script == "game" %}
+<script src="{{ url_for('static', filename='js/world.js') }}"></script>
+{% else %}
+<script src="{{ url_for('static', filename='js/world.js') }}"></script>
+{% endif %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/world.css') }}" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, orientation=portrait">
 
 {% endblock %}
 
 {% block content %}
 <div id="svg-container">
-    {{ svg_content | safe }}
+  {{ svg_content | safe }}
 </div>
+<span id="feedback"></span>
 <div id="tabsContainer">
 </div>
 <div class="container">
     <p id="question"><strong>Question:</strong></p>
     <input type="text" id="answerInput" placeholder="Type your answer here">
-    <div class="input-container">      
-      <button id="getQAcountries" class="clickable-child">Get a Question</button>
+    <div class="button-container">
+      <button id="startGame" class="clickable-child">Start Game!</button>
       <button id="submitAnswerButton" class="clickable-child">Submit Answer</button>
-      <button id="zoomToEurope" class="clickable-child">Zoom to Europe [test]</button>
+      <button id="pass" class="clickable-child" style="display: none;">Pass</button>
     </div>
-    <p id="feedback"></p>
-  </div>
-    
-
-
+  <span id="timer" class="clickable-child"></span>
+  <span id="feedback"></span>
+</div>
 {% endblock %}

@@ -15,7 +15,7 @@
 <body>
     <div id="topdiv">
         <a href="{{ url_for('main.index') }}">Home</a>
-        <a href="{{ url_for('main.world') }}">World Map</a>
+        <a href="{{ url_for('worldmap.world') }}">World Map</a>
         <a href="{{ url_for('main.periodic_table') }}">Periodic Table</a>
         {% if current_user.is_anonymous %}
         <a href="{{ url_for('main.login') }}">Login</a>
