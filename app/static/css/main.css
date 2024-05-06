@@ -31,7 +31,7 @@ a{
     padding-left: 8px;
 }
 
- .nav-item > .btn-outline-primary{
+ .nav-item > .btn-outline-primary, #homepagebutton{
     color: var(--link_color);
     border-color: var(--link_color);
     margin-top: .2rem;
@@ -47,6 +47,11 @@ h1{
 
 hr{
     background-color: var(--dark_background);
+}
+
+h3 {
+    color: var(--color_text);
+    font-size: 1.25rem;
 }
 
 /* this auto finds text within the {{ }} style input and styles them, temp prototype since this will probably cause problems */

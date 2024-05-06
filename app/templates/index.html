@@ -6,12 +6,47 @@
 {% endblock %}
 
 {% block content %}
+    <!--Title of website ocde-->
+    <div class="container-fluid">
+        <div class="col-md-12 d-flex justify-content-center">
+            <h1 style="margin-bottom: 2rem;">(Insert website name here)</h1>
+        </div>
+    </div>
+
+    <!--If user is not logged in, display message to login or register-->
     {% if current_user.is_anonymous %}
-    <p>Welcome to My Flask App!</p>
+    <div class="container-fluid">
+        <div class="col-md-12 d-flex justify-content-center">
+            <h3>You are currently not logged in, if you would like to save your score information please</h3>
+        </div>
+        <div class="col-md-12 d-flex justify-content-center">
+            <a  id="homepagebutton" class="btn btn-outline-primary" href="{{ url_for('login') }}">Login</a>
+            <h3 style="margin-left: 1rem; margin-right: 1rem;">or</h3>
+            <a id="homepagebutton" class="btn btn-outline-primary" href="{{ url_for('register') }}">Register</a>
+        </div>
+    </div>
+    <!--If user is logged in, display welcome message-->
     {% else %}
-    <h1>Hi, {{ current_user.username }}! Welcome to My Flask App!</h1>
+    <div class="container-fluid">
+        <div class="col-md-12 d-flex justify-content-center">
+            <h3>Welcome {{ current_user.username }}!</h3>
+        </div>
+    </div>
     {% endif %}
-    <p>This is the home page of my Flask application.</p>
+    <!--Buttons to select which game to start-->
+
+    <div class="container-fluid">
+        <div class="col-md-12 d-flex justify-content-center">
+            <!--Image credit: https://chemistrydocs.com/periodic-table-notes/-->
+            <div class="container-fluid">
+                <img src="/images/PeriodicTableBackground.png" alt="Periodic Table" style="width: 100%; max-width: 500px; margin-bottom: 2rem; margin-top: 2rem;">
+            </div>
+            <h3 style="margin-left: 1rem; margin-right: 1rem;">or</h3>
+            <a id="homepagebutton" class="btn btn-outline-primary" href="{{ url_for('world') }}">World Map Game</a>
+        </div>
+    </div>
+
+
 
     <h1>Guess the Answer Game</h1>
     <button id="getQAcountries">Get a Question</button>
