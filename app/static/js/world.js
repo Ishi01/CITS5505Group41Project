@@ -4,17 +4,6 @@ $(document).ready(function () {
     var currentMode = 0; // Default mode
     var selectOnly = [];
 
-    const europeanCountries = [
-        "Albania", "Andorra", "Austria", "Belarus", "Belgium",
-        "Bosnia_and_Herzegovina", "Bulgaria", "Croatia", "Cyprus", "Czech_Republic",
-        "Denmark", "Estonia", "Finland", "France", "Germany", "Greece",
-        "Hungary", "Iceland", "Ireland", "Italy", "Kosovo", "Latvia",
-        "Liechtenstein", "Lithuania", "Luxembourg", "Malta", "Moldova", "Monaco",
-        "Montenegro", "Netherlands", "Norway", "Poland", "Portugal",
-        "Romania", "Russia", "San Marino", "Serbia", "Slovakia", "Slovenia", "Spain",
-        "Sweden", "Switzerland", "Turkey", "Ukraine", "United_Kingdom", "Vatican_City",
-        "Russian_Federation", "Macedonia", "Cyprus"
-    ];
     attachInputHandlers();
 
     function attachInputHandlers() {
@@ -32,7 +21,7 @@ $(document).ready(function () {
                 $('#submitAnswerButton').trigger('click');
             } else {
                 // Handle single tap
-                if(currentMode === 0) {
+                if (currentMode === 0) {
                     selectPathMode0(this);
                 }
                 else if (currentMode === 1) {
@@ -54,7 +43,7 @@ $(document).ready(function () {
             });
             $('#svg-container svg path').on('dblclick touchend', function (event) {
                 handleTouchEnd.call(this, event, currentMode);
-            });    
+            });
             $('#answerInput').on('keypress', function (event) {
                 if (event.which == 13) { // 13 is the keycode for Enter
                     let inputVal = $('#answerInput').val().replace(/ /g, '_'); // Convert spaces to underscores
@@ -88,10 +77,10 @@ $(document).ready(function () {
 
     // Function to reset SVG path styles to default
     function resetSVGStyles(path) {
-        //let className = $(path).attr('class');
+        let className = $(path).attr('class');
         $('#svg-container svg path').each(function () {
-            let className = $(this).attr('class');
-            if (selectOnly.includes(className) || selectOnly.length == 0) {
+            let eachPathName = $(this).attr('class');
+            if (selectOnly.includes(eachPathName) || selectOnly.length == 0) {
                 $(this).css({
                     'fill': '',
                     'stroke': '',
@@ -99,7 +88,7 @@ $(document).ready(function () {
                 });
             }
         });
-        
+
         for (selectedPath of selectedPaths) {
             let className = $(selectedPath).attr('class');
             if (selectOnly.includes(className) || selectOnly.length == 0) {
@@ -116,8 +105,8 @@ $(document).ready(function () {
     function highlightPath(path) {
         let className = $(path).attr('class');
         if (selectOnly.includes(className) || selectOnly.length == 0) {
-          //  console.log(className);
-          //  console.log(selectOnly.length);
+            //  console.log(className);
+            //  console.log(selectOnly.length);
             let highlightName = '#svg-container svg path.' + className;
             if (!selectedPaths.includes(highlightName)) {
                 $(highlightName).css({
@@ -145,15 +134,15 @@ $(document).ready(function () {
     }
 
     function selectPathMode1(path) {
-        let countryName = $(path).attr('class');
-        let pathClass = '#svg-container svg path.' + countryName;
+        let className = $(path).attr('class');
+        let pathClass = '#svg-container svg path.' + className;
         if (selectOnly.includes(className) || selectOnly.length == 0) {
             if (selectedPaths.includes(pathClass)) {
                 selectedPaths = selectedPaths.filter(p => p !== pathClass); // Toggle off
-                updateSelectedCountriesDisplay(countryName);
+                updateSelectedCountriesDisplay(className);
             } else {
                 selectedPaths.push(pathClass);
-                updateSelectedCountriesDisplay(countryName);
+                updateSelectedCountriesDisplay(className);
             }
             resetSVGStyles(this);
         }
@@ -208,7 +197,6 @@ $(document).ready(function () {
     });
 
     $('#svg-container svg path').on('mouseout', function () {
-        
         resetSVGStyles(this);
     });
 
@@ -262,18 +250,17 @@ $(document).ready(function () {
                 $('#question').text(response.question); // Display the question
                 $('#answerInput').val(''); // Clear previous answer
                 $('#feedback').text(''); // Clear previous feedback
-                if (response.type === "<class 'list'>") {
-                    currentMode = 1;
-                    selectedPaths = []
-                    resetSVGStyles();
-                    attachInputHandlers();
-                } else if (response.type === "<class 'str'>") {
-                    currentMode = 0;
-                    selectedPaths = []
-                    resetSVGStyles();
-                    attachInputHandlers();
-                }
+
+                currentMode = response.is_multiple_choice ? 1 : 0;
+                selectedPaths = [];
                 resetSVGStyles();
+                attachInputHandlers();
+                if(response.location == "Europe") {
+                    zoneEurope();    
+                } else {
+                    zoneGlobal();
+                    resetSVGStyles();
+                }
                 selectedPath = null; // Clear selected path
             },
             error: function (error) {
@@ -284,13 +271,24 @@ $(document).ready(function () {
 
     // Submit Answer Button & Response Handling
     $('#submitAnswerButton').on('click', function () {
-        var selectedCountries = selectedPaths.map(function (path) {
-            return $(path).attr('class').replace(/_/g, ' ');  // Convert class to country name
-        });
-        var answerData = {
-            answer: selectedCountries,  // Always send as an array
-            question: $('#question').text()
-        };
+        var answerData;
+
+        if (currentMode === 0) {
+            answerData = {
+                answer: [$('#answerInput').val()],
+                question: $('#question').text()
+            };
+        } else {
+            var selectedCountries = selectedPaths.map(function (path) {
+                return $(path).attr('class').replace(/\_/g, ' ');  // Convert class to country name
+            });
+
+            answerData = {
+                answer: selectedCountries,
+                question: $('#question').text()
+            };
+        }
+
         $.ajax({
             url: '/check-answer#countries',
             type: 'POST',
@@ -307,40 +305,64 @@ $(document).ready(function () {
         });
     });
 
+
+
+    // Original button click event refactored to use the new function
+    $('#zoomToEurope').on('click', function () {
+        zoneEurope();
+    });
+
     //////////////////////////////////////
-    //        Area lock functions       //
+    //    Zone and Area lock functions  //
     //////////////////////////////////////
 
-    $('#zoomToEurope').on('click', function () {
-        console.log("before")
-        // Example viewBox values for Europe, these would need to be adjusted to your specific SVG
-        viewBox.x = 750;
-        viewBox.y = 150;
-        //viewBox.width = 450;
-        //viewBox.height = 300;
-        scaleSVG = 6;
+    function zoneGlobal() {
+        const globalViewBox = { x: boundBox.xOffset, y: boundBox.yOffset, scale: minScale };
+        zoomToRegion(globalViewBox, []);
+    }
+
+    function zoneEurope() {
+        const europeViewBox = { x: 750, y: 150, scale: maxScale };
+        const europeanCountries = [
+            "Albania", "Andorra", "Austria", "Belarus", "Belgium",
+            "Bosnia_and_Herzegovina", "Bulgaria", "Croatia", "Cyprus", "Czech_Republic",
+            "Denmark", "Estonia", "Finland", "France", "Germany", "Greece",
+            "Hungary", "Iceland", "Ireland", "Italy", "Kosovo", "Latvia",
+            "Liechtenstein", "Lithuania", "Luxembourg", "Malta", "Moldova", "Monaco",
+            "Montenegro", "Netherlands", "Norway", "Poland", "Portugal",
+            "Romania", "Russia", "San Marino", "Serbia", "Slovakia", "Slovenia", "Spain",
+            "Sweden", "Switzerland", "Turkey", "Ukraine", "United_Kingdom", "Vatican_City",
+            "Russian_Federation", "Macedonia", "Cyprus"
+        ];
+        zoomToRegion(europeViewBox, europeanCountries);
+    }
+
+    function zoomToRegion(regionViewBox, regionCountries) {
+        console.log("Zooming to region");
+        viewBox.x = regionViewBox.x;
+        viewBox.y = regionViewBox.y;
+        scaleSVG = regionViewBox.scale;
         viewBox.width = boundBox.widthMax / scaleSVG;
         viewBox.height = boundBox.heightMax / scaleSVG;
-        //2;
+    
         updateViewBox();
-      //  $('#svg-container svg').attr('viewBox', '500 -50 1000 500');
+    
         $('svg path').each(function () {
             var pathClass = $(this).attr('class');
-           // var formattedClass = pathClass.replace(/_/g, ' '); // Replace underscores with spaces
-            // Check if the class of the path is not in the list of European countries
-            if ($.inArray(pathClass, europeanCountries) === -1) {
-                // Apply CSS if not found in the list
-                $(this).css({
-                    'stroke-width': '0.4083586658048981',
-                    'stroke': '#333',
-                    'stroke-opacity': '1',
-                    'fill': '#fff7ec',
-                    'fill-opacity': '1'
-                });
+            if(regionCountries.length != 0) {
+                if ($.inArray(pathClass, regionCountries) === -1) {
+                    $(this).css({
+                        'stroke-width': '0.4083586658048981',
+                        'stroke': '#333',
+                        'stroke-opacity': '1',
+                        'fill': '#fff7ec',
+                        'fill-opacity': '1'
+                    });
+                }
             }
         });
-        selectOnly = europeanCountries;
-    });
+        selectOnly = regionCountries;
+    }
 
     //////////////////////////////////////
     // World map zoom and pan functions //
@@ -377,7 +399,7 @@ $(document).ready(function () {
 
     // Calculate new viewBox based on current scale and translation
     function updateViewBox(scale = 1) {
-       // console.trace("updateViewBox function called");
+        // console.trace("updateViewBox function called");
         let rawNewRatio = window.innerHeight / window.innerWidth;
         let newRatio = Math.max(Math.min(rawNewRatio, 1.4), 0.9);
         if (newRatio !== browserRatio) {
@@ -397,7 +419,7 @@ $(document).ready(function () {
         let translateBase = 100; // Base translation when ratio is 1
         let translateMultiplier = -480; // Adjust this to control the translation amount change with the ratio
         let translateY = translateBase + (newRatio - 1) * translateMultiplier;
-        
+
         let elements = svg.find('*');
 
         console.log('scaleSVG:', scaleSVG);
@@ -488,19 +510,19 @@ $(document).ready(function () {
             //console.log('svgPoint.svgX:', svgPoint.svgX, 'svgPoint.svgY:', svgPoint.svgY, 'viewBox.x:', viewBox.x, 'viewBox.y:', viewBox.y, 'scaleSVG:', scaleSVG, 'scaleChange:', scaleChange);
         } else { // Zooming out
             // Calculate the new viewBox dimensions based on the scale change
-          //  console.log()
+            //  console.log()
             console.log("Before", viewBox.width, viewBox.height);
-        //    let newWidth = Math.min(viewBox.width / scaleChange, boundBox.widthMax);
-         //   let newHeight = Math.min(viewBox.height / scaleChange, boundBox.heightMax);
+            //    let newWidth = Math.min(viewBox.width / scaleChange, boundBox.widthMax);
+            //   let newHeight = Math.min(viewBox.height / scaleChange, boundBox.heightMax);
             let newWidth = Math.min(boundBox.widthMax / scaleSVG, boundBox.widthMax / minScale);
             let newHeight = Math.min(boundBox.heightMax / scaleSVG, boundBox.heightMax / minScale);
 
             console.log("After", viewBox.width, viewBox.height);
             // Interpolate towards the origin (0,0) for xOffset and yOffset
-          //  viewBox.x = boundBox.xOffset*0.05 + viewBox.x*0.99;// - (boundBox.xOffset - viewBox.x * scaleChange) * 0.95;
-          //  viewBox.y = boundBox.yOffset*0.05 + viewBox.y*0.99;// - (boundBox.yOffset - viewBox.y * scaleChange) * 0.95;
+            //  viewBox.x = boundBox.xOffset*0.05 + viewBox.x*0.99;// - (boundBox.xOffset - viewBox.x * scaleChange) * 0.95;
+            //  viewBox.y = boundBox.yOffset*0.05 + viewBox.y*0.99;// - (boundBox.yOffset - viewBox.y * scaleChange) * 0.95;
 
-            if(scaleSVG === minScale) {
+            if (scaleSVG === minScale) {
                 const transitionFactor = 0.25; // Adjust this value to control the transition speed
                 viewBox.x = boundBox.xOffset * transitionFactor + viewBox.x * (1 - transitionFactor);
                 viewBox.y = boundBox.yOffset * transitionFactor + viewBox.y * (1 - transitionFactor);

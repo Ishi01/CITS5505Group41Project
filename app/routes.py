@@ -1,3 +1,4 @@
+import json
 from flask import Blueprint, jsonify, render_template, request, current_app
 import random
 import os
@@ -19,22 +20,28 @@ def index():
 @main.route('/get-random-qa')
 def get_random_qa():
     referer_url = request.headers.get('Referer')
-    if 'index' in referer_url or 'world' in referer_url:
+    print(request.headers)
+
+    if 'index' in referer_url:
         category = 'countries'
+        location = 'global'
+    elif 'world' in referer_url:
+        category = 'countries'
+        location = 'global'
     elif 'periodictable' in referer_url:
         category = 'elements'
+        location = 'Various'
     else:
         return jsonify(error="Unable to determine the category from the referer"), 400
 
-    question = db.session.query(
-        QuizQuestion.question_text
-    ).filter_by(category=category).order_by(sa.func.random()).first()
+    question = QuizQuestion.query.filter_by(category=category, location=location).order_by(sa.func.random()).first()
 
     if question:
-        return jsonify(question=question.question_text)
+        answer_length = len(question.answer)
+        is_multiple_choice = answer_length > 1
+        return jsonify(question=question.question_text, is_multiple_choice=is_multiple_choice)
     else:
-        return jsonify(error="No questions found for the category"), 404
-
+        return jsonify(error="No questions found for the specified category and location"), 404
 
 @main.route('/check-answer', methods=['POST'])
 def check_answer():
@@ -42,30 +49,25 @@ def check_answer():
     print(data)
     print("??")
     referer_url = request.headers.get('Referer')
-    if 'index' in referer_url or 'world' in referer_url:
-        category = 'countries'
-    elif 'periodictable' in referer_url:
-        category = 'elements'
-    else:
-        return jsonify(error="Unable to determine the category from the referer"), 400
+    print(referer_url)
 
-    question = data.get('question')
-    user_answer = data.get('answer')
+    category = 'countries' if 'world' in referer_url else 'elements' if 'elements' in referer_url else None
+    location = 'global' if category == 'countries' else 'Various' if category == 'elements' else None
 
-    if not question or not user_answer:
-        return jsonify(error="Question and answer are required"), 400
+    if category is None or location is None:
+        return jsonify(error="Unable to determine the category and location from the referer"), 400
 
-    query = db.session.query(
-        QuizQuestion.answer
-    ).filter_by(question_text=question, category=category).first()
+    user_answer = data['answer']
+    question_text = data['question']
 
-    if query:
-        correct_answer = query.answer
-        is_correct = (user_answer.strip().lower() == correct_answer.strip().lower())
+    question = QuizQuestion.query.filter_by(category=category, location=location, question_text=question_text).first()
+
+    if question:
+        correct_answer = question.answer
+        is_correct = set(map(str.lower, user_answer)) == set(map(str.lower, correct_answer))
         return jsonify(is_correct=is_correct)
     else:
         return jsonify(error="Question not found"), 404
-
 
 @main.route('/periodictable')
 def periodic_table():

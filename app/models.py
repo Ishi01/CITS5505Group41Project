@@ -5,7 +5,7 @@ import sqlalchemy.orm as so
 from app import db, login
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
-
+from sqlalchemy.types import JSON
 
 @login.user_loader
 def load_user(id):
@@ -46,11 +46,11 @@ class Game(db.Model):
 
 class QuizQuestion(db.Model):
     __tablename__ = 'quiz_questions'
-
     question_id: so.Mapped[int] = so.mapped_column(primary_key=True)
     category: so.Mapped[str] = so.mapped_column(sa.String(50), nullable=False)
     question_text: so.Mapped[str] = so.mapped_column(sa.String(200), nullable=False)
-    answer: so.Mapped[str] = so.mapped_column(sa.String(200), nullable=False)
+    answer: so.Mapped[list] = so.mapped_column(JSON, nullable=False)
+    location: so.Mapped[str] = so.mapped_column(sa.String(100), nullable=True)
 
     def __repr__(self):
         return f'<QuizQuestion {self.question_text[:50]}...>'

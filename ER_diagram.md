@@ -20,9 +20,9 @@ erDiagram
 
     quiz_questions {
         INTEGER question_id PK
-        VARCHAR(50) category
-        VARCHAR(200) question_text
-        VARCHAR(200) answer
-
+        VARCHAR(50) category NOT NULL
+        VARCHAR(200) question_text NOT NULL
+        JSON answer NOT NULL
+        VARCHAR(100) location NULL
     }
 ```
