@@ -62,10 +62,10 @@ def check_answer():
     question = QuizQuestion.query.filter_by(category=category, location=location, question_text=question_text).first()
 
     if question:
-        correct_answer = question.answer
-        #print(correct_answer)
-        is_correct = set(map(str.lower, user_answer)) == set(map(str.lower, correct_answer))
-        #print(is_correct)
+        # Deserialize the JSON text to a Python list
+        correct_answers = json.loads(question.answer)
+        # Compare the sets of the user's answer and the correct answer, case insensitive
+        is_correct = set(map(str.lower, user_answer)) == set(map(str.lower, correct_answers))
         return jsonify(is_correct=is_correct)
     else:
         return jsonify(error="Question not found"), 404

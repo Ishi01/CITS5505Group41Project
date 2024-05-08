@@ -50,12 +50,12 @@ def load_quiz_questions():
         # Populate the database
         for category, locations in qa_dict.items():
             for location, questions in locations.items():
-                for question_text, answer in questions.items():
+                for question_text, answers in questions.items():
                     question = QuizQuestion(
                         category=category,
                         question_text=question_text,
                         location=location,
-                        answer=answer  # Store the answer as JSON
+                        answer=json.dumps(answers)  # Convert list to JSON string
                     )
                     db.session.add(question)
 

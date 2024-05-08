@@ -49,7 +49,7 @@ class QuizQuestion(db.Model):
     question_id: so.Mapped[int] = so.mapped_column(primary_key=True)
     category: so.Mapped[str] = so.mapped_column(sa.String(50), nullable=False)
     question_text: so.Mapped[str] = so.mapped_column(sa.String(200), nullable=False)
-    answer: so.Mapped[list] = so.mapped_column(JSON, nullable=False)
+    answer: so.Mapped[list] = so.mapped_column(sa.Text, nullable=False)
     location: so.Mapped[str] = so.mapped_column(sa.String(100), nullable=True)
 
     def __repr__(self):

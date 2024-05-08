@@ -18,7 +18,7 @@ depends_on = None
 def upgrade():
     with op.batch_alter_table('quiz_questions', schema=None) as batch_op:
         batch_op.add_column(sa.Column('location', sa.String(length=100), nullable=True))
-        batch_op.alter_column('answer', type_=sa.ARRAY, nullable=False)
+        batch_op.alter_column('answer', type_=sa.Text(), nullable=False)
 
 def downgrade():
     with op.batch_alter_table('quiz_questions', schema=None) as batch_op:
