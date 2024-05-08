@@ -30,6 +30,7 @@ def start_game_session():
     session['questions'] = [q.question_text for q in questions]
     session['answers'] = {q.question_text: q.answer for q in questions}
     session['current_index'] = 0
+    session['results'] = {}
     start_time = int(time.time())
     session['start_time'] = start_time
     return jsonify(success=True, start_time=start_time)
@@ -39,6 +40,8 @@ def get_next_question():
     if 'questions' not in session or session['current_index'] >= len(session['questions']):
         return jsonify(error="No more questions or session not started"), 404
 
+    previous_time = int(time.time())
+    session['previous_time'] = previous_time
     question_text = session['questions'][session['current_index']]
     session['current_index'] += 1  # Increment to next question
     return jsonify(question=question_text, is_multiple_choice=len(session['answers'][question_text]) > 1)
@@ -66,6 +69,13 @@ def check_answer():
         correct_answers = json.loads(question.answer)
         # Compare the sets of the user's answer and the correct answer, case insensitive
         is_correct = set(map(str.lower, user_answer)) == set(map(str.lower, correct_answers))
+        current_time = int(time.time())
+        time_spent = current_time - session['previous_time']
+        if question_text not in session['result']:
+            session['result'][question_text] = [False, 0, 0]
+        session['result'][question_text][0] = is_correct
+        session['result'][question_text][1] = time_spent
+        session['result'][question_text][2] += 1 
         return jsonify(is_correct=is_correct)
     else:
         return jsonify(error="Question not found"), 404
@@ -91,7 +101,7 @@ def end_game_session():
     total_time_spent = end_time - session['start_time']
 
     # Assuming each correct answer is stored as True in a list of results.
-    score = session.get('results', []).count(True)
+    score = sum(result[0] for result in session.get('result', {}).values())
     total_questions = len(session['questions'])
 
     return jsonify(success=True, total_time_spent=total_time_spent, score=score, total_questions=total_questions)
