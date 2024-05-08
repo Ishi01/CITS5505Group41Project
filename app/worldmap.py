@@ -11,7 +11,7 @@ from flask import (
     request,
     session,
 )
-from app.models import QuizQuestion, User
+from app.models import QuizQuestion
 
 worldmap = Blueprint('worldmap', __name__)
 
@@ -69,3 +69,29 @@ def check_answer():
         return jsonify(is_correct=is_correct)
     else:
         return jsonify(error="Question not found"), 404
+
+@worldmap.route('/skip-question', methods=['POST'])
+def skip_question():
+    if 'questions' not in session or 'current_index' not in session:
+        return jsonify(error="Session not started or invalid"), 400
+
+    # Analytics here?
+
+    return jsonify(success=True, current_index=session['current_index'])
+
+@worldmap.route('/end-game-session')
+def end_game_session():
+    if 'questions' not in session or 'start_time' not in session:
+        return jsonify(error="Session not started or invalid"), 400
+
+    if session['current_index'] < len(session['questions']):
+        return jsonify(error="Game not yet finished"), 400
+
+    end_time = int(time.time())
+    total_time_spent = end_time - session['start_time']
+
+    # Assuming each correct answer is stored as True in a list of results.
+    score = session.get('results', []).count(True)
+    total_questions = len(session['questions'])
+
+    return jsonify(success=True, total_time_spent=total_time_spent, score=score, total_questions=total_questions)

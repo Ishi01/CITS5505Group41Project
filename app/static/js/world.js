@@ -292,7 +292,12 @@ $(document).ready(function () {
             type: 'GET',
             success: function (response) {
                 if (response.error) {
-                    alert('Game Over or Error: ' + response.error);
+                    // If no more questions are available, end the game
+                    if (response.error === "No more questions or session not started") {
+                        endGame();  // Call the function to handle end of the game
+                    } else {
+                        alert('Game Over or Error: ' + response.error);
+                    }
                 } else {
                     $('#question').text(response.question);
                     $('#answerInput').val('');
@@ -317,10 +322,52 @@ $(document).ready(function () {
         });
     }
 
-    $('#pass').on('click', function () {
-        getNextQuestion();
-    });
+    function endGame() {
+        $.ajax({
+            url: '/end-game-session',
+            type: 'GET',
+            success: function (response) {
+                if (response.success) {
+                    // Display results such as time spent and score
+                    $('#results').html(`Game Over!<br>Total Time: ${response.total_time_spent}s<br>Score: ${response.score} out of ${response.total_questions}`);
+                    $('#pass').hide(); // Hide the pass button
+                    $('#submitAnswerButton').hide(); // Hide the submit button
+                    $('#endGame').hide(); // Hide the end game button
+                    clearInterval(timerInterval); // Stop the timer
+                } else {
+                    alert('Error: ' + response.error);
+                }
+            },
+            error: function (error) {
+                console.log("Error ending game session:", error);
+            }
+        });
+    }    
+    
 
+    $('#pass').on('click', function () {
+        $.ajax({
+            url: '/skip-question',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({}),
+            success: function(response) {
+                if (response.end_of_game) {
+                    // Handle end of game, like showing results or disabling game controls
+                    $('#results').text("You've reached the end of the game!");
+                } else if (response.success) {
+                    getNextQuestion();  // Get the next question if skip was successful
+                } else {
+                    alert('Error: ' + response.error);
+                }
+            },
+            error: function(error) {
+                console.log("Error skipping question:", error);
+                getNextQuestion();  // Attempt to continue to the next question even in case of error
+            }
+        });
+    });
+    
     $('#submitAnswerButton').on('click', function () {
         var answerData;
 
