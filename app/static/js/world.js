@@ -1,19 +1,17 @@
 $(document).ready(function () {
 
     var selectedPaths = []; // Array to store the currently selected paths
-    var currentMode = 0; // Default mode
+    var currentMode = 0; // Single Click Mode
     var selectOnly = [];
     let lastTouchTime = 0; // to store the time of the last touch
 
     attachInputHandlers();
 
     function attachInputHandlers() {
-        // Remove previous handlers to avoid duplicates
         $('#answerInput').off('input keypress');
         $('#svg-container svg path').off('click dblclick touchstart touchend')
 
         function handleTouchEnd(event, currentMode) {
-            // Prevent firing click event immediately after touchend
             event.preventDefault();
             let now = new Date().getTime();
             let timeSinceLastTouch = now - lastTouchTime;
@@ -76,7 +74,7 @@ $(document).ready(function () {
 
     // Function to reset SVG path styles to default
     function resetSVGStyles(path) {
-        let className = $(path).attr('class');
+        //let className = $(path).attr('class');
         $('#svg-container svg path').each(function () {
             let eachPathName = $(this).attr('class');
             if (selectOnly.includes(eachPathName) || selectOnly.length == 0) {
@@ -126,14 +124,15 @@ $(document).ready(function () {
             resetSVGStyles(this);
             className = className.replace(/_/g, ' '); // Replace all underscores with spaces
             $('#answerInput').val(className);
-            updateSelectedCountriesDisplay(className);
+            updateSelectedCountriesDisplay(pathClass);
         } else {
             if (selectOnly.includes(className) || selectOnly.length == 0) {
                 selectedPaths = [pathClass]; // Reset and select new path
                 if (className) {
                     className = className.replace(/_/g, ' '); // Replace all underscores with spaces
                     $('#answerInput').val(className);
-                    updateSelectedCountriesDisplay(className);
+                    removeAllTabs();
+                    updateSelectedCountriesDisplay(pathClass);
                 }
                 resetSVGStyles(this);
             }
@@ -146,57 +145,48 @@ $(document).ready(function () {
         if (selectOnly.includes(className) || selectOnly.length == 0) {
             if (selectedPaths.includes(pathClass)) {
                 selectedPaths = selectedPaths.filter(p => p !== pathClass); // Toggle off
-                updateSelectedCountriesDisplay(className);
+                updateSelectedCountriesDisplay(pathClass);
             } else {
                 selectedPaths.push(pathClass);
-                updateSelectedCountriesDisplay(className);
+                updateSelectedCountriesDisplay(pathClass);
             }
             resetSVGStyles(this);
         }
     }
 
-    function updateSelectedCountriesDisplay(country) {
-        var countryId = 'tab-' + country.replace(/\s+/g, '-');
-        if (!$('#' + countryId).length) {
-            if (currentMode === 0) {
-                // Single tab mode: clear existing tabs before adding a new one
-                $('.country-tab').remove();
-                selectedCountries = []; // Clear the array as only one country can be selected
-            }
-            // Proceed to add new tab
+    function updateSelectedCountriesDisplay(path) {
+        let country = $(path).attr('class');
+        let countryId = 'tab-' + country.replace(/\s+/g, '-') 
+        let countryTab = $('#' + countryId);
+    
+        if (!countryTab.length) {
+            // No existing tab for the country, add a new one
             var tab = $('<div/>', {
                 id: countryId,
                 class: 'country-tab',
                 text: country,
                 click: function () {
-                    $(this).remove(); // Remove the tab from UI
-                    selectedPaths = selectedPaths.filter(c => c !== country); // Update selectedCountries
-                    adjustTabsPosition(); // Adjust the positions of remaining tabs
-                    $(document).trigger('tabs-update'); // Notify the document about the update
+                    removeTab(path); 
                 }
             }).css({
                 transform: 'scale(0)',
                 opacity: 0
             }).appendTo('#tabsContainer');
-
-            // Animate the tab to scale up and fade in
+    
             setTimeout(function () {
                 tab.css({
                     transform: 'scale(1)',
                     opacity: 1
                 });
             }, 10);
-
-            selectedPaths.push(country); // Add new country to the array
+            selectedPaths.push(path); // Add new country to the array
         } else {
-            // If the tab exists and the mode allows multiple tabs, or it's the only tab in single mode
-            $('#' + countryId).remove();
-            selectedPaths = selectedPaths.filter(c => c !== country); // Update selectedCountries
+            removeTab(path);
         }
         adjustTabsPosition(); // Adjust positions after adding or removing tabs
         $(document).trigger('tabs-update'); // Notify the document about the update
     }
-
+    
     function adjustTabsPosition() {
         // This function will adjust the flex positioning of the tabs
         var tabsCount = $('.country-tab').length;
@@ -207,6 +197,18 @@ $(document).ready(function () {
         }
     }
 
+    function removeTab(path) {
+        let country = $(path).attr('class');
+        let countryId = 'tab-' + country.replace(/\s+/g, '-')
+        $('#' + countryId).remove();
+        console.log(countryId);
+        selectedPaths = selectedPaths.filter(c => c !== path); // Update selectedPaths
+        console.log(selectedPaths);
+        resetSVGStyles();
+        adjustTabsPosition(); // Adjust the positions of remaining tabs
+        $(document).trigger('tabs-update'); // Notify the document about the update
+    }
+
     function removeAllTabs() {
         $('.country-tab').each(function () {
             $(this).remove(); // Remove each tab
@@ -214,11 +216,6 @@ $(document).ready(function () {
         adjustTabsPosition(); // Adjust the positions in case you need to realign other elements
         $(document).trigger('tabs-update'); // Notify the document that all tabs have been removed
     }
-
-    $('.country-tab').click(function () {
-        $(this).remove();
-        $(document).trigger('tabs-update');  // Trigger layout update after a tab is removed
-    });
 
     // Handler for mouseover to temporarily highlight SVG paths
     $('#svg-container svg path').on('mouseover', function () {
@@ -263,61 +260,139 @@ $(document).ready(function () {
     //////////////////////////////////////
 
     $('#startGame').on('click', function () {
-        $(this).hide(); // Hide the startGame button
-        $('#pass').show(); // Show the pass button
+        startGameSession();
+    });
+
+    $('#pass').on('click', function () {
+        skipQuestion();
+    });
+
+    $('#submitAnswerButton').on('click', function () {
+        submitAnswer();
+    });
+
+    // Function to start the game session
+    function startGameSession() {
         $.ajax({
-            url: '/start-game-session#countries',
+            url: '/start-game-session?category=countries',
             type: 'GET',
             success: function (response) {
                 if (response.success) {
-                    var serverStartTime = response.start_time * 1000; // Convert to milliseconds
-                    var timerInterval = setInterval(function() {
-                        var currentTime = Date.now();
-                        var elapsedTime = currentTime - serverStartTime;
-                        var seconds = Math.floor(elapsedTime / 1000); // Convert milliseconds to seconds
-                        $('#timer').text(seconds + 's');
-                    }, 1000); // Update the timer every second
+                    updateGameUI('start', response);
                     getNextQuestion();  // Start the game by fetching the first question
                 }
             },
             error: function (error) {
-                console.log("Error starting game session:", error);
+                console.error("Error starting game session:", error);
+                alert("Error starting the game session. Please try again.");
             }
         });
-    });
+    }
 
+    // Function to update the game UI based on the action
+    function updateGameUI(action, data) {
+        switch (action) {
+            case 'start':
+                $('#startGame').hide();
+                $('#pass').show();
+                // Start the timer
+                var serverStartTime = data.start_time * 1000; // Convert to milliseconds
+                window.timerInterval = setInterval(function () {
+                    var currentTime = Date.now();
+                    var elapsedTime = currentTime - serverStartTime;
+                    var seconds = Math.floor(elapsedTime / 1000); // Convert milliseconds to seconds
+                    $('#timer').text(seconds + 's');
+                }, 1000); // Update the timer every second
+                break;
+            case 'question':
+                // Update the UI with the new question and reset necessary fields
+                currentMode = data.is_multiple_choice ? 1 : 0;
+                $('#question').text(data.question);
+                $('#answerInput').val('');
+                removeAllTabs();
+                selectedPaths = [];
+                resetSVGStyles();
+                attachInputHandlers();
+                if (data.location === "Europe") {
+                    zoneEurope();
+                } else {
+                    zoneGlobal();
+                }
+                break;
+            case 'end':
+                // Stop the timer and display results
+                clearInterval(window.timerInterval); // Stop the timer
+                feedback(`Game Over!<br>Total Time: ${data.total_time_spent}s<br>Score: ${data.score} out of ${data.total_questions}`);
+                $('#startGame').show();
+                $('#pass').hide(); // Hide the pass button
+                $('#submitAnswerButton').disabled(); // Hide the submit button
+                $('#endGame').hide(); // Hide the end game button
+                $('#answerInput').disabled(); // Disable the input field
+                break;
+        }
+    }
+
+    // Function to fetch the next question from the server
     function getNextQuestion() {
         $.ajax({
-            url: '/get-next-question#countries',
+            url: '/get-next-question',
             type: 'GET',
-            success: function (response) {
+            success: function(response) {
                 if (response.error) {
-                    // If no more questions are available, end the game
                     if (response.error === "No more questions or session not started") {
                         endGame();  // Call the function to handle end of the game
                     } else {
                         alert('Game Over or Error: ' + response.error);
                     }
                 } else {
-                    $('#question').text(response.question);
-                    $('#answerInput').val('');
-                    $('#feedback').text('');
-                    
-                    currentMode = response.is_multiple_choice ? 1 : 0;
-                    removeAllTabs();
-                    selectedPaths = [];
-                    resetSVGStyles();
-                    attachInputHandlers();
-                    if(response.location == "Europe") {
-                        zoneEurope();    
-                    } else {
-                        zoneGlobal();
-                        resetSVGStyles();
-                    }
+                    console.log(response);
+                    updateGameUI('question', response);
                 }
             },
+            error: function(error) {
+                console.error("Error fetching next question:", error);
+            }
+        });
+    }
+
+    function submitAnswer() {
+        var answerData;
+        if (currentMode === 0) {
+            answerData = {
+                answer: [getCountryNameFromPath(selectedPaths[0])],
+                question: $('#question').text()
+            };
+        } else {
+            let selectedAnswerCountries = selectedPaths.map(function (path) {
+                if ($(path).length) {
+                    return getCountryNameFromPath(path);
+                } else {
+                    return null;
+                }
+            }).filter(function (country) { return country !== null; }); // Filter out null values
+            answerData = {
+                answer: selectedAnswerCountries,
+                question: $('#question').text()
+            };
+        }
+        $.ajax({
+            url: '/game-answer',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(answerData),
+            success: function (response) {
+            if (response.is_correct) {
+                feedback('Correct!');
+            } else {
+                feedback('Incorrect. Try again!');
+                // Do something here? (lives?)
+            }
+            if (response.next_question) {
+                getNextQuestion();  // Fetch next question only on correct answer
+            }
+            },
             error: function (error) {
-                console.log("Error fetching next question:", error);
+                console.error("Error checking answer:", error);
             }
         });
     }
@@ -329,7 +404,7 @@ $(document).ready(function () {
             success: function (response) {
                 if (response.success) {
                     // Display results such as time spent and score
-                    $('#results').html(`Game Over!<br>Total Time: ${response.total_time_spent}s<br>Score: ${response.score} out of ${response.total_questions}`);
+                    $('#question').text(`Game Over!<br>Total Time: ${response.total_time_spent}s<br>Score: ${response.score} out of ${response.total_questions}`);
                     $('#pass').hide(); // Hide the pass button
                     $('#submitAnswerButton').hide(); // Hide the submit button
                     $('#endGame').hide(); // Hide the end game button
@@ -342,80 +417,45 @@ $(document).ready(function () {
                 console.log("Error ending game session:", error);
             }
         });
-    }    
-    
+    }
 
-    $('#pass').on('click', function () {
+    function skipQuestion() {
+        answerData = {
+            question: $('#question').text()
+        };
         $.ajax({
-            url: '/skip-question',
+            url: '/game-answer',
             type: 'POST',
             contentType: 'application/json',
-            data: JSON.stringify({}),
-            success: function(response) {
-                if (response.end_of_game) {
-                    // Handle end of game, like showing results or disabling game controls
-                    $('#results').text("You've reached the end of the game!");
-                } else if (response.success) {
+            data: JSON.stringify(answerData),
+            success: function (response) {
+                if (response.success) {
                     getNextQuestion();  // Get the next question if skip was successful
                 } else {
                     alert('Error: ' + response.error);
                 }
             },
-            error: function(error) {
-                console.log("Error skipping question:", error);
-                getNextQuestion();  // Attempt to continue to the next question even in case of error
-            }
-        });
-    });
-    
-    $('#submitAnswerButton').on('click', function () {
-        var answerData;
-
-        if (currentMode === 0) {
-            answerData = {
-                answer: [$('#answerInput').val()],
-                question: $('#question').text()
-            };
-        } else {
-            let selectedAnswerCountries = selectedPaths.map(function (path) {
-                let $path = $(path);
-                if ($path.length) {
-                    return $path.attr('class').replace(/\_/g, ' ');  // Convert class to country name
-                } else {
-                    return null;
-                }
-            });
-            // Filter out any null values from the resulting array
-            selectedAnswerCountries = selectedAnswerCountries.filter(function (country) {
-                return country !== null;
-            });
-
-            answerData = {
-                answer: selectedAnswerCountries,
-                question: $('#question').text()
-            };
-        }
-
-        $.ajax({
-            url: '/game-answer#countries',
-            type: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify(answerData),
-            success: function (response) {
-                if (response.is_correct) {
-                    $('#feedback').text('Correct!');
-                    getNextQuestion();  // Fetch next question only on correct answer
-                } else {
-                    $('#feedback').text('Incorrect. Try again!');
-                    // Optionally reset or end the game here
-                }
-
-            },
             error: function (error) {
-                console.log("Error checking answer:", error);
+                console.error("Error skipping question:", error);
             }
         });
-    });
+    }
+
+    function getCountryNameFromPath(path) {
+        let $path = $(path);
+        let className = $path.attr('class');
+        if (className) {
+            return className.replace(/_/g, ' '); // Replace underscores with spaces
+        } else {
+            return null;
+        }
+    }
+
+    function feedback(message) {
+        $('#feedback').stop(true, true);
+        $('#feedback').text(message);
+        $('#feedback').show().delay(5000).fadeOut(5000);
+    }
 
     //////////////////////////////////////
     //    Zone and Area lock functions  //
