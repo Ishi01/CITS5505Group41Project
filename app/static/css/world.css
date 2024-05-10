@@ -57,15 +57,14 @@ svg * {
   /* Ensure it remains visible above #tabsContainer */
 }
 
-.container button.clickable-child {
-  display: flex;
-  align-items: center;
-  pointer-events: auto;
-}
-
 .button-container {
   display: flex;
   width: 100%;
+}
+.button-container button.clickable-child {
+  display: flex;
+  align-items: center;
+  pointer-events: auto;
 }
 
 #startGame,
@@ -120,9 +119,6 @@ svg * {
   background-color: #e7e7e7;
   color: black;
 }
-
-
-
 
 html,
 body {
@@ -179,20 +175,37 @@ svg:active {
   pointer-events: all;
 }
 
-
 .country-tab:hover {
   background-color: #0056b3;
 }
 
+.click-helper {
+  fill: none;
+  pointer-events: all;
+  stroke-width: 0;
+}
+
+#overlay {
+  display: show;
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  width: 80%;
+  height: 20%;
+  overflow-y: scroll;
+  background-color: rgba(255, 255, 255, 0.8);
+  z-index: 100;
+}
+
+
+
 /* Media query for mobile devices */
-@media screen and (max-width: 850px) {
+@media screen and (max-width: 950px) {
   .container {
-    width: 52%;
-    max-width: none;
-    padding: 0px;
+    height: 5%;
   }
   #question {
-    font-size: 14px;
+    font-size: 12px;
   }
   #answerInput {
     font-size: 12px;
@@ -201,9 +214,45 @@ svg:active {
     margin-bottom: 1px;
   }
   #getQAcountries {
+    font-size: 12px;
+    padding: 2px 4px;
+
+  }
+
+  #startGame {
+    font-size: 12px;
+    padding: 2px 4px;
+  }
+  #submitAnswerButton {
+    font-size: 12px;
+    padding: 2px 4px;
+  }
+}
+
+
+/* Media query for mobile devices */
+@media screen and (max-width: 850px) {
+  .container {
+    height: 7%;
+  }
+  #question {
+    font-size: 14px;
+  }
+  #answerInput {
+    font-size: 14px;
+    padding: 1px;
+    border-radius: 0px;
+    margin-bottom: 1px;
+  }
+  #getQAcountries {
     font-size: 14px;
     padding: 2px 4px;
 
+  }
+
+  #startGame {
+    font-size: 14px;
+    padding: 2px 4px;
   }
   #submitAnswerButton {
     font-size: 14px;

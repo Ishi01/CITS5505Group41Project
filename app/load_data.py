@@ -57,6 +57,7 @@ def load_quiz_questions():
                         location=location,
                         answer=json.dumps(answers)  # Convert list to JSON string
                     )
+                    print(location)
                     db.session.add(question)
 
         db.session.commit()

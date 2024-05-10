@@ -16,6 +16,12 @@
 {% block content %}
 <div id="svg-container">
   {{ svg_content | safe }}
+  <div id="overlay">
+    {% for location in locations %}
+    <button class="location-btn" data-location="{{ location }}">{{ location }}</button>
+    {% endfor %}
+</div>
+
 </div>
 <span id="feedback"></span>
 <div id="tabsContainer">

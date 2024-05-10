@@ -22,12 +22,25 @@ def world():
     svg_path = os.path.join(current_app.root_path, 'static', 'world.svg')
     with open(svg_path, 'r') as file:
         svg_content = file.read()
-    return render_template('world.html', svg_content=svg_content, script="game")
+    # Query for unique locations where the category is 'countries'
+    locations = QuizQuestion.query \
+        .filter(QuizQuestion.category == 'countries') \
+        .with_entities(QuizQuestion.location) \
+        .distinct() \
+        .all()
+    locations = [loc.location for loc in locations]  # Extract the locations from the tuples
+    return render_template('world.html', svg_content=svg_content, script="game", locations=locations)
 
+
+@worldmap.route('/set-location', methods=['POST'])
+def set_location():
+    data = request.get_json()
+    session['location'] = data['location']
+    return jsonify(success=True)
 
 @worldmap.route('/start-game-session')
 def start_game_session():
-    location = 'global'
+    location = session.get('location', 'global')
     questions = QuizQuestion.query.filter_by(category='countries', location=location).order_by(sa.func.random()).all()
     session['questions'] = [q.question_text for q in questions]
     session['answers'] = json.dumps({q.question_text: q.answer for q in questions})
@@ -36,6 +49,7 @@ def start_game_session():
     start_time = int(time.time())
     session['start_time'] = start_time
     return jsonify(success=True, start_time=start_time)
+
 
 
 @worldmap.route('/get-next-question')
@@ -51,7 +65,7 @@ def get_next_question():
     answers = json.loads(session['answers'])
     is_multiple_choice = len(json.loads(answers[question_text])) > 1
 
-    return jsonify(success=True, question=question_text, is_multiple_choice=is_multiple_choice)
+    return jsonify(success=True, question=question_text, is_multiple_choice=is_multiple_choice, location=session['location'])
 
 @worldmap.route('/game-answer', methods=['POST'])
 def check_answer():
@@ -73,6 +87,8 @@ def check_answer():
         if question_text not in session.get('results', {}):
             session['results'][question_text] = [is_correct, time_spent, 1]
         else:
+            session['results'][question_text][0] = is_correct
+            session['results'][question_text][1] += time_spent
             session['results'][question_text][2] += 1
 
         return jsonify(success=True, is_correct=is_correct, next_question=next_question)
@@ -108,4 +124,4 @@ def end_game_session():
 
     # Clear all session variables
     session.clear()
-    return jsonify(success=True, total_time_spent=total_time_spent, score=score, total_questions=total_questions)
+    return jsonify(success=True, total_time_spent=round(total_time_spent,2), score=score, total_questions=total_questions)

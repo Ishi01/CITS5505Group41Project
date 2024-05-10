@@ -29,7 +29,7 @@ def create_app():
 
     from app import models
     with app.app_context():
-        if inspect(db.engine).get_table_names():
+        if 'quiz_questions' in inspect(db.engine).get_table_names():
             from app.load_data import load_quiz_questions
             load_quiz_questions()
             
@@ -37,5 +37,7 @@ def create_app():
     app.register_blueprint(main)
     from app.worldmap import worldmap
     app.register_blueprint(worldmap)
+    from app.creategame import creategame
+    app.register_blueprint(creategame)
     
     return app

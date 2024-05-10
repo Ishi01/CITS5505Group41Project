@@ -10,7 +10,6 @@ $(document).ready(function () {
     function attachInputHandlers() {
         $('#answerInput').off('input keypress');
         $('#svg-container svg path').off('click dblclick touchstart touchend')
-
         function handleTouchEnd(event, currentMode) {
             event.preventDefault();
             let now = new Date().getTime();
@@ -29,7 +28,6 @@ $(document).ready(function () {
             }
             lastTouchTime = now;
         }
-
         if (currentMode === 0) {
             $('#answerInput').on('input', function () {
                 resetSVGStyles(); // Reset all highlights first
@@ -38,8 +36,8 @@ $(document).ready(function () {
             $('#svg-container svg path').on('click', function () {
                 selectPathMode0(this);
             });
-            $('#svg-container svg path').on('dblclick touchend', function (event) {
-                handleTouchEnd.call(this, event, currentMode);
+            $('#svg-container svg path').on('dblclick touchend', function (e) {
+                handleTouchEnd.call(this, e, currentMode);
             });
             $('#answerInput').on('keypress', function (event) {
                 if (event.which == 13) { // 13 is the keycode for Enter
@@ -76,7 +74,7 @@ $(document).ready(function () {
     function resetSVGStyles(path) {
         //let className = $(path).attr('class');
         $('#svg-container svg path').each(function () {
-            let eachPathName = $(this).attr('class');
+            let eachPathName = $(this).attr('class').split(/\s+/)[0];
             if (selectOnly.includes(eachPathName) || selectOnly.length == 0) {
                 $(this).css({
                     'fill': '',
@@ -87,7 +85,7 @@ $(document).ready(function () {
         });
 
         for (selectedPath of selectedPaths) {
-            let className = $(selectedPath).attr('class');
+            let className = $(selectedPath).attr('class').split(/\s+/)[0];
             if (selectOnly.includes(className) || selectOnly.length == 0) {
                 $(selectedPath).css({
                     'fill': 'green',
@@ -100,10 +98,8 @@ $(document).ready(function () {
 
     // Highlight a path function for mouseover
     function highlightPath(path) {
-        let className = $(path).attr('class');
+        let className = $(path).attr('class').split(/\s+/)[0];
         if (selectOnly.includes(className) || selectOnly.length == 0) {
-            //  console.log(className);
-            //  console.log(selectOnly.length);
             let highlightName = '#svg-container svg path.' + className;
             if (!selectedPaths.includes(highlightName)) {
                 $(highlightName).css({
@@ -117,8 +113,8 @@ $(document).ready(function () {
 
     // Apply selected style to a path
     function selectPathMode0(path) {
-        let pathClass = '#svg-container svg path.' + $(path).attr('class');
-        let className = $(path).attr('class'); // Get the class attribute of the clicked path
+        let className = $(path).attr('class').split(/\s+/)[0];
+        let pathClass = '#svg-container svg path.' + className;
         if (selectedPaths[0] == pathClass) {
             selectedPaths = [];
             resetSVGStyles(this);
@@ -126,12 +122,16 @@ $(document).ready(function () {
             $('#answerInput').val(className);
             updateSelectedCountriesDisplay(pathClass);
         } else {
+            console.log(`1  ${className}`);
             if (selectOnly.includes(className) || selectOnly.length == 0) {
+                console.log(`2  ${className}`);
                 selectedPaths = [pathClass]; // Reset and select new path
                 if (className) {
+                    console.log(`3  ${className}`);
                     className = className.replace(/_/g, ' '); // Replace all underscores with spaces
                     $('#answerInput').val(className);
                     removeAllTabs();
+                    console.log(`4  ${className}`);
                     updateSelectedCountriesDisplay(pathClass);
                 }
                 resetSVGStyles(this);
@@ -140,7 +140,7 @@ $(document).ready(function () {
     }
 
     function selectPathMode1(path) {
-        let className = $(path).attr('class');
+        let className = $(path).attr('class').split(/\s+/)[0];
         let pathClass = '#svg-container svg path.' + className;
         if (selectOnly.includes(className) || selectOnly.length == 0) {
             if (selectedPaths.includes(pathClass)) {
@@ -155,16 +155,19 @@ $(document).ready(function () {
     }
 
     function updateSelectedCountriesDisplay(path) {
-        let country = $(path).attr('class');
+        console.trace('updateSelectedCountriesDisplay function called');
+        let country = $(path).attr('class').split(/\s+/)[0];
+        console.log(`5  ${country}`);
         let countryId = 'tab-' + country.replace(/\s+/g, '-') 
         let countryTab = $('#' + countryId);
-    
+        console.log(`6  ${countryTab.length}`);
         if (!countryTab.length) {
+            console.log(`7  ${country}`);
             // No existing tab for the country, add a new one
             var tab = $('<div/>', {
                 id: countryId,
                 class: 'country-tab',
-                text: country,
+                text: country.replace(/_/g, ' '),
                 click: function () {
                     removeTab(path); 
                 }
@@ -181,6 +184,7 @@ $(document).ready(function () {
             }, 10);
             selectedPaths.push(path); // Add new country to the array
         } else {
+            console.log(`8  ${country}`);
             removeTab(path);
         }
         adjustTabsPosition(); // Adjust positions after adding or removing tabs
@@ -198,7 +202,7 @@ $(document).ready(function () {
     }
 
     function removeTab(path) {
-        let country = $(path).attr('class');
+        let country = $(path).attr('class').split(/\s+/)[0];
         let countryId = 'tab-' + country.replace(/\s+/g, '-')
         $('#' + countryId).remove();
         console.log(countryId);
@@ -244,7 +248,7 @@ $(document).ready(function () {
             let pathToHighlight = $('#svg-container svg path.' + inputVal);
             if (pathToHighlight.length) {
                 // In Mode 1, add the path to the selection list if it's not already included
-                let pathClass = '#svg-container svg path.' + $(pathToHighlight[0]).attr('class');
+                let pathClass = '#svg-container svg path.' + $(pathToHighlight[0]).attr('class').split(/\s+/)[0];
                 if (!selectedPaths.includes(pathClass)) {
                     selectedPaths.push(pathClass);
                     highlightPath(pathClass); // Refresh SVG styles to reflect the new selection
@@ -295,6 +299,9 @@ $(document).ready(function () {
             case 'start':
                 $('#startGame').hide();
                 $('#pass').show();
+                $('#answerInput').prop('disabled', false);
+                $('#submitAnswerButton').prop('disabled', false);
+                $('#overlay').hide(); 
                 // Start the timer
                 var serverStartTime = data.start_time * 1000; // Convert to milliseconds
                 window.timerInterval = setInterval(function () {
@@ -313,9 +320,11 @@ $(document).ready(function () {
                 selectedPaths = [];
                 resetSVGStyles();
                 attachInputHandlers();
-                if (data.location === "Europe") {
+                if (data.location === "europe") {
+                    console.log(data.location);
                     zoneEurope();
                 } else {
+                    console.log(data.location);
                     zoneGlobal();
                 }
                 break;
@@ -325,9 +334,10 @@ $(document).ready(function () {
                 feedback(`Game Over!<br>Total Time: ${data.total_time_spent}s<br>Score: ${data.score} out of ${data.total_questions}`);
                 $('#startGame').show();
                 $('#pass').hide(); // Hide the pass button
-                $('#submitAnswerButton').disabled(); // Hide the submit button
+                $('#submitAnswerButton').prop('disabled', true);
                 $('#endGame').hide(); // Hide the end game button
-                $('#answerInput').disabled(); // Disable the input field
+                $('#answerInput').prop('disabled', true);
+                $('#overlay').show(); 
                 break;
         }
     }
@@ -404,13 +414,9 @@ $(document).ready(function () {
             success: function (response) {
                 if (response.success) {
                     // Display results such as time spent and score
-                    $('#question').text(`Game Over!<br>Total Time: ${response.total_time_spent}s<br>Score: ${response.score} out of ${response.total_questions}`);
-                    $('#pass').hide(); // Hide the pass button
-                    $('#submitAnswerButton').hide(); // Hide the submit button
-                    $('#endGame').hide(); // Hide the end game button
-                    clearInterval(timerInterval); // Stop the timer
+                    updateGameUI('end', response)
                 } else {
-                    alert('Error: ' + response.error);
+                    feedback('Error: ' + response.error);
                 }
             },
             error: function (error) {
@@ -443,7 +449,7 @@ $(document).ready(function () {
 
     function getCountryNameFromPath(path) {
         let $path = $(path);
-        let className = $path.attr('class');
+        let className = $path.attr('class').split(/\s+/)[0];
         if (className) {
             return className.replace(/_/g, ' '); // Replace underscores with spaces
         } else {
@@ -453,9 +459,25 @@ $(document).ready(function () {
 
     function feedback(message) {
         $('#feedback').stop(true, true);
-        $('#feedback').text(message);
+        $('#feedback').html(message);
         $('#feedback').show().delay(5000).fadeOut(5000);
     }
+
+    $('.location-btn').click(function() {
+        var selectedLocation = $(this).data('location');
+        $.ajax({
+            url: '/set-location',
+            type: 'POST',
+            data: JSON.stringify({ location: selectedLocation }),
+            contentType: 'application/json;charset=UTF-8',
+            success: function(response) {
+                if (response.success) {
+                    startGameSession();
+                }
+            }
+        });
+    });
+    
 
     //////////////////////////////////////
     //    Zone and Area lock functions  //
@@ -493,7 +515,7 @@ $(document).ready(function () {
         updateViewBox();
 
         $('svg path').each(function () {
-            var pathClass = $(this).attr('class');
+            var pathClass = $(this).attr('class').split(/\s+/)[0];
             if (regionCountries.length != 0) {
                 if ($.inArray(pathClass, regionCountries) === -1) {
                     $(this).css({
@@ -620,19 +642,8 @@ $(document).ready(function () {
     svg.on('wheel', function (e) {
         e.preventDefault();
         const deltaY = normalizeWheelDelta(e);
-        let oldScale = scaleSVG;
         scaleSVG *= deltaY < 0 ? 1 + zoomFactor : 1 / (1 + zoomFactor);
-        scaleSVG = Math.max(minScale, Math.min(maxScale, scaleSVG)); // Set reasonable limits for zoom
-
-        // Coordinates adjustment to focus zoom on cursor position
-        let cursorX = e.clientX - svg.offset().left; // Cursor's x-coordinate relative to the SVG
-        let cursorY = e.clientY - svg.offset().top;  // Cursor's y-coordinate relative to the SVG
-
-        let scaleChange = scaleSVG / oldScale;
-
-        let oldX = viewBox.x;
-        let oldY = viewBox.y;
-
+        scaleSVG = Math.max(minScale, Math.min(maxScale, scaleSVG));
         // Adjust viewBox to keep the zoom centered on the cursor
         if (deltaY < 0) { // Zooming in
 
@@ -655,18 +666,12 @@ $(document).ready(function () {
             //console.log('svgPoint.svgX:', svgPoint.svgX, 'svgPoint.svgY:', svgPoint.svgY, 'viewBox.x:', viewBox.x, 'viewBox.y:', viewBox.y, 'scaleSVG:', scaleSVG, 'scaleChange:', scaleChange);
         } else { // Zooming out
             // Calculate the new viewBox dimensions based on the scale change
-            //  console.log()
             console.log("Before", viewBox.width, viewBox.height);
-            //    let newWidth = Math.min(viewBox.width / scaleChange, boundBox.widthMax);
-            //   let newHeight = Math.min(viewBox.height / scaleChange, boundBox.heightMax);
             let newWidth = Math.min(boundBox.widthMax / scaleSVG, boundBox.widthMax / minScale);
             let newHeight = Math.min(boundBox.heightMax / scaleSVG, boundBox.heightMax / minScale);
 
             console.log("After", viewBox.width, viewBox.height);
             // Interpolate towards the origin (0,0) for xOffset and yOffset
-            //  viewBox.x = boundBox.xOffset*0.05 + viewBox.x*0.99;// - (boundBox.xOffset - viewBox.x * scaleChange) * 0.95;
-            //  viewBox.y = boundBox.yOffset*0.05 + viewBox.y*0.99;// - (boundBox.yOffset - viewBox.y * scaleChange) * 0.95;
-
             if (scaleSVG === minScale) {
                 const transitionFactor = 0.25; // Adjust this value to control the transition speed
                 viewBox.x = boundBox.xOffset * transitionFactor + viewBox.x * (1 - transitionFactor);
@@ -682,12 +687,6 @@ $(document).ready(function () {
 
             console.log('Updated viewBox:', 'x:', viewBox.x, 'y:', viewBox.y, 'width:', viewBox.width, 'height:', viewBox.height);
         }
-
-
-        // console.log('oldX:', oldX, 'oldY:', oldY, 'viewBox.x:', viewBox.x, 'viewBox.y:', viewBox.y, 'scaleSVG:', scaleSVG, 'scaleChange:', scaleChange);
-        //  console.log('Ratio X', viewBox.x/oldX, 'Ratio Y', viewBox.y/oldY, 'Ratio Width', viewBox.width/newWidth, 'Ratio Height', viewBox.height/newHeight);
-
-
         updateViewBox();
     });
 
@@ -720,7 +719,7 @@ $(document).ready(function () {
         initialY = y;
         isPanning = true;
         svg.css('cursor', 'grabbing');
-        $('.container .clickable-child').css('pointer-events', 'none');
+        $('.button-container .clickable-child').css('pointer-events', 'none');
     }
 
     // Move panning function
@@ -741,9 +740,8 @@ $(document).ready(function () {
     function endPanning() {
         isPanning = false;
         svg.css('cursor', 'grab');
-        $('.container .clickable-child').css('pointer-events', '');
+        $('.button-container .clickable-child').css('pointer-events', '');
     }
-
 
     // Disable text selection during panning
     svg.on('mousedown touchstart', function (e) {
@@ -804,4 +802,35 @@ $(document).ready(function () {
 
     // Trigger this adjustment when tabs are added or removed
     $(document).on('tabs-update', adjustContainerMargin); // Custom event when tabs change
+
+    //////////////////////////////////////
+    //      Expand Small Countries      //
+    //////////////////////////////////////
+
+    var smallCountries = [
+        'Luxembourg', 'Brunei', 'Burundi', 'Swaziland', 'Lesotho', 'Rwanda',
+        'Belize', 'El-Salvador', 'Jamaica', 'Dominican_Republic', 'Dominica',
+        'Trinidad_and_Tobago' 
+    ];
+
+    var selector = smallCountries.map(function(country) {
+        return '.' + country;
+    }).join(', ');
+
+    $('.click-helper').on('click', function() {
+        var targetId = $(this).attr('data-target');
+        console.log(targetId);
+        $(targetId + ':first').click();
+    });
+
+    $('.click-helper').on('mouseover', function() {
+        var targetId = $(this).attr('data-target');
+        $(targetId).mouseover();
+    });
+
+    $('.click-helper').on('mouseleave', function() {
+        var targetId = $(this).attr('data-target');
+        $(targetId).mouseleave();
+    });
+
 });
