@@ -823,6 +823,12 @@ $(document).ready(function () {
         $(targetId + ':first').click();
     });
 
+    $('.click-helper').on('touchend', function() {
+        var targetId = $(this).attr('data-target');
+        console.log(targetId);
+        $(targetId + ':first').trigger('touchend')
+    });
+
     $('.click-helper').on('mouseover', function() {
         var targetId = $(this).attr('data-target');
         $(targetId).mouseover();
