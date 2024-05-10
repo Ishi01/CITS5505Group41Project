@@ -21,7 +21,7 @@ def create_app():
 
     from app import models
     with app.app_context():
-        if inspect(db.engine).get_table_names():
+        if 'quiz_questions' in inspect(db.engine).get_table_names():
             from app.load_data import load_quiz_questions
             load_quiz_questions()
             
