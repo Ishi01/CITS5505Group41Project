@@ -33,25 +33,34 @@
         </div>
     </div>
     {% endif %}
-    <!--Buttons to select which game to start-->
 
     <div class="container-fluid">
         <div class="col-md-12 d-flex justify-content-center">
-            <!--Image credit: https://chemistrydocs.com/periodic-table-notes/-->
-            <div class="container-fluid">
-                <img src="/images/PeriodicTableBackground.png" alt="Periodic Table" style="width: 100%; max-width: 500px; margin-bottom: 2rem; margin-top: 2rem;">
-            </div>
-            <h3 style="margin-left: 1rem; margin-right: 1rem;">or</h3>
-            <a id="homepagebutton" class="btn btn-outline-primary" href="{{ url_for('world') }}">World Map Game</a>
+            <h3>Please Select a Quiz to Start</h3>
         </div>
     </div>
 
 
+    <!--Buttons to select which game to start-->
+    <div class="row justify-content-center">
+        <div class="col-3 d-flex align-items-center position-relative justify-content-center" onclick="location.href='{{ url_for('periodic_table')}}'"> <!-- <- ignore this compiler error, its caused by quotation shenanigans-->
+            <!--Image credit: https://chemistrydocs.com/periodic-table-notes/-->
+            <img src="{{ url_for('static', filename='/images/periodicbutton.png') }}" alt="Periodic Table Quiz Button" class="img-fluid rounded">
+            <div class="stack-Txt position-absolute">
+                <h4 class="stack-Txt-child">Periodic Table Quiz</h4>
+            </div>
+        </div>
 
-    <h1>Guess the Answer Game</h1>
-    <button id="getQAcountries">Get a Question</button>
-    <p id="question"><strong>Question:</strong></p>
-    <input type="text" id="answerInput" placeholder="Type your answer here">
-    <button id="submitAnswerButton">Submit Answer</button>
-    <p id="feedback"></p>
+        <div class="col-3 d-flex align-items-center position-relative justify-content-center" onclick="location.href='{{ url_for('world')}}'"> <!--  <- ignore this one too-->
+            <!--Image credit: https://www.pxfuel.com/en/desktop-wallpaper-graok-->
+            <img src="{{ url_for('static', filename='/images/worldbutton.jpg') }}" alt="World Map Quiz Button" class="img-fluid rounded">
+            <div class="stack-Txt position-absolute">
+                <h4 class="stack-Txt-child">World Map Quiz</h4>
+            </div>
+        </div>
+    </div>
+    
+    <!--Spacer to change background to black-->
+    <div class="row min-vh-100"></div> 
+
 {% endblock %}

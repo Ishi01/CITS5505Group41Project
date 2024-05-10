@@ -15,7 +15,7 @@ a{
 
 /* container and background styling */
 
-.container-fluid{
+.container-fluid, .row{
     background-color: var(--dark_background);
     margin: 0%;
 }
@@ -25,6 +25,14 @@ a{
     margin-block: 0%;
 
 }
+
+/* Image styling */
+
+img {
+    width: fit-content;
+    height: auto;
+}
+
 
 /* navbar styling */
 .nav-item{
@@ -52,6 +60,17 @@ hr{
 h3 {
     color: var(--color_text);
     font-size: 1.25rem;
+}
+
+h4 {
+    color: var(--color_title);
+    font-size: 1.5rem;
+    /* This is a jank way to add a text outline in order to avoid having to use --webkit-text-stroke since its not unviversally compatible*/
+    text-shadow:
+    1px 1px 0 #000,
+    -1px 1px 0 #000,
+    -1px -1px 0 #000,
+    1px -1px 0 #000;
 }
 
 /* this auto finds text within the {{ }} style input and styles them, temp prototype since this will probably cause problems */
