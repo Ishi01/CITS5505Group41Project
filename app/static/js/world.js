@@ -30,8 +30,9 @@ $(document).ready(function () {
         }
         if (currentMode === 0) {
             $('#answerInput').on('input', function () {
-                resetSVGStyles(); // Reset all highlights first
-                highlightPathFromInput_Mode0(); // Then apply new highlight based on the mode
+                if (event.which != 13) { 
+                    highlightPathFromInput_Mode0(); // Highlight country if text matches input
+                }
             });
             $('#svg-container svg path').on('click', function () {
                 selectPathMode0(this);
@@ -43,36 +44,42 @@ $(document).ready(function () {
                 if (event.which == 13) { // 13 is the keycode for Enter
                     let inputVal = $('#answerInput').val().replace(/ /g, '_'); // Convert spaces to underscores
                     let pathClass = $('#svg-container svg path.' + inputVal);
-                    selectedPaths = [pathClass]; // Reset and select new path
-                    resetSVGStyles(); // Then apply new highlight
+                    if (selectOnly.includes(inputVal) || selectOnly.length == 0) {
+                        removeAllPaths();
+                        updateSelectedCountriesDisplay(pathClass);
+                    }
                 }
             });
         }
         else if (currentMode === 1) {
             $('#answerInput').on('input', function () {
-                resetSVGStyles(); // Reset all highlights first
-                highlightPathFromInput_Mode1(); // Then apply new highlight based on the mode
+                if (event.which != 13) { 
+                    highlightPathFromInput_Mode1(); // Highlight country if text matches input
+                }
             });
             $('#answerInput').on('keypress', function (event) {
+                console.log(event.which)
                 if (event.which == 13) { // 13 is the keycode for Enter
                     console.log('Current mode is 1');
                     let inputVal = $('#answerInput').val().replace(/ /g, '_'); // Convert spaces to underscores
+                    console.log("input val", inputVal);
                     let pathClass = $('#svg-container svg path.' + inputVal);
-                    if (!selectedPaths.includes(pathClass)) {
-                        selectedPaths.push(pathClass);
+                    if (selectOnly.includes(inputVal) || selectOnly.length == 0) {
+                        console.log('pathClass', pathClass);
+                        console.log('#svg-container svg path.' + inputVal)
+                        updateSelectedCountriesDisplay(pathClass);
                     }
-                    resetSVGStyles(); // Then apply new highlight
+                    console.log(selectedPaths);
                 }
             });
-            $('#svg-container svg path').on('click touchend', function (event) {
+            $('#svg-container svg path').on('click touchend', function () {
                 selectPathMode1(this);
             });
         }
     }
 
-    // Function to reset SVG path styles to default
-    function resetSVGStyles(path) {
-        //let className = $(path).attr('class');
+    // Function to reset SVG path styles to only the paths contained in selectedPaths
+    function resetSVGStyles() {
         $('#svg-container svg path').each(function () {
             let eachPathName = $(this).attr('class').split(/\s+/)[0];
             if (selectOnly.includes(eachPathName) || selectOnly.length == 0) {
@@ -101,7 +108,7 @@ $(document).ready(function () {
         let className = $(path).attr('class').split(/\s+/)[0];
         if (selectOnly.includes(className) || selectOnly.length == 0) {
             let highlightName = '#svg-container svg path.' + className;
-            if (!selectedPaths.includes(highlightName)) {
+            if (!isPathSelected(className)) {
                 $(highlightName).css({
                     'fill': 'palegreen',
                     'stroke': '#225522',
@@ -116,25 +123,15 @@ $(document).ready(function () {
         let className = $(path).attr('class').split(/\s+/)[0];
         let pathClass = '#svg-container svg path.' + className;
         if (selectedPaths[0] == pathClass) {
-            selectedPaths = [];
-            resetSVGStyles(this);
-            className = className.replace(/_/g, ' '); // Replace all underscores with spaces
-            $('#answerInput').val(className);
-            updateSelectedCountriesDisplay(pathClass);
+            updateSelectedCountriesDisplay(path);
         } else {
-            console.log(`1  ${className}`);
             if (selectOnly.includes(className) || selectOnly.length == 0) {
-                console.log(`2  ${className}`);
-                selectedPaths = [pathClass]; // Reset and select new path
                 if (className) {
-                    console.log(`3  ${className}`);
                     className = className.replace(/_/g, ' '); // Replace all underscores with spaces
                     $('#answerInput').val(className);
-                    removeAllTabs();
-                    console.log(`4  ${className}`);
-                    updateSelectedCountriesDisplay(pathClass);
+                    removeAllPaths();
+                    updateSelectedCountriesDisplay(path);
                 }
-                resetSVGStyles(this);
             }
         }
     }
@@ -143,39 +140,27 @@ $(document).ready(function () {
         let className = $(path).attr('class').split(/\s+/)[0];
         let pathClass = '#svg-container svg path.' + className;
         if (selectOnly.includes(className) || selectOnly.length == 0) {
-            if (selectedPaths.includes(pathClass)) {
-                selectedPaths = selectedPaths.filter(p => p !== pathClass); // Toggle off
-                updateSelectedCountriesDisplay(pathClass);
-            } else {
-                selectedPaths.push(pathClass);
-                updateSelectedCountriesDisplay(pathClass);
-            }
-            resetSVGStyles(this);
+            updateSelectedCountriesDisplay(path);
         }
     }
 
     function updateSelectedCountriesDisplay(path) {
-        console.trace('updateSelectedCountriesDisplay function called');
         let country = $(path).attr('class').split(/\s+/)[0];
-        console.log(`5  ${country}`);
         let countryId = 'tab-' + country.replace(/\s+/g, '-') 
         let countryTab = $('#' + countryId);
-        console.log(`6  ${countryTab.length}`);
         if (!countryTab.length) {
-            console.log(`7  ${country}`);
             // No existing tab for the country, add a new one
             var tab = $('<div/>', {
                 id: countryId,
                 class: 'country-tab',
                 text: country.replace(/_/g, ' '),
                 click: function () {
-                    removeTab(path); 
+                    removePath(path); 
                 }
             }).css({
                 transform: 'scale(0)',
                 opacity: 0
             }).appendTo('#tabsContainer');
-    
             setTimeout(function () {
                 tab.css({
                     transform: 'scale(1)',
@@ -183,12 +168,12 @@ $(document).ready(function () {
                 });
             }, 10);
             selectedPaths.push(path); // Add new country to the array
+            adjustTabsPosition();
+            $(document).trigger('tabs-update'); 
+            resetSVGStyles();
         } else {
-            console.log(`8  ${country}`);
-            removeTab(path);
+            removePath(path);
         }
-        adjustTabsPosition(); // Adjust positions after adding or removing tabs
-        $(document).trigger('tabs-update'); // Notify the document about the update
     }
     
     function adjustTabsPosition() {
@@ -201,24 +186,24 @@ $(document).ready(function () {
         }
     }
 
-    function removeTab(path) {
+    function removePath(path) {
         let country = $(path).attr('class').split(/\s+/)[0];
         let countryId = 'tab-' + country.replace(/\s+/g, '-')
         $('#' + countryId).remove();
-        console.log(countryId);
-        selectedPaths = selectedPaths.filter(c => c !== path); // Update selectedPaths
-        console.log(selectedPaths);
-        resetSVGStyles();
+        selectedPaths = removePathFromSelected(country); // Update selectedPaths
         adjustTabsPosition(); // Adjust the positions of remaining tabs
         $(document).trigger('tabs-update'); // Notify the document about the update
+        resetSVGStyles();
     }
 
-    function removeAllTabs() {
+    function removeAllPaths() {
         $('.country-tab').each(function () {
             $(this).remove(); // Remove each tab
         });
-        adjustTabsPosition(); // Adjust the positions in case you need to realign other elements
-        $(document).trigger('tabs-update'); // Notify the document that all tabs have been removed
+        selectedPaths = []
+        adjustTabsPosition();
+        $(document).trigger('tabs-update');
+        resetSVGStyles();
     }
 
     // Handler for mouseover to temporarily highlight SVG paths
@@ -227,7 +212,7 @@ $(document).ready(function () {
     });
 
     $('#svg-container svg path').on('mouseout', function () {
-        resetSVGStyles(this);
+        resetSVGStyles();
     });
 
     function highlightPathFromInput_Mode0() {
@@ -235,6 +220,7 @@ $(document).ready(function () {
             let inputVal = $('#answerInput').val().replace(/ /g, '_'); // Convert spaces to underscores
             let pathToHighlight = $('#svg-container svg path.' + inputVal);
             if (pathToHighlight.length) {
+                resetSVGStyles();
                 highlightPath(pathToHighlight); // Highlight the first found path
             }
         } catch (error) {
@@ -250,15 +236,34 @@ $(document).ready(function () {
                 // In Mode 1, add the path to the selection list if it's not already included
                 let pathClass = '#svg-container svg path.' + $(pathToHighlight[0]).attr('class').split(/\s+/)[0];
                 if (!selectedPaths.includes(pathClass)) {
-                    selectedPaths.push(pathClass);
+                    resetSVGStyles();
                     highlightPath(pathClass); // Refresh SVG styles to reflect the new selection
                 }
             }
         } catch (error) {
-            //console.log('Error highlighting path:', error);
         }
     }
 
+    function isPathSelected(className) {
+        return selectedPaths.some(pathObj =>
+            Object.values(pathObj).some(path => 
+                path.classList && path.classList.contains(className)
+            )
+        );
+    }
+    
+    function removePathFromSelected(className) {
+        console.log("remove func");
+        console.log(className);
+        console.log(selectedPaths);
+    
+        // Filter the selectedPaths array to exclude any paths that have the specified class
+        return selectedPaths.filter(path => {
+            // Check if the path element does not have the specified class in its classList
+            return !path.classList.contains(className);
+        });
+    }
+    
     //////////////////////////////////////
     //              Buttons             //
     //////////////////////////////////////
@@ -315,9 +320,7 @@ $(document).ready(function () {
                 currentMode = data.is_multiple_choice ? 1 : 0;
                 $('#question').text(data.question);
                 $('#answerInput').val('');
-                removeAllTabs();
-                selectedPaths = [];
-                resetSVGStyles();
+                removeAllPaths();
                 attachInputHandlers();
                 if (data.location === "europe") {
                     console.log(data.location);
@@ -489,7 +492,8 @@ $(document).ready(function () {
     }
 
     function zoneEurope() {
-        const europeViewBox = { x: 750, y: 150, scale: maxScale };
+        let browserRatioOffset = browserRatio > 1 ? 50 : 0;
+        let europeViewBox = { x: 790 + browserRatioOffset, y: 150, scale: Math.min(maxScale, browserRatio > 1 ? 1.2 * browserRatio * 6 : 6) };
         const europeanCountries = [
             "Albania", "Andorra", "Austria", "Belarus", "Belgium",
             "Bosnia_and_Herzegovina", "Bulgaria", "Croatia", "Cyprus", "Czech_Republic",
@@ -539,15 +543,15 @@ $(document).ready(function () {
 
     let scaleSVG = 2.4;
     let minScale = 2.4;
-    let maxScale = 6;
+    let maxScale = 14;
 
     let boundBox = {
         xOffset: 200,
         yOffset: 140,
         widthMax: 4000,
         heightMax: 1714,
-        widthMin: 500,
-        heightMin: (857 * 0.8) / 4,
+        widthMin: 300,
+        heightMin: (857 * 0.8) / 5,
     }
 
     let viewBox = {
@@ -719,7 +723,7 @@ $(document).ready(function () {
         initialY = y;
         isPanning = true;
         svg.css('cursor', 'grabbing');
-        $('.button-container .clickable-child').css('pointer-events', 'none');
+        $('.clickable-child').css('pointer-events', 'none');
     }
 
     // Move panning function
@@ -740,7 +744,7 @@ $(document).ready(function () {
     function endPanning() {
         isPanning = false;
         svg.css('cursor', 'grab');
-        $('.button-container .clickable-child').css('pointer-events', '');
+        $('.clickable-child').css('pointer-events', '');
     }
 
     // Disable text selection during panning
