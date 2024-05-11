@@ -297,7 +297,6 @@ $(document).ready(function () {
     function updateGameUI(action, data) {
         switch (action) {
             case 'start':
-                $('#startGame').hide();
                 $('#pass').show();
                 $('#answerInput').prop('disabled', false);
                 $('#submitAnswerButton').prop('disabled', false);
@@ -332,7 +331,7 @@ $(document).ready(function () {
                 // Stop the timer and display results
                 clearInterval(window.timerInterval); // Stop the timer
                 feedback(`Game Over!<br>Total Time: ${data.total_time_spent}s<br>Score: ${data.score} out of ${data.total_questions}`);
-                $('#startGame').show();
+
                 $('#pass').hide(); // Hide the pass button
                 $('#submitAnswerButton').prop('disabled', true);
                 $('#endGame').hide(); // Hide the end game button
@@ -463,12 +462,12 @@ $(document).ready(function () {
         $('#feedback').show().delay(5000).fadeOut(5000);
     }
 
-    $('.location-btn').click(function() {
-        var selectedLocation = $(this).data('location');
+    $('.location-row').click(function() {
+        var selectedLocation = $(this).children('td').first().text();
         $.ajax({
             url: '/set-location',
             type: 'POST',
-            data: JSON.stringify({ location: selectedLocation }),
+            data: JSON.stringify({ game_name: selectedLocation }),
             contentType: 'application/json;charset=UTF-8',
             success: function(response) {
                 if (response.success) {
@@ -477,6 +476,7 @@ $(document).ready(function () {
             }
         });
     });
+    
     
 
     //////////////////////////////////////

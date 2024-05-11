@@ -17,23 +17,41 @@
 <div id="svg-container">
   {{ svg_content | safe }}
   <div id="overlay">
-    {% for location in locations %}
-    <button class="location-btn" data-location="{{ location }}">{{ location }}</button>
-    {% endfor %}
-</div>
-
+    <table class="info-table">
+      <thead>
+        <tr>
+          <th>Game Name</th>
+          <th>Description</th>
+          <th>Created by</th>
+          <th>Questions</th>
+          <th>User rating</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for location in locations %}
+        <tr class="location-row">
+          <td>{{ location.name }}</td>
+          <td>{{ location.description }}</td>
+          <td>{{ location.user }}</td>
+          <td>{{ location.question_count }}</td>
+          <td>{{ location.average_rating }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  
 </div>
 <span id="feedback"></span>
 <div id="tabsContainer">
 </div>
 <div class="container">
-    <p id="question"><strong>Question:</strong></p>
-    <input type="text" id="answerInput" placeholder="Type your answer here">
-    <div class="button-container">
-      <button id="startGame" class="clickable-child">Start Game!</button>
-      <button id="submitAnswerButton" class="clickable-child">Submit Answer</button>
-      <button id="pass" class="clickable-child" style="display: none;">Pass</button>
-    </div>
+  <p id="question"><strong>Question:</strong></p>
+  <input type="text" id="answerInput" placeholder="Type your answer here">
+  <div class="button-container">
+    <button id="submitAnswerButton" class="clickable-child">Submit Answer</button>
+    <button id="pass" class="clickable-child" style="display: none;">Pass</button>
+  </div>
   <span id="timer" class="clickable-child"></span>
   <span id="feedback"></span>
 </div>

@@ -1,3 +1,16 @@
+html,
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #0fe0f9;
+  /* background-color: #e0f7fa;  very light blue background */
+  overflow: hidden;
+}
+
+/* SVG CSS - SVG CSS - SVG CSS */
+/* SVG CSS - SVG CSS - SVG CSS */
 
 svg * {
   user-select: none;
@@ -7,9 +20,33 @@ svg * {
   display: none;
 }
 
-/* Initially hide labels if needed */
 .svg-label {
   display: none;
+}
+
+#svg-container {
+  will-change: transform;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+}
+
+svg {
+  width: 100vw;
+  height: 100vh;
+  display: block;
+  position: flex;
+  background-color: #e0f7fa;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+}
+
+svg:active {
+  cursor: grabbing;
 }
 
 #feedback {
@@ -120,49 +157,6 @@ svg * {
   color: black;
 }
 
-html,
-body {
-  height: 100%;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  background-color: #0fe0f9;
-  /* background-color: #e0f7fa;  very light blue background */
-  overflow: hidden;
-}
-
-#svg-container {
-  will-change: transform;
-  /* Optimizes the container for animations */
-  border: none;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100vh;
-}
-
-svg {
-  width: 100vw;
-  /* 100% of the viewport width */
-  height: 100vh;
-  /* 100% of the viewport height */
-  display: block;
-  /* remove any margins or paddings */
-  position: flex;
-  /* optional: to ensure it always stays full screen */
-  background-color: #e0f7fa;
-  /* very light blue background */
-  top: 0;
-  left: 0;
-  overflow: hidden;
-}
-
-svg:active {
-  cursor: grabbing;
-}
-
-
 .country-tab {
   margin: 5px;
   padding: 5px 10px;
@@ -185,6 +179,10 @@ svg:active {
   stroke-width: 0;
 }
 
+/* Overlay CSS - Overlay CSS - Overlay CSS */
+/* Overlay CSS - Overlay CSS - Overlay CSS */
+/* Overlay CSS - Overlay CSS - Overlay CSS */
+
 #overlay {
   display: show;
   position: absolute;
@@ -197,9 +195,29 @@ svg:active {
   z-index: 100;
 }
 
+.info-table {
+  width: 100%;
+  border-collapse: collapse;
+}
 
+.info-table th, .info-table td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
 
-/* Media query for mobile devices */
+.location-row:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+
+.location-row:nth-child(even) {
+  background-color: #eff2f5;
+}
+
+/* Mobile device CSS - Mobile device CSS - Mobile device CSS */
+/* Mobile device CSS - Mobile device CSS - Mobile device CSS */
+/* Mobile device CSS - Mobile device CSS - Mobile device CSS */
+
 @media screen and (max-width: 950px) {
   .container {
     height: 5%;
@@ -216,7 +234,6 @@ svg:active {
   #getQAcountries {
     font-size: 12px;
     padding: 2px 4px;
-
   }
 
   #startGame {
@@ -229,8 +246,6 @@ svg:active {
   }
 }
 
-
-/* Media query for mobile devices */
 @media screen and (max-width: 850px) {
   .container {
     height: 7%;

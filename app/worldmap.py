@@ -11,45 +11,70 @@ from flask import (
     request,
     session,
 )
-from app.models import QuizQuestion
+from app.models import QuizQuestion, User
 from flask_session import Session
 
 
 worldmap = Blueprint('worldmap', __name__)
 
+import random
+from flask import render_template, current_app
+from os import path
+
 @worldmap.route('/world')
 def world():
-    svg_path = os.path.join(current_app.root_path, 'static', 'world.svg')
+    svg_path = path.join(current_app.root_path, 'static', 'world.svg')
     with open(svg_path, 'r') as file:
         svg_content = file.read()
-    # Query for unique locations where the category is 'countries'
-    locations = QuizQuestion.query \
-        .filter(QuizQuestion.category == 'countries') \
-        .with_entities(QuizQuestion.location) \
-        .distinct() \
-        .all()
-    locations = [loc.location for loc in locations]  # Extract the locations from the tuples
-    return render_template('world.html', svg_content=svg_content, script="game", locations=locations)
 
+    # Fetch location and question count from the database
+    game_info = QuizQuestion.query \
+        .filter(QuizQuestion.category == 'countries') \
+        .with_entities(
+            QuizQuestion.game_name,
+            QuizQuestion.location,
+            QuizQuestion.user_id,
+            QuizQuestion.description,
+            sa.func.count(QuizQuestion.question_id).label('question_count')  # Assuming the primary key is named 'question_id'
+        ) \
+        .group_by(QuizQuestion.game_name) \
+        .all()
+
+    user = 'Anonymous'
+
+    # Generate dummy data for the average rating
+    locations = [{
+        'name': game.game_name,
+        'user': 'admin' if (game.user_id == 0) else User.query.get(game.user_id).username,
+        'description': game.description,
+        'question_count': game.question_count,
+        'average_rating': round(random.uniform(1, 5), 2)  # Random average rating between 1 and 5
+    } for game in game_info]
+
+    # Sort locations by average rating in descending order
+    locations.sort(key=lambda x: x['average_rating'], reverse=True)
+
+    return render_template('world.html', svg_content=svg_content, script="game", locations=locations)
 
 @worldmap.route('/set-location', methods=['POST'])
 def set_location():
     data = request.get_json()
-    session['location'] = data['location']
+    print(data)
+    session['game_name'] = data['game_name']
     return jsonify(success=True)
 
 @worldmap.route('/start-game-session')
 def start_game_session():
-    location = session.get('location', 'global')
-    questions = QuizQuestion.query.filter_by(category='countries', location=location).order_by(sa.func.random()).all()
+    game_name = session.get('game_name')
+    questions = QuizQuestion.query.filter_by(game_name=game_name).order_by(sa.func.random()).all()
     session['questions'] = [q.question_text for q in questions]
+    session['locations'] = [q.location for q in questions]
     session['answers'] = json.dumps({q.question_text: q.answer for q in questions})
     session['current_index'] = 0
     session['results'] = {}
     start_time = int(time.time())
     session['start_time'] = start_time
     return jsonify(success=True, start_time=start_time)
-
 
 
 @worldmap.route('/get-next-question')
@@ -60,12 +85,13 @@ def get_next_question():
     previous_time = time.time()
     session['previous_time'] = previous_time
     question_text = session['questions'][session['current_index']]
+    current_location = session['locations'][session['current_index']]
     session['current_index'] += 1  # Increment to next question
     # Deserialize the answers before use
     answers = json.loads(session['answers'])
     is_multiple_choice = len(json.loads(answers[question_text])) > 1
 
-    return jsonify(success=True, question=question_text, is_multiple_choice=is_multiple_choice, location=session['location'])
+    return jsonify(success=True, question=question_text, is_multiple_choice=is_multiple_choice, location=current_location)
 
 @worldmap.route('/game-answer', methods=['POST'])
 def check_answer():

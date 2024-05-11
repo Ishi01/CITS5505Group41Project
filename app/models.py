@@ -47,10 +47,13 @@ class Game(db.Model):
 class QuizQuestion(db.Model):
     __tablename__ = 'quiz_questions'
     question_id: so.Mapped[int] = so.mapped_column(primary_key=True)
+    game_name: so.Mapped[str] = so.mapped_column(sa.String(100), nullable=False)
+    description: so.Mapped[str] = so.mapped_column(sa.String(255), nullable=False)
+    user_id: so.Mapped[int] = so.mapped_column(sa.Integer, nullable=False, foreign_keys=[sa.ForeignKey('user.id')])
     category: so.Mapped[str] = so.mapped_column(sa.String(50), nullable=False)
     question_text: so.Mapped[str] = so.mapped_column(sa.String(200), nullable=False)
     answer: so.Mapped[list] = so.mapped_column(sa.Text, nullable=False)
     location: so.Mapped[str] = so.mapped_column(sa.String(100), nullable=True)
 
     def __repr__(self):
-        return f'<QuizQuestion {self.question_text[:50]}...>'
+        return f'<QuizQuestion "{self.game_name}": {self.question_text[:50]}...>'
