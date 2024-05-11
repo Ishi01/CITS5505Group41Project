@@ -222,6 +222,20 @@ svg:active {
     font-size: 12px;
   }
 
+  #submitAnswerButton,
+  #pass, #timer {
+    font-size: 12px;
+  }
+
+  #overlay {
+    font-size: 12px;
+  }
+
+  .info-table th,
+  .info-table td {
+    padding: 4px;
+  }
+
   @media screen and (max-width: 850px) {
     .container {
       display: flex;
