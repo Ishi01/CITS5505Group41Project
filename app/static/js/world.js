@@ -153,7 +153,7 @@ $(document).ready(function () {
                     opacity: 1
                 });
             }, 10);
-            selectedPaths.push(path); // Add new country to the array
+            selectedPaths.push($('#svg-container svg path.' + getFirstClassName(path)));            
             adjustTabsPosition();
             $(document).trigger('tabs-update'); 
             resetSVGStyles();
@@ -176,7 +176,9 @@ $(document).ready(function () {
         let country = getFirstClassName(path);
         let countryId = 'tab-' + country.replace(/\s+/g, '-')
         $('#' + countryId).remove();
+        console.log($('#svg-container svg path.' + getFirstClassName(path)));
         selectedPaths = removePathFromSelected(country); // Update selectedPaths
+       
         adjustTabsPosition(); // Adjust the positions of remaining tabs
         $(document).trigger('tabs-update'); // Notify the document about the update
         resetSVGStyles();
@@ -241,14 +243,9 @@ $(document).ready(function () {
     }
     
     function removePathFromSelected(className) {
-        console.log("remove func");
-        console.log(className);
-        console.log(selectedPaths);
-    
         // Filter the selectedPaths array to exclude any paths that have the specified class
         return selectedPaths.filter(path => {
-            // Check if the path element does not have the specified class in its classList
-            return !path.classList.contains(className);
+            return !path.hasClass(className);
         });
     }
     
@@ -650,8 +647,8 @@ $(document).ready(function () {
             let cursorPercentY = ((svgPoint.svgY - viewBox.y) / viewBox.height) - 0.5;
 
             // Zoom to mouse coursor position
-            viewBox.x = viewBox.x + svgPoint.svgX * cursorPercentX * 0.1;
-            viewBox.y = viewBox.y + svgPoint.svgY * cursorPercentY * 0.1;
+            viewBox.x = viewBox.x + svgPoint.svgX * cursorPercentX * 0.09;
+            viewBox.y = viewBox.y + svgPoint.svgY * cursorPercentY * 0.09;
 
             // Debug
             //console.log('cursorPercentX:', cursorPercentX, 'cursorPercentY:', cursorPercentY);

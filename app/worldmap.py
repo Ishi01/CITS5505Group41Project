@@ -40,8 +40,6 @@ def world():
         .group_by(QuizQuestion.game_name) \
         .all()
 
-    user = 'Anonymous'
-
     # Generate dummy data for the average rating
     locations = [{
         'name': game.game_name,
@@ -103,6 +101,8 @@ def check_answer():
         if 'answer' in data:
             user_answers = set(map(str.lower, data['answer']))
             correct_answers_set = set(map(str.lower, json.loads(correct_answers)))
+            print(user_answers)
+            print(correct_answers_set)
             is_correct = user_answers == correct_answers_set
             next_question = is_correct
         else:
