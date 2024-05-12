@@ -18,7 +18,7 @@ This guide provides detailed instructions for setting up development environment
     ```
    - On MacOS/Linux:
     ```
-    source venve/bin/activate
+    source venv/bin/activate
     ```
 3. Installing Dependencies
    ```
