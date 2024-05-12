@@ -11,6 +11,8 @@ editsvg.ipynb
 venv_windows/
 venv_macos/
 venv*/
+myenv/
+create_venv.bat
 
 # Database
 *.db
