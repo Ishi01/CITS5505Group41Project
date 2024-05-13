@@ -478,7 +478,7 @@ $(document).ready(function () {
 
     function zoneEurope() {
         let browserRatioOffset = browserRatio > 1 ? 50 : 0;
-        let europeViewBox = { x: 790 + browserRatioOffset, y: 150, scale: Math.min(maxScale, browserRatio > 1 ? 1.2 * browserRatio * 6 : 6) };
+        let europeViewBox = { x: 240 + browserRatioOffset, y: 150, scale: Math.min(maxScale, browserRatio > 1 ? 1.2 * browserRatio * 6 : 6) };
         const europeanCountries = [
             "Albania", "Andorra", "Austria", "Belarus", "Belgium",
             "Bosnia_and_Herzegovina", "Bulgaria", "Croatia", "Cyprus", "Czech_Republic",
@@ -526,13 +526,13 @@ $(document).ready(function () {
 
     let svg = $('#svg-container svg');
 
-    let scaleSVG = 2.4;
-    let minScale = 2.4;
+    let scaleSVG = 2.74;
+    let minScale = 2.74;
     let maxScale = 14;
 
     let boundBox = {
-        xOffset: 200,
-        yOffset: 140,
+        xOffset: 250,
+        yOffset: 230,
         widthMax: 4000,
         heightMax: 1714,
         widthMin: 300,
@@ -540,8 +540,8 @@ $(document).ready(function () {
     }
 
     let viewBox = {
-        x: 200,
-        y: 140,
+        x: 250,
+        y: 230,
         width: boundBox.widthMax / scaleSVG,
         height: boundBox.heightMax / scaleSVG
     }
@@ -764,6 +764,7 @@ $(document).ready(function () {
             let touch = e.touches[0];
             startPanning(touch.clientX, touch.clientY);
         }
+        console.log("touchstart")
     });
 
     svg.on('touchmove', function (e) {
@@ -771,12 +772,14 @@ $(document).ready(function () {
             let touch = e.touches[0];
             movePanning(touch.clientX, touch.clientY);
         }
+        console.log("touchmove")
     });
 
     svg.on('touchend touchcancel', function (e) {
         if (isPanning) {
             endPanning();
         }
+        console.log("touchend")
     });
 
     $(window).resize(function () {

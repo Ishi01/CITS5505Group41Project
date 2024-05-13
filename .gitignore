@@ -6,6 +6,7 @@ __pycache__/
 
 # SVG Editor
 editsvg.ipynb
+editsvg copy.ipynb
 
 #venv
 venv_windows/
