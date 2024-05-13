@@ -56,7 +56,7 @@ def submit_game():
                 countries = question['countries']  # Already a list from JSON, no need to load
 
                 # Remove empty countries and duplicates
-                countries = [country for country in countries if country]
+                countries = [country.replace('_', ' ') for country in countries if country]
                 countries = list(set(countries))
 
                 # Debug print to check what's being processed
