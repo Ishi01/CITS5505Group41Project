@@ -1,0 +1,123 @@
+/* color scheming */
+:root {
+    --dark_background: #0b0c10;
+    --light_background: #1f2833;
+    --color_text: #c5c6c7;
+    --color_title: #1ce3a7;
+    --link_color: #66fcf1;
+}
+
+/*link styling */
+a{
+    color: var(--link_color);
+    text-decoration: none;
+}
+
+/* container and background styling */
+
+.container-fluid, .row{
+    background-color: var(--dark_background);
+    margin: 0%;
+}
+
+.navbar-dark, .navbar-dark > .container-fluid, ul{
+    background-color: var(--light_background)!important;
+    margin-block: 0%;
+
+}
+
+/* Image styling */
+
+img {
+    width: fit-content;
+    height: auto;
+}
+
+
+/* navbar styling */
+.navbar-nav {
+    justify-content: center;
+    margin: auto;
+}
+
+.nav-item{
+    padding-left: 8px;
+}
+
+ .nav-item > .btn-outline-primary, #homepagebutton{
+    color: var(--link_color);
+    border-color: var(--link_color);
+    margin-top: .2rem;
+    margin-bottom: .2rem;
+}
+
+/* Background styling*/
+
+h1{
+    color: var(--color_title);
+    margin-bottom: 0%;
+}
+
+hr{
+    background-color: var(--dark_background);
+}
+
+h3 {
+    color: var(--color_text);
+    font-size: 1.25rem;
+}
+
+h4 {
+    color: var(--color_title);
+    font-size: 1.5rem;
+    /* This is a jank way to add a text outline in order to avoid having to use --webkit-text-stroke since its not unviversally compatible*/
+    text-shadow:
+    1px 1px 0 #000,
+    -1px 1px 0 #000,
+    -1px -1px 0 #000,
+    1px -1px 0 #000;
+}
+
+/* this auto finds text within the {{ }} style input and styles them, temp prototype since this will probably cause problems */
+p > label, #floating_text{
+    color: var(--color_text);
+    margin-bottom: .2rem;
+}
+
+p > input{
+    background-color: var(--light_background);
+    color: var(--color_text);
+}
+
+input[type="checkbox"]{
+    background-color: var(--light_background);
+    color: var(--color_text);
+}
+
+#link{
+    color: #fff;
+    text-decoration: none;
+}
+
+@media screen and (max-width: 650px) {
+    .navbar-nav {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        margin: auto;
+    }
+
+    .navbar-nav .nav-item {
+        padding-left: 2px;
+    }
+
+    .btn {
+        padding: 0.15rem 0.15rem;
+        font-size: 0.78rem;
+        margin-bottom: .1rem;
+        margin-top: .1rem;
+        display: flex;
+        min-width: fit-content;
+        white-space: nowrap;
+    }
+}

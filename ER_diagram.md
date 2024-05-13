@@ -18,11 +18,16 @@ erDiagram
         %%  relation attribute: player %%
     }
 
+    users ||--o{ quiz_questions : create
     quiz_questions {
         INTEGER question_id PK
+        VARCHAR(100) game_name NOT NULL
+        VARCHAR(255) description NOT NULL
+        INTEGER user_id FK
         VARCHAR(50) category NOT NULL
         VARCHAR(200) question_text NOT NULL
-        JSON answer NOT NULL
+        TEXT answer NOT NULL
         VARCHAR(100) location NULL
+        %% relation attribute: user defined in QuizQuestion class %%
     }
 ```
