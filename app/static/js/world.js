@@ -356,13 +356,13 @@ $(document).ready(function () {
         var answerData;
         if (currentMode === 0) {
             answerData = {
-                answer: [getCountryNameFromPath(selectedPaths[0]).replace(/\s/g, '_')],
+                answer: [getCountryNameFromPath(selectedPaths[0]).replace(/_/g, ' ')],
                 question: $('#question').text()
             };
         } else {
             let selectedAnswerCountries = selectedPaths.map(function (path) {
                 if ($(path).length) {
-                    return getCountryNameFromPath(path).replace(/\s/g, '_');
+                    return getCountryNameFromPath(path).replace(/_/g, ' ');
                 } else {
                     return null;
                 }

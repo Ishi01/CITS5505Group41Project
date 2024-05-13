@@ -28,12 +28,11 @@
             <label for="question_text[]">Question:</label>
             <input type="text" name="question_text[]" required>
         
-            <label for="location[]">Location:</label>
-            <input type="text" name="location[]" list="locations" required>
-            <datalist id="locations">
-                <option value="global (recommended)"></option>
-                <option value="Europe"></option>
-            </datalist>
+            <label for="location[]">Location Lock:</label>
+            <select name="location[]" required>
+                <option value="global">global (whole map)</option>
+                <option value="Europe">Europe</option>
+            </select>
             
             <div class="country-inputs">
                 <label>Answer Countries:</label>
