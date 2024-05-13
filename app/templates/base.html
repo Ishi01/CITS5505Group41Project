@@ -43,6 +43,9 @@
                 </li>
                 {% else %}
                 <li class="nav-item">
+                    <a class="btn btn-outline-primary" href="{{ url_for('creategame.loadpage') }}">Create Game</a>
+                </li>
+                <li class="nav-item">
                     <a class="btn btn-outline-primary" href="{{ url_for('main.logout') }}">Logout</a>
                 </li>
                 {% endif %}

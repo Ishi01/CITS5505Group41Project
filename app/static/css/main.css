@@ -35,6 +35,11 @@ img {
 
 
 /* navbar styling */
+.navbar-nav {
+    justify-content: center;
+    margin: auto;
+}
+
 .nav-item{
     padding-left: 8px;
 }
@@ -92,4 +97,27 @@ input[type="checkbox"]{
 #link{
     color: #fff;
     text-decoration: none;
+}
+
+@media screen and (max-width: 650px) {
+    .navbar-nav {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        margin: auto;
+    }
+
+    .navbar-nav .nav-item {
+        padding-left: 2px;
+    }
+
+    .btn {
+        padding: 0.15rem 0.15rem;
+        font-size: 0.78rem;
+        margin-bottom: .1rem;
+        margin-top: .1rem;
+        display: flex;
+        min-width: fit-content;
+        white-space: nowrap;
+    }
 }
