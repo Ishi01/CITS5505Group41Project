@@ -488,7 +488,7 @@ $(document).ready(function () {
             "Montenegro", "Netherlands", "Norway", "Poland", "Portugal",
             "Romania", "Russia", "San Marino", "Serbia", "Slovakia", "Slovenia", "Spain",
             "Sweden", "Switzerland", "Turkey", "Ukraine", "United_Kingdom", "Vatican_City",
-            "Russian_Federation", "Macedonia", "Cyprus"
+            "Russia", "Macedonia", "Cyprus"
         ];
         zoomToRegion(europeViewBox, europeanCountries);
     }
@@ -587,9 +587,9 @@ $(document).ready(function () {
         console.log(scale, boundBox.widthMin, boundBox.widthMax, boundBox.heightMin, boundBox.heightMax);
         console.log(viewBox.width, viewBox.height);
 
-        // Calculate the maximum allowed translation in x and y directions (30% of viewBox dimensions)
+        // Calculate the maximum allowed translation in x and y directions
         let maxTranslateX = (boundBox.widthMax / minScale) * 0.8;
-        let maxTranslateY = (boundBox.heightMax / minScale) * 0.9;
+        let maxTranslateY = (boundBox.heightMax / minScale) * 1.2;
         // console.log('c_scaleSVG:', scaleSVG, 'maxTranslateX:', maxTranslateX, 'maxTranslateY:', maxTranslateY);
         viewBox.x = Math.max(Math.min(viewBox.x, maxTranslateX), -maxTranslateX);
         viewBox.y = Math.max(Math.min(viewBox.y, maxTranslateY), -maxTranslateY);
