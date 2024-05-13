@@ -3,6 +3,8 @@ import sqlalchemy.orm as so
 from app import app, db
 from app.models import User, Game
 
+
+
 @app.shell_context_processor
 def make_shell_context():
     print("Shell context processor is being used!")
