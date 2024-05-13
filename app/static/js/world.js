@@ -307,9 +307,21 @@ $(document).ready(function () {
                 $('#answerInput').val('');
                 removeAllPaths();
                 attachInputHandlers();
-                if (data.location === "europe") {
+                if (data.location === "Europe") {
                     console.log(data.location);
                     zoneEurope();
+                } else if (data.location === "East Asia") {
+                    console.log(data.location);
+                    zoneEastAsia();
+                } else if (data.location === "North America") {
+                    console.log(data.location);
+                    zoneNorthAmerica();
+                } else if (data.location === "South America") {
+                    console.log(data.location);
+                    zoneSouthAmerica();
+                } else if (data.location === "Middle East") {
+                    console.log(data.location);
+                    zoneMiddleEast();
                 } else {
                     console.log(data.location);
                     zoneGlobal();
@@ -492,6 +504,81 @@ $(document).ready(function () {
         ];
         zoomToRegion(europeViewBox, europeanCountries);
     }
+
+    function zoneEastAsia() {
+        let browserRatioOffset = browserRatio > 1 ? 50 : 0;
+        let viewBox = { x: 725 + browserRatioOffset, y: 295, scale: Math.min(maxScale, browserRatio > 1 ? 1.2 * browserRatio * 6 : 6) };
+        const countries = [
+            "China", "Taiwan", "North_Korea", "South_Korea", "Japan", "Mongolia"
+        ];
+        zoomToRegion(viewBox, countries);
+    }
+
+    function zoneEurope() {
+        let browserRatioOffset = browserRatio > 1 ? 50 : 0;
+        let europeViewBox = { x: 240 + browserRatioOffset, y: 150, scale: Math.min(maxScale, browserRatio > 1 ? 1.2 * browserRatio * 6 : 6) };
+        const europeanCountries = [
+            "Albania", "Andorra", "Austria", "Belarus", "Belgium",
+            "Bosnia_and_Herzegovina", "Bulgaria", "Croatia", "Cyprus", "Czech_Republic",
+            "Denmark", "Estonia", "Finland", "France", "Germany", "Greece",
+            "Hungary", "Iceland", "Ireland", "Italy", "Kosovo", "Latvia",
+            "Liechtenstein", "Lithuania", "Luxembourg", "Malta", "Moldova", "Monaco",
+            "Montenegro", "Netherlands", "Norway", "Poland", "Portugal",
+            "Romania", "Russia", "San Marino", "Serbia", "Slovakia", "Slovenia", "Spain",
+            "Sweden", "Switzerland", "Turkey", "Ukraine", "United_Kingdom", "Vatican_City",
+            "Russia", "Macedonia", "Cyprus"
+        ];
+        zoomToRegion(europeViewBox, europeanCountries);
+    }
+
+    function zoneEastAsia() {
+        let browserRatioOffset = browserRatio > 1 ? 50 : 0;
+        let viewBox = { x: 725 + browserRatioOffset, y: 295, scale: Math.min(maxScale, browserRatio > 1 ? 1.2 * browserRatio * 6 : 6) };
+        const countries = [
+            "China", "Taiwan", "North_Korea", "South_Korea", "Japan", "Mongolia"
+        ];
+        zoomToRegion(viewBox, countries);
+    }
+
+    function zoneNorthAmerica() {
+        let browserRatioOffset = browserRatio > 1 ? 50 : 0;
+        let northAmericaViewBox = { x: 1015 + browserRatioOffset, y: 230, scale: Math.min(maxScale, browserRatio > 1 ? 1.2 * browserRatio * 4 : 4) };
+        const northAmericanCountries = [
+            "Canada", "United_States", "Mexico", "Guatemala", "Belize", 
+            "Honduras", "El_Salvador", "Nicaragua", "Costa_Rica", "Panama"
+        ];
+        zoomToRegion(northAmericaViewBox, northAmericanCountries);
+    }
+
+    function zoneSouthAmerica() {
+        let browserRatioOffset = browserRatio > 1 ? 50 : 0;
+        let southAmericaViewBox = { x: 1140 + browserRatioOffset, y: 575, scale: Math.min(maxScale, browserRatio > 1 ? 1.2 * browserRatio * 3.75 : 3.75) };
+        const southAmericanCountries = [
+            "Argentina", "Bolivia", "Brazil", "Chile", "Colombia", 
+            "Ecuador", "Guyana", "Paraguay", "Peru", "Suriname", 
+            "Uruguay", "Venezuela"
+        ];
+        zoomToRegion(southAmericaViewBox, southAmericanCountries);
+    }
+
+    function zoneAfrica_NOT_IMPLEMENTED() {
+        let browserRatioOffset = browserRatio > 1 ? 50 : 0;
+        let africaViewBox = { x: 500 + browserRatioOffset, y: 200, scale: Math.min(maxScale, browserRatio > 1 ? 1.2 * browserRatio * 5 : 5) };
+        const africanCountries = [
+        ];
+        zoomToRegion(africaViewBox, africanCountries);
+    }
+
+    function zoneMiddleEast() {
+        let browserRatioOffset = browserRatio > 1 ? 50 : 0;
+        let middleEastViewBox = { x: 440 + browserRatioOffset, y: 290, scale: Math.min(maxScale, browserRatio > 1 ? 1.2 * browserRatio * 7.5 : 7.5) };
+        const middleEasternCountries = [
+            "Saudi_Arabia", "Iran", "Turkey", "Iraq", "United_Arab_Emirates", 
+            "Israel", "Jordan", "Lebanon", "Oman", "Kuwait", "Qatar", "Bahrain", "Yemen", "Syria"
+        ];
+        zoomToRegion(middleEastViewBox, middleEasternCountries);
+    }
+    
 
     function zoomToRegion(regionViewBox, regionCountries) {
         console.log("Zooming to region");
