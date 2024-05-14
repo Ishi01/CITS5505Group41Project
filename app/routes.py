@@ -6,12 +6,18 @@ from app.forms import LoginForm, RegistrationForm
 from flask import flash, redirect, url_for
 from flask_login import current_user, login_user, logout_user, login_required
 import sqlalchemy as sa
-from app.models import User, QuizQuestion
+from .models import User, Game, QuizQuestion
 from urllib.parse import urlsplit
+from flask import jsonify
+from sqlalchemy.sql import func
+
 
 main = Blueprint('main', __name__)
 
 @main.route('/')
+def home():
+    return "Welcome to the Home Page"
+
 @main.route('/index')
 def index():
     return render_template('index.html', title='Home')
@@ -123,16 +129,31 @@ def register():
     
 @main.route('/get-rankings')
 def get_rankings():
-    users = User.query.order_by(User.score.desc()).all()
-    rankings = []
-    for i, user in enumerate(users):
-        rankings.append({
-            'rank': i + 1,
-            'username': user.username,
-            'score': user.score
-        })
-    return jsonify(rankings=rankings)
+    rankings = db.session.query(
+        User.username,
+        func.sum(Game.score).label('total_score')
+    ).join(Game, Game.user_id == User.id) \
+     .group_by(User.id) \
+     .order_by(func.sum(Game.score).desc()) \
+     .all()
+
+    rank_list = [{'username': user, 'total_score': score} for user, score in rankings]
+    return jsonify(rank_list)
+
+
+
 
 @main.route('/leaderboard')
 def leaderboard():
-    return render_template('leaderboard.html')
+    rankings = db.session.query(
+        User.username,
+        func.sum(Game.score).label('total_score')
+    ).join(Game, Game.user_id == User.id) \
+     .group_by(User.id) \
+     .order_by(func.sum(Game.score).desc()) \
+     .all()
+
+    rank_list = [{'username': user, 'total_score': score} for user, score in rankings]
+    return render_template('leaderboard.html', rank_list=rank_list)
+
+    
