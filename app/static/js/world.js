@@ -307,25 +307,27 @@ $(document).ready(function () {
                 $('#answerInput').val('');
                 removeAllPaths();
                 attachInputHandlers();
-                if (data.location === "Europe") {
-                    console.log(data.location);
+                console.log(data.location);
+                switch (data.location.toLowerCase()) {
+                  case "europe":
                     zoneEurope();
-                } else if (data.location === "East Asia") {
-                    console.log(data.location);
+                    break;
+                  case "east asia":
                     zoneEastAsia();
-                } else if (data.location === "North America") {
-                    console.log(data.location);
+                    break;
+                  case "north america":
                     zoneNorthAmerica();
-                } else if (data.location === "South America") {
-                    console.log(data.location);
+                    break;
+                  case "south america":
                     zoneSouthAmerica();
-                } else if (data.location === "Middle East") {
-                    console.log(data.location);
+                    break;
+                  case "middle east":
                     zoneMiddleEast();
-                } else {
-                    console.log(data.location);
+                    break;
+                  default:
                     zoneGlobal();
-                }
+                    break;
+                }                
                 break;
             case 'end':
                 // Stop the timer and display results
