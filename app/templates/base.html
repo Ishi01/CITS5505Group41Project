@@ -47,12 +47,10 @@
         {% if messages %}
         <ul>
             {% for message in messages %}
-            <li>{{ message }}</li>
+            <li style="color: red;">{{ message }}</li>
             {% endfor %}
         </ul>
         {% endif %}
-        {% endwith %}
+    {% endwith %}
     {% block content %}{% endblock %}
-        
-    </body>
     </html>
