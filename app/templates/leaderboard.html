@@ -1,5 +1,11 @@
 {% extends "base.html" %}
 
+{% block header %}
+    {{ super() }}
+    <script src="{{ url_for('static', filename='js/leaderboard.js') }}"></script>
+    
+{% endblock %}
+
 {% block content %}
 <div class="container-fluid">
     <div class="col-md-12 d-flex justify-content-center">
@@ -8,23 +14,17 @@
 </div>
 <div class="container-fluid min-vh-100">
     <div class="col-md-12 d-flex justify-content-center">
-        <table class="table table-striped">
+        <table class="table table-striped" >
             <thead>
-                <tr>
-                    <th scope="col">Rank</th>
-                    <th scope="col">Username</th>
-                    <th scope="col">Score</th>
+                <tr style="color: white;">
+                    <th scope="col" >Rank</th>
+                    <th scope="col" >Username</th>
+                    <th scope="col" >Score</th>
                 </tr>
             </thead>
-            <tbody>
-                {% for user in users %}
-                <tr>
-                    <th scope="row">{{ loop.index }}</th>
-                    <td>{{ user.username }}</td>
-                    <td>{{ user.score }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-            </tbody>
+            
+            <!-- Leaderboard data will be inserted here -->
         </table>
     </div>
+ {% endblock %}
+  

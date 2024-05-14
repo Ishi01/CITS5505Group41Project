@@ -119,3 +119,20 @@ def register():
         flash('Congratulations, you are now a registered user!')
         return redirect(url_for('main.login'))
     return render_template('register.html', title='Register', form=form)
+
+    
+@main.route('/get-rankings')
+def get_rankings():
+    users = User.query.order_by(User.score.desc()).all()
+    rankings = []
+    for i, user in enumerate(users):
+        rankings.append({
+            'rank': i + 1,
+            'username': user.username,
+            'score': user.score
+        })
+    return jsonify(rankings=rankings)
+
+@main.route('/leaderboard')
+def leaderboard():
+    return render_template('leaderboard.html')
