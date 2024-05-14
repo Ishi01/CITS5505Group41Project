@@ -945,16 +945,16 @@ preserveAspectRatio="xMidYMid meet">
  </circle>
  <circle cx="1798.2" cy="719.3" id="2">
  </circle>
- <circle cx="957.4" cy="185.7" r="8" class="click-helper" data-target=".Luxembourg"></circle>
- <circle cx="1101.7" cy="667.7" r="10" class="click-helper" data-target=".Swaziland"></circle>
- <circle cx="1079.1" cy="697.9" r="10" class="click-helper" data-target=".Lesotho"></circle>
- <circle cx="1174.5" cy="580" r="14" class="click-helper" data-target=".Comoros"></circle>
- <circle cx="1259.5" cy="630" r="14" class="click-helper" data-target=".Mauritius"></circle>
- <circle cx="1573.1" cy="472.8" r="9" class="click-helper" data-target=".Brunei"></circle>
- <circle cx="1840.1" cy="586.8" r="15" class="click-helper" data-target=".Solomon_Islands"></circle>
- <circle cx="1632.7" cy="562.1" r="17" class="click-helper" data-target=".East_Timor"></circle>
- <circle cx="639.2"  cy="424.5" r="14" class="click-helper" data-target=".Grenada"></circle>
- <circle cx="556.5"  cy="387.1" r="14" class="click-helper" data-target=".Jamaica"></circle>
- <circle cx="570.0"  cy="342.1" r="17" class="click-helper" data-target=".Bahamas"></circle>
- <circle cx="640.7"  cy="390.1" r="14" class="click-helper" data-target=".Antigua_and_Barbuda"></circle>
+<circle cx="407.4" cy="185.7" r="8" class="click-helper" data-target=".Luxembourg"></circle>
+<circle cx="551.7" cy="667.7" r="10" class="click-helper" data-target=".Swaziland"></circle>
+<circle cx="529.1" cy="697.9" r="10" class="click-helper" data-target=".Lesotho"></circle>
+<circle cx="624.5" cy="580" r="14" class="click-helper" data-target=".Comoros"></circle>
+<circle cx="709.5" cy="630" r="14" class="click-helper" data-target=".Mauritius"></circle>
+<circle cx="1023.1" cy="472.8" r="9" class="click-helper" data-target=".Brunei"></circle>
+<circle cx="1290.1" cy="586.8" r="15" class="click-helper" data-target=".Solomon_Islands"></circle>
+<circle cx="1082.7" cy="562.1" r="17" class="click-helper" data-target=".East_Timor"></circle>
+<circle cx="1589.2" cy="424.5" r="14" class="click-helper" data-target=".Grenada"></circle>
+<circle cx="1506.5" cy="387.1" r="14" class="click-helper" data-target=".Jamaica"></circle>
+<circle cx="1520.0" cy="342.1" r="17" class="click-helper" data-target=".Bahamas"></circle>
+<circle cx="1590.7" cy="390.1" r="14" class="click-helper" data-target=".Antigua_and_Barbuda"></circle>
 </svg>
