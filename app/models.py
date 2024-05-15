@@ -60,7 +60,7 @@ class QuizQuestion(db.Model):
 
 class UserGameHistory(db.Model):
     __tablename__ = 'user_game_history'
-    id: so.Mapped[int] = so.mapped_column(primary_key=True)
+    id: so.Mapped[int] = so.mapped_column(primary_key=True, autoincrement=True)
     user_id: so.Mapped[int] = so.mapped_column(sa.Integer, sa.ForeignKey('user.id'), nullable=False)
     game_name: so.Mapped[int] = so.mapped_column(sa.Integer, nullable=False)
     correct_answers: so.Mapped[int] = so.mapped_column(sa.Integer, nullable=False)
