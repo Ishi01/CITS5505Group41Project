@@ -14,54 +14,14 @@ from flask import (
 from app.models import QuizQuestion, User
 from flask_session import Session
 
-
-worldmap = Blueprint('worldmap', __name__)
+periodictable = Blueprint('periodictable', __name__)
 
 import random
 from flask import render_template, current_app
 from os import path
 
-@worldmap.route('/world')
-def world():
-    svg_path = path.join(current_app.root_path, 'static', 'world.svg')
-    with open(svg_path, 'r') as file:
-        svg_content = file.read()
 
-    # Fetch location and question count from the database
-    game_info = QuizQuestion.query \
-        .filter(QuizQuestion.category == 'countries') \
-        .with_entities(
-            QuizQuestion.game_name,
-            QuizQuestion.location,
-            QuizQuestion.user_id,
-            QuizQuestion.description,
-            sa.func.count(QuizQuestion.question_id).label('question_count')  # Assuming the primary key is named 'question_id'
-        ) \
-        .group_by(QuizQuestion.game_name) \
-        .all()
-
-    # Generate dummy data for the average rating
-    locations = [{
-        'name': game.game_name,
-        'user': 'admin' if (game.user_id == 0) else User.query.get(game.user_id).username,
-        'description': game.description,
-        'question_count': game.question_count,
-        'average_rating': round(random.uniform(1, 5), 2)  # Random average rating between 1 and 5
-    } for game in game_info]
-
-    # Sort locations by average rating in descending order
-    locations.sort(key=lambda x: x['average_rating'], reverse=True)
-
-    return render_template('world.html', svg_content=svg_content, script="game", locations=locations)
-
-@worldmap.route('/set-location', methods=['POST'])
-def set_location():
-    data = request.get_json()
-    print(data)
-    session['game_name'] = data['game_name']
-    return jsonify(success=True)
-
-@worldmap.route('/start-game-session')
+@periodictable.route('/start-game-session')
 def start_game_session():
     game_name = session.get('game_name')
     questions = QuizQuestion.query.filter_by(game_name=game_name).order_by(sa.func.random()).all()
@@ -75,7 +35,7 @@ def start_game_session():
     return jsonify(success=True, start_time=start_time)
 
 
-@worldmap.route('/get-next-question')
+@periodictable.route('/get-next-question')
 def get_next_question():
     if 'questions' not in session or session['current_index'] >= len(session['questions']):
         return jsonify(success=True, error="No more questions or session not started")
@@ -91,7 +51,7 @@ def get_next_question():
 
     return jsonify(success=True, question=question_text, is_multiple_choice=is_multiple_choice, location=current_location)
 
-@worldmap.route('/game-answer', methods=['POST'])
+@periodictable.route('/game-answer', methods=['POST'])
 def check_answer():
     data = request.json
     question_text = data['question']
@@ -122,13 +82,13 @@ def check_answer():
         return jsonify(error="Question not found or session invalid"), 404
 
 
-@worldmap.route('/skip-question', methods=['POST'])
+@periodictable.route('/skip-question', methods=['POST'])
 def skip_question():
     if 'questions' not in session or 'current_index' not in session:
         return jsonify(error="Session not started or invalid"), 400
     return jsonify(success=True, current_index=session['current_index'])
 
-@worldmap.route('/end-game-session')
+@periodictable.route('/end-game-session')
 def end_game_session():
     if 'questions' not in session or 'start_time' not in session:
         return jsonify(error="Session not started or invalid"), 400

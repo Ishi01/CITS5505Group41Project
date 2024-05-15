@@ -1,0 +1,73 @@
+/* Mobile device CSS - Mobile device CSS - Mobile device CSS */
+/* Mobile device CSS - Mobile device CSS - Mobile device CSS */
+/* Mobile device CSS - Mobile device CSS - Mobile device CSS */
+
+@media screen and (max-width: 950px) {
+    #question {
+      font-size: 12px;
+    }
+  
+    #answerInput {
+      font-size: 12px;
+    }
+  
+    #submitAnswerButton,
+    #pass, #timer {
+      font-size: 12px;
+    }
+  
+    #overlay {
+      font-size: 12px;
+    }
+  
+    .info-table th,
+    .info-table td {
+      padding: 4px;
+    }
+  
+    #tabsContainer {
+      bottom: 12vh;
+    }
+  
+    @media screen and (max-width: 850px) {
+      .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 12vh;
+        width: 100%;
+        padding: 1px, 0px, 0px, 2px;
+        margin: 0;
+      }
+  
+      #tabsContainer {
+        bottom: 14vh;
+      }
+    
+      #question {
+        margin: 0px, 0px, 2px, 0px;
+        padding: 3px, 0, 3px, 0;
+      }
+    
+      #button-container {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    
+      #answerInput {
+        padding: 1px, 2px, 2px, 2px;
+        margin: 0, 0, 2px, 0;
+        border-radius: 0px;
+        width: 100%;
+      }
+    
+      #submitAnswerButton,
+      #pass, #timer {
+        display: flex;
+      }
+    }
+  
+  }

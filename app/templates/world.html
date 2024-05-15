@@ -3,11 +3,9 @@
 {% block header %}
 {{ super() }}
 
-{% if script == "game" %}
 <script src="{{ url_for('static', filename='js/world.js') }}"></script>
-{% else %}
-<script src="{{ url_for('static', filename='js/world.js') }}"></script>
-{% endif %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/overlay.css') }}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='css/bottombar.css') }}" />
 <link rel="stylesheet" href="{{ url_for('static', filename='css/world.css') }}" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, orientation=portrait">
 
