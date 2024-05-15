@@ -66,6 +66,15 @@ This guide provides detailed instructions for setting up development environment
 
 ## Testing
 
+   **To be completed:**
+   For now testing can be complete with: 
+   ```sh
+   flask add-test
+   ```
+   or to add both the admin and test data
+   ```sh
+   flask add-all
+   ```
 
 ## Updating Requirements
 Whenever you add a new dependency, update the appropriate requirements_*.txt file and ensure it's documented:
