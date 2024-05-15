@@ -4,7 +4,6 @@ from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
-from sqlalchemy import inspect
 from app.commands import register_commands
 
 db = SQLAlchemy()
