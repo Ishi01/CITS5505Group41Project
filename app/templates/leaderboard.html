@@ -1,6 +1,5 @@
 {% extends "base.html" %} {% block header %} {{ super() }}
 <script src="{{ url_for('static', filename='js/leaderboard.js') }}"></script>
-
 {% endblock %} {% block content %}
 <div class="container-fluid">
   <div class="col-md-12 d-flex justify-content-center">
@@ -9,7 +8,7 @@
 </div>
 <div class="container-fluid min-vh-100">
   <div class="col-md-12 d-flex justify-content-center">
-    <table class="table table-striped">
+    <table class="table table-striped" id="leaderboard">
       <thead>
         <tr style="color: white">
           <th scope="col">Rank</th>
@@ -17,17 +16,16 @@
           <th scope="col">Score</th>
         </tr>
       </thead>
-
       <tbody>
-        {% for rank, entry in enumerate(rank_list, start=1) %}
+        {% for rank in range(rank_list|length) %}
         <tr style="color: white">
-          <td>{{ rank }}</td>
-          <td>{{ entry.username }}</td>
-          <td>{{ entry.total_score }}</td>
+          <td>{{ rank + 1 }}</td>
+          <td>{{ rank_list[rank].username }}</td>
+          <td>{{ rank_list[rank].total_score }}</td>
         </tr>
         {% endfor %}
       </tbody>
     </table>
   </div>
-  {% endblock %}
 </div>
+{% endblock %}

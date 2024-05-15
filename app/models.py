@@ -33,16 +33,16 @@ class User(UserMixin, db.Model):
 
 class Game(db.Model):
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
-    score: so.Mapped[int] = so.mapped_column(sa.Integer)
+    result: so.Mapped[int] = so.mapped_column(sa.Integer)
     timestamp: so.Mapped[datetime] = so.mapped_column(
         index=True, default=lambda: datetime.now(timezone.utc))
-    user_id: so.Mapped[int] = so.mapped_column(sa.ForeignKey(User.id),
+    user_id: so.Mapped[int] = so.mapped_column(sa.ForeignKey('user.id'),
                                                index=True)
 
-    player: so.Mapped[User] = so.relationship(back_populates='games')
+    player: so.Mapped['User'] = so.relationship('User', back_populates='games')
 
     def __repr__(self):
-        return '<Game {}>'.format(self.score)
+        return '<Game {}>'.format(self.result)
 
 class QuizQuestion(db.Model):
     __tablename__ = 'quiz_questions'

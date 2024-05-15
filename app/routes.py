@@ -15,9 +15,6 @@ from sqlalchemy.sql import func
 main = Blueprint('main', __name__)
 
 @main.route('/')
-def home():
-    return "Welcome to the Home Page"
-
 @main.route('/index')
 def index():
     return render_template('index.html', title='Home')
@@ -131,29 +128,26 @@ def register():
 def get_rankings():
     rankings = db.session.query(
         User.username,
-        func.sum(Game.score).label('total_score')
+        func.sum(Game.result).label('total_score')
     ).join(Game, Game.user_id == User.id) \
      .group_by(User.id) \
-     .order_by(func.sum(Game.score).desc()) \
+     .order_by(func.sum(Game.result).desc()) \
      .all()
 
-    rank_list = [{'username': user, 'total_score': score} for user, score in rankings]
+    rank_list = [{'username': user, 'total_score': result} for user, result in rankings]
     return jsonify(rank_list)
-
-
 
 
 @main.route('/leaderboard')
 def leaderboard():
     rankings = db.session.query(
         User.username,
-        func.sum(Game.score).label('total_score')
+        func.sum(Game.result).label('total_score')
     ).join(Game, Game.user_id == User.id) \
      .group_by(User.id) \
-     .order_by(func.sum(Game.score).desc()) \
+     .order_by(func.sum(Game.result).desc()) \
      .all()
 
-    rank_list = [{'username': user, 'total_score': score} for user, score in rankings]
+    rank_list = [{'username': user, 'total_score': result} for user, result in rankings]
     return render_template('leaderboard.html', rank_list=rank_list)
-
     

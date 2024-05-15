@@ -30,9 +30,9 @@ class LeaderboardTestCase(unittest.TestCase):
         db.session.add_all([user1, user2, user3])
         db.session.commit()
 
-        game1 = Game(score=100, player=user1)
-        game2 = Game(score=200, player=user2)
-        game3 = Game(score=300, player=user3)
+        game1 = Game(result=100, player=user1)
+        game2 = Game(result=200, player=user2)
+        game3 = Game(result=300, player=user3)
 
         db.session.add_all([game1, game2, game3])
         db.session.commit()
