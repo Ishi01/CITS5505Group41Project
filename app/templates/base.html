@@ -51,16 +51,13 @@
     </nav>
     <hr style="margin: 0%;">
     {% with messages = get_flashed_messages() %}
-    {% if messages %}
-    <ul>
-        {% for message in messages %}
-        <li>{{ message }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
+        {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <li style="color: red;">{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
     {% endwith %}
     {% block content %}{% endblock %}
-
-</body>
-
-</html>
+  </html>
