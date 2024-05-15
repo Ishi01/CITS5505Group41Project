@@ -41,5 +41,7 @@ def create_app():
     app.register_blueprint(creategame)
     from app.periodictable import periodictable
     app.register_blueprint(periodictable)
+    from app.user import user
+    app.register_blueprint(user)
     
     return app
