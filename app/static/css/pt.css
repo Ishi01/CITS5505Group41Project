@@ -6,6 +6,19 @@ svg g text {
     pointer-events: none;
 }
 
+#svg-container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+svg {
+    max-width: 100%;
+    max-height: 88%;
+  }
+
 #feedback {
     font-size: 18px;
     color: rgb(0, 0, 0);

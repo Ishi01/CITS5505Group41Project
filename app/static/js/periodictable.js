@@ -312,6 +312,7 @@ $(document).ready(function () {
                 $('#answerInput').val('');
                 removeAllPaths();
                 attachInputHandlers();
+                break;
             case 'end':
                 // Stop the timer and display results
                 clearInterval(window.timerInterval); // Stop the timer

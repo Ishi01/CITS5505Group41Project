@@ -20,6 +20,44 @@ import random
 from flask import render_template, current_app
 from os import path
 
+@periodictable.route('/periodictable')
+def periodic_table():
+
+    print("fgdfgf")
+
+
+    svg_path = path.join(current_app.root_path, 'static', 'pt.svg')
+    with open(svg_path, 'r') as file:
+        svg_content = file.read()
+
+    # Fetch location and question count from the database
+    game_info = QuizQuestion.query \
+        .filter(QuizQuestion.category == 'elements') \
+        .with_entities(
+            QuizQuestion.game_name,
+            QuizQuestion.location,
+            QuizQuestion.user_id,
+            QuizQuestion.description,
+            sa.func.count(QuizQuestion.question_id).label('question_count')  # Assuming the primary key is named 'question_id'
+        ) \
+        .group_by(QuizQuestion.game_name) \
+        .all()
+    print("fgdfgf")
+    print(game_info)
+    # Generate dummy data for the average rating
+    locations = [{
+        'name': game.game_name,
+        'user': 'admin' if (game.user_id == 0) else User.query.get(game.user_id).username,
+        'description': game.description,
+        'question_count': game.question_count,
+        'average_rating': round(random.uniform(1, 5), 2)  # Random average rating between 1 and 5
+    } for game in game_info]
+
+    # Sort locations by average rating in descending order
+    locations.sort(key=lambda x: x['average_rating'], reverse=True)
+
+    return render_template('periodic_table.html', svg_content=svg_content, locations=locations)
+
 
 @periodictable.route('/start-game-session')
 def start_game_session():
