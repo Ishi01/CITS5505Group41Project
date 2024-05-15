@@ -57,3 +57,15 @@ class QuizQuestion(db.Model):
 
     def __repr__(self):
         return f'<QuizQuestion "{self.game_name}": {self.question_text[:50]}...>'
+
+class UserGameHistory(db.Model):
+    __tablename__ = 'user_game_history'
+    id: so.Mapped[int] = so.mapped_column(primary_key=True)
+    user_id: so.Mapped[int] = so.mapped_column(sa.Integer, sa.ForeignKey('user.id'), nullable=False)
+    game_name: so.Mapped[int] = so.mapped_column(sa.Integer, nullable=False)
+    correct_answers: so.Mapped[int] = so.mapped_column(sa.Integer, nullable=False)
+    attempts: so.Mapped[int] = so.mapped_column(sa.Integer, nullable=False)
+    completion_time: so.Mapped[float] = so.mapped_column(sa.REAL, nullable=False)
+    
+    def __repr__(self):
+        return f'<UserGameHistory User "{self.user_id}" Game "{self.game_name}" Correct "{self.correct_answers}">'
