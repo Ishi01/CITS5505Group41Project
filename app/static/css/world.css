@@ -1,9 +1,285 @@
+html,
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #0fe0f9;
+  /* background-color: #e0f7fa;  very light blue background */
+  overflow: hidden;
+}
+
+/* SVG CSS - SVG CSS - SVG CSS */
+/* SVG CSS - SVG CSS - SVG CSS */
+
 svg * {
-    user-select: none;
+  user-select: none;
+}
+
+.svg-label.hidden {
+  display: none;
+}
+
+.svg-label {
+  display: none;
+}
+
+#svg-container {
+  will-change: transform;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+}
+
+svg {
+  width: 100vw;
+  height: 100vh;
+  display: block;
+  position: flex;
+  background-color: #e0f7fa;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+}
+
+svg:active {
+  cursor: grabbing;
+}
+
+#feedback {
+  font-size: 18px;
+  color: rgb(0, 0, 0);
+  margin-top: 0px;
+  margin-bottom: 12px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.05);
+  z-index: 1001;
+  display: flex;
+  align-items: center;
+  position: fixed;
+  justify-content: center;
+  pointer-events: none;
+  bottom: 22%;
+  left: 0;
+  width: 100%;
+}
+
+#tabsContainer {
+  position: fixed;
+  bottom: 60px;
+  /* Adjust the value based on the height of the input container */
+  left: 0;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0);
+  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  z-index: 1000;
+  pointer-events: none;
 }
 
 .container {
-    display: grid;
-    place-items: center;
-    margin: 0;
+  display: flex;
+  align-items: center;
+  position: fixed;
+  bottom: 0;
+  background-color: #f5f5f5;
+  z-index: 999;
+  width: 100%;
+  min-height: 4vh;
+  /* Ensure it remains visible above #tabsContainer */
 }
+
+.button-container {
+  display: flex;
+  width: 100%;
+  pointer-events: none;
+}
+
+.button-container button.clickable-child {
+  display: flex;
+  align-items: center;
+  pointer-events: auto;
+}
+
+#startGame,
+#submitAnswerButton,
+#pass {
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+#question {
+  flex: 2;
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  margin: 0;
+  text-align: center;
+}
+
+#answerInput {
+  flex: 3;
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+}
+
+.button-container {
+  flex: 4;
+  display: flex;
+}
+
+#submitAnswerButton {
+  flex: 3;
+  background-color: #008CBA;
+  color: white;
+}
+
+#pass {
+  flex: 1;
+  background-color: #e7e7e7;
+  color: black;
+}
+
+.country-tab {
+  margin: 5px;
+  padding: 5px 10px;
+  background-color: #007BFF;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  /* Animate the transform and opacity */
+  pointer-events: all;
+}
+
+.country-tab:hover {
+  background-color: #0056b3;
+}
+
+.click-helper {
+  fill: none;
+  pointer-events: all;
+  stroke-width: 0;
+}
+
+/* Overlay CSS - Overlay CSS - Overlay CSS */
+/* Overlay CSS - Overlay CSS - Overlay CSS */
+/* Overlay CSS - Overlay CSS - Overlay CSS */
+
+#overlay {
+  display: flex;
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  width: 80%;
+  height: 50%;
+  overflow-y: scroll;
+  background-color: rgba(255, 255, 255, 0.8);
+  z-index: 100;
+}
+
+.info-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.info-table th,
+.info-table td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.info-table tbody > tr:hover {
+  background-color: #89fce9;
+}
+
+.location-row:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+
+.location-row:nth-child(even) {
+  background-color: #eff2f5;
+}
+
+/* Mobile device CSS - Mobile device CSS - Mobile device CSS */
+/* Mobile device CSS - Mobile device CSS - Mobile device CSS */
+/* Mobile device CSS - Mobile device CSS - Mobile device CSS */
+
+@media screen and (max-width: 950px) {
+  #question {
+    font-size: 12px;
+  }
+
+  #answerInput {
+    font-size: 12px;
+  }
+
+  #submitAnswerButton,
+  #pass, #timer {
+    font-size: 12px;
+  }
+
+  #overlay {
+    font-size: 12px;
+  }
+
+  .info-table th,
+  .info-table td {
+    padding: 4px;
+  }
+
+  #tabsContainer {
+    bottom: 12vh;
+  }
+
+  @media screen and (max-width: 850px) {
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 12vh;
+      width: 100%;
+      padding: 1px, 0px, 0px, 2px;
+      margin: 0;
+    }
+
+    #tabsContainer {
+      bottom: 14vh;
+    }
+  
+    #question {
+      margin: 0px, 0px, 2px, 0px;
+      padding: 3px, 0, 3px, 0;
+    }
+  
+    #button-container {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+    }
+  
+    #answerInput {
+      padding: 1px, 2px, 2px, 2px;
+      margin: 0, 0, 2px, 0;
+      border-radius: 0px;
+      width: 100%;
+    }
+  
+    #submitAnswerButton,
+    #pass, #timer {
+      display: flex;
+    }
+  }
+
+}
+
