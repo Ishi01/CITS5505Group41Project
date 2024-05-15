@@ -143,5 +143,8 @@ def leaderboard():
      .all()
 
     rank_list = [{'username': user, 'total_score': result} for user, result in rankings]
-    return render_template('leaderboard.html', rank_list=rank_list)
+    
+    print("Rank List: ", rank_list)
+    
+    return render_template('leaderboard.html', rank_list=rank_list, enumerate=enumerate)
     

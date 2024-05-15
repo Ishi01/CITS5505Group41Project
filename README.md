@@ -41,3 +41,10 @@ See [DEVELOPMENT_GUIDE.md](DEVELOPMENT_GUIDE.md) for details on how to contribut
 ```
 python -m unittest test_leaderboard.py
 ```
+
+## Add Fake Data
+
+```
+pip install faker
+python fake_data.py
+```

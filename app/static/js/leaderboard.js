@@ -1,23 +1,21 @@
 function updateLeaderboard() {
   $.getJSON("/get-rankings", function (data) {
     var leaderboard = $("#leaderboard tbody");
-    leaderboard.find("tr").remove(); // Remove all rows
-    $.each(data.rankings, function (i, ranking) {
+    // leaderboard.empty(); // Clear existing rows
+
+    $.each(data.rank_list, function (i, entry) {
       leaderboard.append(
         "<tr><td>" +
           (i + 1) +
           "</td><td>" +
-          ranking.username +
+          entry.username +
           "</td><td>" +
-          ranking.total_score +
+          entry.total_score +
           "</td></tr>"
       );
     });
   });
 }
-
-// Update the leaderboard every 5 seconds
-setInterval(updateLeaderboard, 5000);
 
 // Initial update
 updateLeaderboard();
