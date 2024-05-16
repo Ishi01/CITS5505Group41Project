@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block header %}
+    {{ super() }}
+{% endblock %}
+
+{% block content %}
+
+<h1>{{ user.username }}'s Profile</h1>
+<p>Email: {{ user.email }}</p>
+
+<h2>Game History</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Game Name</th>
+            <th>Correct Answers</th>
+            <th>Attempts</th>
+            <th>Completion Time</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for record in game_history %}
+        <tr>
+            <td>{{ record.game_name }}</td>
+            <td>{{ record.correct_answers }}</td>
+            <td>{{ record.attempts }}</td>
+            <td>{{ record.completion_time }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

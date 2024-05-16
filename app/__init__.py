@@ -1,5 +1,6 @@
 from flask import Flask
 from config import Config
+from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
@@ -13,11 +14,18 @@ login.login_view = 'login'
 def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
-    
+
+    # Flask Session
+    app.config['SESSION_TYPE'] = 'sqlalchemy'
+    app.config['SESSION_SQLALCHEMY'] = db
+    app.config['SESSION_PERMANENT'] = False
+
     # Extensions
     db.init_app(app)
     migrate.init_app(app, db)
     login.init_app(app)
+    Session(app)
+
 
     from app import models
     with app.app_context():
@@ -27,5 +35,11 @@ def create_app():
             
     from app.routes import main
     app.register_blueprint(main)
+    from app.worldmap import worldmap
+    app.register_blueprint(worldmap)
+    from app.creategame import creategame
+    app.register_blueprint(creategame)
+    from app.user import user
+    app.register_blueprint(user)
     
     return app
