@@ -41,5 +41,7 @@ def create_app(config_class=Config):
     app.register_blueprint(worldmap)
     from app.creategame import creategame
     app.register_blueprint(creategame)
+    from app.user import user
+    app.register_blueprint(user)
     
     return app
