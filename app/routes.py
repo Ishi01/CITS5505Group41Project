@@ -11,18 +11,22 @@ from urllib.parse import urlsplit
 
 main = Blueprint('main', __name__)
 
+#Starting route, sends to homepage labeled index.html
 @main.route('/')
 @main.route('/index')
 def index():
     return render_template('index.html', title='Home')
 
+#Get random question from the database, including 
 @main.route('/get-random-qa')
 def get_random_qa():
+    #Select which table to get the question from, depending on the referer URL
     referer_url = request.headers.get('Referer')
     if 'index' in referer_url or 'world' in referer_url:
         category = 'countries'
     elif 'periodictable' in referer_url:
         category = 'elements'
+    #Error handling for if the referer URL is not recognized
     else:
         return jsonify(error="Unable to determine the category from the referer"), 400
 

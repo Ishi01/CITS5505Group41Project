@@ -11,6 +11,7 @@ from flask_login import UserMixin
 def load_user(id):
     return db.session.get(User, int(id))
 
+#User class, sonctains all of the user information and getters and setters for it
 class User(UserMixin, db.Model):
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
     username: so.Mapped[str] = so.mapped_column(sa.String(64), index=True,
@@ -31,6 +32,7 @@ class User(UserMixin, db.Model):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
+#Game class, contains all of the game information and databse mapping
 class Game(db.Model):
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
     score: so.Mapped[int] = so.mapped_column(sa.Integer)
@@ -44,6 +46,7 @@ class Game(db.Model):
     def __repr__(self):
         return '<Game {}>'.format(self.score)
 
+#QuizQuestion class, contains all of the quiz question information and database mapping
 class QuizQuestion(db.Model):
     __tablename__ = 'quiz_questions'
 
