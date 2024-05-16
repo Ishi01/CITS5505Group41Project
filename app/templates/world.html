@@ -14,7 +14,7 @@
 {% endblock %}
 
 {% block content %}
-<div id="svg-container">
+<div id="svg-container" style="height: 85vh;">
   {{ svg_content | safe }}
   <div id="overlay">
     <table class="info-table">
@@ -45,6 +45,38 @@
 <span id="feedback"></span>
 <div id="tabsContainer">
 </div>
+
+<div class="container-fluid" style="height: 15vh;">
+  <div class="row align-items-center" style="width: 100%; padding-top: .2rem; padding-bottom: .2rem;">
+    <div class="col-md-4">
+      <p id="question" style="font-weight: bold; color: #c5c6c7;">Question:</p>
+    </div>
+
+    <div class="col-md-3">
+      <input type="text" id="answerInput" class="clickable-child" placeholder="Type your answer here">
+    </div> 
+
+    <div class="col-md-2">
+      <button id="submitAnswerButton" class="clickable-child" >Submit Answer</button>
+    </div> 
+
+    <div class="col-md-2">
+      <button id="pass" class="clickable-child" style="display: none; width: 100%;">Pass</button>
+    </div>
+
+    <div class="col-md-1">
+      <span id="timer" class="clickable-child"></span>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+
+
+
+
+<!--
 <div class="container">
   <p id="question"><strong>Question:</strong></p>
   <input type="text" id="answerInput" class="clickable-child" placeholder="Type your answer here">
@@ -53,7 +85,6 @@
     <button id="pass" class="clickable-child" style="display: none;">Pass</button>
     <span id="timer" class="clickable-child"></span>
   </div>
-  
   <span id="feedback"></span>
 </div>
-{% endblock %}
+-->
