@@ -16,28 +16,33 @@
         </div>
     </div>
 
+
+
     <div class="form-group">
         <label for="game_name">Game Name:</label>
-        <input type="text" id="game_name" name="game_name" required aria-describedby="gameNameHelp">
+        <input type="text" id="game_name" name="game_name[]" required aria-describedby="gameNameHelp">
         <small id="game_name_error" class="form-text text-danger"></small>
     </div>
 
     <div class="form-group" style="margin-bottom: 0%!important;">
         <label for="description" class="form-label">Description:</label>
-        <textarea id="description" name="description" class="form-control" required aria-describedby="descriptionHelp"></textarea>
+        <textarea id="description" name="description[]" class="form-control" required aria-describedby="descriptionHelp"></textarea>
     </div>
 
 
-    <form>
-        <h3 style="padding-left: 2%;">Add Questions</h3>
-        <div class="container-fluid" id="questions_container">
-            <div class="question_block form-group col-md-12 justify-content-center">
+    <h3 style="padding-left: 2%;">Add Questions</h3>
+
+
+    <div id="questions_container">
+        <div class="question_block form-group" style="padding-bottom: 1rem;">
+            <div class="form-group col-md-12 justify-content-center">
                 <label for="question_text">Question:</label>
-                <input type="text" name="question_text" id="question_text" required>
+                <input type="text" name="question_text[]" id="question_text" required>
             </div>
-            <div class="question_block form-group col-md-12 justify-content-center">
+
+            <div class="form-group col-md-12 justify-content-center">
                 <label for="location">Location Lock:</label>
-                <select name="location" id="location" required>
+                <select name="location[]" id="location" required>
                     <option value="global">global (whole map)</option>
                     <option value="Europe">Europe</option>
                     <option value="East Asia">East Asia</option>
@@ -46,7 +51,7 @@
                     <option value="Middle East">Middle East</option>
                 </select>
             </div>
-            <div class="question_block form-group col-md-12 justify-content-center">
+            <div class="form-group col-md-12 justify-content-center">
                 <div class="country-inputs">
                     <label>Answer Countries:</label>
                     <input type="text" class="answer-countries" name="countries[]" list="countries" required>
@@ -56,19 +61,22 @@
                     <!-- This datalist will be populated with country options via JavaScript -->
                 </datalist>
                 <div id="error_message" class="form-text text-danger" style="display: none;"></div>
-            </div> 
- 
+            </div>
         </div>
-    </form>
-    <div>
-        <br>
-    <button type="button" id="addQuestion" class="btn btn-link">Add Another Question</button>
-    </div>
-    <div>
-    <button type="submit" class="btn btn-primary">Submit Game</button>
-    <div id="responseMessage" class="form-text" style="display: none;"></div>
     </div>
     
+    <div class="form-group min-vh-100" style="margin: 0%;">
+        <div  style="margin-bottom: 1rem;">
+            <br>
+            <button type="button" id="addQuestion" class="btn btn btn-secondary">Add Another Question</button>
+        </div>
+        <div>
+            <button type="submit" class="btn btn-outline-primary">Submit Game</button>
+            <div id="responseMessage" class="form-text" style="display: none;"></div>
+        </div>
+    </div>
+
+      
 </form>
 
 {% endblock %}
