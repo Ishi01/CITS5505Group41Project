@@ -34,6 +34,8 @@ def create_app():
     app.register_blueprint(creategame)
     from app.manage import manage
     app.register_blueprint(manage)
+    from app.user import user
+    app.register_blueprint(user)
     
     register_commands(app)
 
