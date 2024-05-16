@@ -1,9 +1,18 @@
 $(document).ready(function () {
     $('#addQuestion').click(function () {
         var newQuestion = $('.question_block:first').clone(true);
+
+        // Clear all text inputs and hide any error messages
         newQuestion.find('input[type="text"], textarea').val('');
         newQuestion.find('.form-text.text-danger').hide();
         newQuestion.find('input, textarea').css('border', '');
+
+        // Remove extra country inputs except the first one and reset its value
+        newQuestion.find('.country-inputs').each(function() {
+            $(this).find('.answer-countries:not(:first)').remove();
+            $(this).find('.answer-countries').val('');
+        });
+
         $('#questions_container').append(newQuestion);
         newQuestion.find('input[type="text"]:first').focus();
     });
@@ -12,6 +21,26 @@ $(document).ready(function () {
         var parent = $(this).closest('.question_block');
         var newInput = $('<input type="text" class="answer-countries" name="countries[]" list="countries" required>');
         parent.find('.country-inputs').append(newInput);
+    });
+
+    // Remove last country input
+    $('#questions_container').on('click', '.remove-country', function() {
+        var parent = $(this).closest('.question_block');
+        var countryInputs = parent.find('.answer-countries');
+        if (countryInputs.length > 1) {
+            countryInputs.last().remove();
+        }
+    });
+
+    // Remove current question block
+    $('#questions_container').on('click', '.remove-question', function() {
+        var parent = $(this).closest('.question_block');
+        if ($('.question_block').length > 1) {
+            parent.remove();
+        } else {
+            var errorSpan = $('#game_name_error');
+            errorSpan.text('You must have at least one question.');
+        }
     });
 
     var availableCountries;

@@ -27,7 +27,7 @@
         <div class="question_block form-group">
             <label for="question_text[]">Question:</label>
             <input type="text" name="question_text[]" required>
-        
+
             <label for="location[]">Location Lock:</label>
             <select name="location[]" required>
                 <option value="global">global (whole map)</option>
@@ -37,7 +37,7 @@
                 <option value="South America">South America</option>
                 <option value="Middle East">Middle East</option>
             </select>
-            
+
             <div class="country-inputs">
                 <label>Answer Countries:</label>
                 <input type="text" class="answer-countries" name="countries[]" list="countries" required>
@@ -47,18 +47,22 @@
                 <!-- This datalist will be populated with country options via JavaScript -->
             </datalist>
             <div id="error_message" class="form-text text-danger" style="display: none;"></div>
+            <button type="button" class="btn btn-link remove-country">Remove Last Country</button>
+            <br>
+            <button type="button" class="btn btn-link remove-question">Remove This Question</button>
         </div>
         
     </div>
     <div>
         <br>
-    <button type="button" id="addQuestion" class="btn btn-link">Add Another Question</button>
+        <button type="button" id="addQuestion" class="btn btn-link">Add Another Question</button>
+        
     </div>
     <div>
-    <button type="submit" class="btn btn-primary">Submit Game</button>
-    <div id="responseMessage" class="form-text" style="display: none;"></div>
+        <button type="submit" class="btn btn-primary">Submit Game</button>
+        <div id="responseMessage" class="form-text" style="display: none;"></div>
     </div>
-    
+
 </form>
 
 {% endblock %}

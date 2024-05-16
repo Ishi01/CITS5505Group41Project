@@ -369,10 +369,14 @@ $(document).ready(function () {
     function submitAnswer() {
         var answerData;
         if (currentMode === 0) {
-            answerData = {
-                answer: [getCountryNameFromPath(selectedPaths[0]).replace(/_/g, ' ')],
-                question: $('#question').text()
-            };
+            if(selectedPaths.length > 0) {
+                answerData = {
+                    answer: [getCountryNameFromPath(selectedPaths[0]).replace(/_/g, ' ')],
+                    question: $('#question').text()
+                };
+            } else {
+                feedback('No country selected!');
+            }
         } else {
             let selectedAnswerCountries = selectedPaths.map(function (path) {
                 if ($(path).length) {
@@ -554,7 +558,7 @@ $(document).ready(function () {
 
     function zoneSouthAmerica() {
         let browserRatioOffset = browserRatio > 1 ? 50 : 0;
-        let southAmericaViewBox = { x: 1140 + browserRatioOffset, y: 575, scale: Math.min(maxScale, browserRatio > 1 ? 1.2 * browserRatio * 3.75 : 3.75) };
+        let southAmericaViewBox = { x: 1140 + browserRatioOffset, y: 525, scale: Math.min(maxScale, browserRatio > 1 ? 1.2 * browserRatio * 3.75 : 3.75) };
         const southAmericanCountries = [
             "Argentina", "Bolivia", "Brazil", "Chile", "Colombia", 
             "Ecuador", "Guyana", "Paraguay", "Peru", "Suriname", 
@@ -573,9 +577,9 @@ $(document).ready(function () {
 
     function zoneMiddleEast() {
         let browserRatioOffset = browserRatio > 1 ? 50 : 0;
-        let middleEastViewBox = { x: 440 + browserRatioOffset, y: 290, scale: Math.min(maxScale, browserRatio > 1 ? 1.2 * browserRatio * 7.5 : 7.5) };
+        let middleEastViewBox = { x: 440 + browserRatioOffset, y: 310, scale: Math.min(maxScale, browserRatio > 1 ? 1.2 * browserRatio * 7.5 : 7.5) };
         const middleEasternCountries = [
-            "Saudi_Arabia", "Iran", "Turkey", "Iraq", "United_Arab_Emirates", 
+            "Saudi_Arabia", "Iran", "Turkey", "Iraq", "United_Arab_Emirates", "Palestine",
             "Israel", "Jordan", "Lebanon", "Oman", "Kuwait", "Qatar", "Bahrain", "Yemen", "Syria"
         ];
         zoomToRegion(middleEastViewBox, middleEasternCountries);
