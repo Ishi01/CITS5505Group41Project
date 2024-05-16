@@ -13,7 +13,7 @@ login.login_view = 'login'
 
 def create_app(config_class=Config):
     app = Flask(__name__)
-    app.config.from_object(Config)
+    app.config.from_object(config_class)
 
     # Flask Session
     app.config['SESSION_TYPE'] = 'sqlalchemy'
@@ -26,6 +26,7 @@ def create_app(config_class=Config):
     login.init_app(app)
     Session(app)
 
+    print(app.config['TESTING'])
 
     from app import models
     with app.app_context():
