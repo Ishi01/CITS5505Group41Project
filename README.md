@@ -35,16 +35,3 @@ Open your web browser and visit `http://localhost:5000` to access the applicatio
 ## Contributing
 
 See [DEVELOPMENT_GUIDE.md](DEVELOPMENT_GUIDE.md) for details on how to contribute to this project.
-
-## Run Test File
-
-```
-python -m unittest test_leaderboard.py
-```
-
-## Add Fake Data
-
-```
-pip install faker
-python fake_data.py
-```
