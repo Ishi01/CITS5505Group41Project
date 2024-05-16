@@ -21,6 +21,7 @@ $(document).ready(function () {
         var parent = $(this).closest('.question_block');
         var newInput = $('<input type="text" class="answer-countries" name="countries[]" list="countries" required>');
         parent.find('.country-inputs').append(newInput);
+        $('#responseMessage').removeClass('error').hide();
     });
 
     // Remove last country input
@@ -29,6 +30,7 @@ $(document).ready(function () {
         var countryInputs = parent.find('.answer-countries');
         if (countryInputs.length > 1) {
             countryInputs.last().remove();
+            $('#responseMessage').removeClass('error').hide();
         }
     });
 
@@ -37,9 +39,10 @@ $(document).ready(function () {
         var parent = $(this).closest('.question_block');
         if ($('.question_block').length > 1) {
             parent.remove();
+            $('#responseMessage').removeClass('error').hide();
         } else {
-            var errorSpan = $('#game_name_error');
-            errorSpan.text('You must have at least one question.');
+            let message = 'You must have at least one question.'
+            $('#responseMessage').removeClass('success').addClass('error').text(message).show();
         }
     });
 
