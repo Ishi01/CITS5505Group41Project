@@ -1,8 +1,8 @@
 """Add is_admin to User
 
 Revision ID: 2633c2d1b330
-Revises: 5649f99dbfa3
-Create Date: 2024-05-14 21:37:36.998880
+Revises: 1152b6c137ae
+Create Date: 2024-05-16 15:25:36.998880
 
 """
 from alembic import op
@@ -11,7 +11,7 @@ import sqlalchemy as sa
 
 # revision identifiers, used by Alembic.
 revision = '2633c2d1b330'
-down_revision = '5649f99dbfa3'
+down_revision = '1152b6c137ae'
 branch_labels = None
 depends_on = None
 

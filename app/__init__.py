@@ -11,9 +11,9 @@ migrate = Migrate()
 login = LoginManager()
 login.login_view = 'login'
 
-def create_app():
+def create_app(config_class=Config):
     app = Flask(__name__)
-    app.config.from_object(Config)
+    app.config.from_object(config_class)
 
     # Flask Session
     app.config['SESSION_TYPE'] = 'sqlalchemy'
