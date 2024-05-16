@@ -12,6 +12,9 @@
 <form action="{{ url_for('creategame.submit_game') }}" method="post" id="quizForm">
     <h2>Create Your Quiz Game</h2>
     <div class="form-group">
+        <label for="jsonInput">Upload JSON File:</label>
+        <input type="file" id="jsonInput" accept=".json">
+        <br>
         <label for="category">Game Type:</label>
         <select name="category" id="category" required>
             <option value="countries" default>World Map Game</option>
@@ -66,5 +69,6 @@
         <button type="submit" class="btn btn-primary">Submit Game</button>
         <div id="responseMessage" class="form-text" style="display: none;"></div>
     </div>
+    <button type="button" id="exportToJson" class="btn btn-link">Export to JSON</button>
 </form>
 {% endblock %}
