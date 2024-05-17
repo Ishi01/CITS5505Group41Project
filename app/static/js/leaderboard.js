@@ -1,18 +1,41 @@
 function updateLeaderboard() {
   $.getJSON("/get-rankings", function (data) {
-    var leaderboard = $("#leaderboard tbody");
-    // leaderboard.empty(); // Clear existing rows
+    var leaderboardContainer = $("#leaderboard-container");
+    leaderboardContainer.empty(); // Clear existing content
 
-    $.each(data.rank_list, function (i, entry) {
-      leaderboard.append(
-        "<tr><td>" +
+    $.each(data, function (game_name, entries) {
+      // Create a new div for each game leaderboard
+      var leaderboardDiv = $("<div>").addClass("leaderboard");
+
+      // Create a new table for each game
+      var table = $("<table>").addClass("table table-striped");
+      var thead = $("<thead>");
+      var tbody = $("<tbody>");
+      
+      thead.append(
+        "<tr><th scope='col'>Rank</th><th scope='col'>Username</th><th scope='col'>Correct Answers</th><th scope='col'>Attempts</th><th scope='col'>Completion Time</th></tr>"
+      );
+      table.append(thead);
+
+      $.each(entries, function (i, entry) {
+        tbody.append(
+          "<tr><td>" +
           (i + 1) +
           "</td><td>" +
           entry.username +
           "</td><td>" +
-          entry.total_score +
+          entry.correct_answers +
+          "</td><td>" +
+          entry.attempts +
+          "</td><td>" +
+          entry.completion_time +
           "</td></tr>"
-      );
+        );
+      });
+
+      table.append(tbody);
+      leaderboardDiv.append("<h3>" + game_name + "</h3>").append(table);
+      leaderboardContainer.append(leaderboardDiv);
     });
   });
 }

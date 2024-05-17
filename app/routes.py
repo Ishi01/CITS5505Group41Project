@@ -7,10 +7,11 @@ from app.forms import LoginForm, RegistrationForm
 from flask import flash, redirect, url_for
 from flask_login import current_user, login_user, logout_user, login_required
 import sqlalchemy as sa
-from .models import User, Game, QuizQuestion
+from .models import User, Game, QuizQuestion, GameLeaderboard
 from urllib.parse import urlsplit
 from flask import jsonify
 from sqlalchemy.sql import func
+from collections import defaultdict
 
 
 main = Blueprint('main', __name__)
@@ -117,34 +118,34 @@ def register():
         return redirect(url_for('main.login'))
     return render_template('register.html', title='Register', form=form)
 
-    
 @main.route('/get-rankings')
 def get_rankings():
+    # Query the game_leaderboard view for rankings
     rankings = db.session.query(
-        User.username,
-        func.sum(Game.result).label('total_score')
-    ).join(Game, Game.user_id == User.id) \
-     .group_by(User.id) \
-     .order_by(func.sum(Game.result).desc()) \
-     .all()
+        GameLeaderboard.username,
+        GameLeaderboard.game_name,
+        GameLeaderboard.correct_answers,
+        GameLeaderboard.attempts,
+        GameLeaderboard.completion_time
+    ).order_by(
+        GameLeaderboard.game_name,
+        GameLeaderboard.correct_answers.desc(),
+        GameLeaderboard.attempts.asc(),
+        GameLeaderboard.completion_time.asc()
+    ).all()
 
-    rank_list = [{'username': user, 'total_score': result} for user, result in rankings]
-    return jsonify(rank_list)
+    # Group rankings by game_name
+    grouped_rankings = defaultdict(list)
+    for ranking in rankings:
+        grouped_rankings[ranking.game_name].append({
+            'username': ranking.username,
+            'correct_answers': ranking.correct_answers,
+            'attempts': ranking.attempts,
+            'completion_time': ranking.completion_time
+        })
 
+    return jsonify(grouped_rankings)
 
 @main.route('/leaderboard')
 def leaderboard():
-    rankings = db.session.query(
-        User.username,
-        func.sum(Game.result).label('total_score')
-    ).join(Game, Game.user_id == User.id) \
-     .group_by(User.id) \
-     .order_by(func.sum(Game.result).desc()) \
-     .all()
-
-    rank_list = [{'username': user, 'total_score': result} for user, result in rankings]
-    
-    print("Rank List: ", rank_list)
-    
-    return render_template('leaderboard.html', rank_list=rank_list, enumerate=enumerate)
-    
+    return render_template('leaderboard.html')

@@ -66,3 +66,19 @@ class UserGameHistory(db.Model):
     
     def __repr__(self):
         return f'<UserGameHistory User "{self.user_id}" Game "{self.game_name}" Correct "{self.correct_answers}">'
+    
+class GameLeaderboard(db.Model):
+    __tablename__ = 'game_leaderboard'
+    __table_args__ = (
+        sa.PrimaryKeyConstraint('user_id', 'game_name'),
+    )
+
+    user_id: so.Mapped[int] = so.mapped_column(sa.Integer, primary_key=True)
+    username: so.Mapped[str] = so.mapped_column(sa.String(64))
+    game_name: so.Mapped[str] = so.mapped_column(sa.String(100), primary_key=True)
+    correct_answers: so.Mapped[int] = so.mapped_column(sa.Integer)
+    attempts: so.Mapped[int] = so.mapped_column(sa.Integer)
+    completion_time: so.Mapped[float] = so.mapped_column(sa.REAL)
+
+    def __repr__(self):
+        return f'<GameLeaderboard User "{self.username}" Game "{self.game_name}" Correct "{self.correct_answers}">'

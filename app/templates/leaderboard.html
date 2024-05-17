@@ -1,14 +1,9 @@
-{% extends "base.html" %} {% block header %} {{ super() }}
+{% extends "base.html" %} 
+{% block header %} 
+{{ super() }}
 <script src="{{ url_for('static', filename='js/leaderboard.js') }}"></script>
-<style>
-  body {
-    color: white;
-  }
-  .table thead th,
-  .table tbody td {
-    color: white;
-  }
-</style>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/leaderboard.css') }}" />
+
 {% endblock %} {% block content %}
 <div class="container-fluid">
   <div class="col-md-12 d-flex justify-content-center">
@@ -16,30 +11,8 @@
   </div>
 </div>
 <div class="container-fluid min-vh-100">
-  <div class="col-md-12 d-flex justify-content-center">
-    <table class="table table-striped" id="leaderboard">
-      <thead>
-        <tr>
-          <th scope="col">Rank</th>
-          <th scope="col">Username</th>
-          <th scope="col">Score</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for rank, entry in enumerate(rank_list, start=1) %}
-        <tr>
-          <td>{{ rank }}</td>
-          <td>
-            <a
-              href="{{ url_for('user.user_profile', user_name=entry.username) }}"
-              >{{ entry.username }}</a
-            >
-          </td>
-          <td>{{ entry.total_score }}</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+  <div class="col-md-12" id="leaderboard-container">
+    <!-- Leaderboard tables will be dynamically inserted here -->
   </div>
 </div>
 {% endblock %}
