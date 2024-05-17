@@ -1,0 +1,11 @@
+C:\Users\stuar\CITS5505Group41Project\myenv\Lib\site-packages\flask_session\filesystem\filesystem.py:57: DeprecationWarning: 'SESSION_FILE_DIR' is deprecated and will be removed in a future release. Instead pass FileSystemCache(directory, threshold, mode) instance as SESSION_CACHELIB.
+  warnings.warn(
+C:\Users\stuar\CITS5505Group41Project\myenv\Lib\site-packages\flask_session\filesystem\filesystem.py:75: DeprecationWarning: FileSystemSessionInterface is deprecated and will be removed in a future release. Instead use the CacheLib backend directly.
+  warnings.warn(
+.C:\Users\stuar\CITS5505Group41Project\tests\test_manage.py:87: LegacyAPIWarning: The Query.get() method is considered legacy as of the 1.x series of SQLAlchemy and becomes a legacy construct in 2.0. The method is now available as Session.get() (deprecated since: 2.0) (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9)
+  deleted_user = User.query.get(user_id)
+..
+----------------------------------------------------------------------
+Ran 3 tests in 0.936s
+
+OK

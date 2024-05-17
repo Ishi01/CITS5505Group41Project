@@ -193,34 +193,36 @@ def end_game_session():
 
 @worldmap.route('/submit-rating', methods=['POST'])
 def submit_rating():
-    if current_user.is_authenticated:
-        data = request.get_json()
-        rating_type = data.get('rating_type')
-        game_name = session.get('game_name')
+    if not current_user.is_authenticated:
+        return jsonify(success=False, error="User not authenticated")
+    
+    data = request.get_json()
+    rating_type = data.get('rating_type')
+    game_name = session.get('game_name')
 
-        if not game_name:
-            return jsonify(error="Game name not found in session"), 400
+    if not game_name:
+        return jsonify(error="Game name not found in session"), 400
 
-        if rating_type == 'positive':
-            feedback_value = 1
-        elif rating_type == 'negative':
-            feedback_value = 0
-        else:
-            return jsonify(error="Invalid rating type"), 400
+    if rating_type == 'positive':
+        feedback_value = 1
+    elif rating_type == 'negative':
+        feedback_value = 0
+    else:
+        return jsonify(error="Invalid rating type"), 400
 
-        # Check if feedback already exists
-        existing_feedback = Feedback.query.filter_by(game_name=game_name, user_id=current_user.id).first()
+    # Check if feedback already exists
+    existing_feedback = Feedback.query.filter_by(game_name=game_name, user_id=current_user.id).first()
 
-        if existing_feedback:
-            # Update the existing feedback
-            existing_feedback.feedback = feedback_value
-        else:
-            # Create a new feedback entry if it does not exist
-            feedback = Feedback(game_name=game_name, user_id=current_user.id, feedback=feedback_value)
-            # Add the new feedback to the database
-            db.session.add(feedback)
+    if existing_feedback:
+        # Update the existing feedback
+        existing_feedback.feedback = feedback_value
+    else:
+        # Create a new feedback entry if it does not exist
+        feedback = Feedback(game_name=game_name, user_id=current_user.id, feedback=feedback_value)
+        # Add the new feedback to the database
+        db.session.add(feedback)
 
-        # Commit changes to the database
-        db.session.commit()
+    # Commit changes to the database
+    db.session.commit()
 
     return jsonify(success=True)

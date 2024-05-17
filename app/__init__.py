@@ -1,5 +1,5 @@
 from flask import Flask
-from config import Config
+from config import Config, TestConfig
 from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -15,20 +15,23 @@ def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(config_class)
 
-    # Set default value for SCRIPT_MODE
-    app.config.setdefault('SCRIPT_MODE', False)
+    # Avoiding reinitializing extensions if they're already set up
+    # The tearDown() method doesn't seem to remove Session properly
+    if not hasattr(app, 'extensions_setup_done'):
+        db.init_app(app)
+        migrate.init_app(app, db)
+        login.init_app(app)
 
-    # Flask Session
-    app.config['SESSION_TYPE'] = 'sqlalchemy'
-    app.config['SESSION_SQLALCHEMY'] = db
-    app.config['SESSION_PERMANENT'] = False
+        if app.config['TESTING']:
+            app.config['SESSION_TYPE'] = 'filesystem'
+        else:
+            app.config['SESSION_TYPE'] = 'sqlalchemy'
+            app.config['SESSION_SQLALCHEMY'] = db
+        
+        Session(app)
+        app.extensions_setup_done = True
 
-    # Extensions
-    db.init_app(app)
-    migrate.init_app(app, db)
-    login.init_app(app)
-    Session(app)
-            
+    # Register blueprints
     from app.routes import main
     app.register_blueprint(main)
     from app.worldmap import worldmap

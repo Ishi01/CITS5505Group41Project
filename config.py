@@ -12,6 +12,12 @@ class Config:
         
 class TestConfig(Config):
     TESTING = True
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'  # Use in-memory database for testing
-    WTF_CSRF_ENABLED = False  # Disable CSRF protection for testing
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'
+    SECRET_KEY = os.environ.get('SECRET_KEY') or 'you-will-never-guess'
+    WTF_CSRF_ENABLED = False
+    SESSION_TYPE = 'filesystem'
+    SESSION_FILE_DIR = './test_sessions'
     SCRIPT_MODE = True
+    SERVER_NAME = 'localhost.localdomain'
+    SESSION_PERMANENT = False  # Ensure sessions don't 'expire' during tests
+    LOGIN_DISABLED = False

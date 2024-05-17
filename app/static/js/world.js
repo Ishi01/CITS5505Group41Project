@@ -512,6 +512,7 @@ $(document).ready(function () {
                 }
             },
             error: function (error) {
+                feedback(false, 'Error: ' + response.error, true);
                 console.error("Error submitting rating:", error);
             }
         });

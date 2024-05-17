@@ -46,9 +46,7 @@ def periodic_table():
         ) \
         .group_by(QuizQuestion.game_name) \
         .all()
-    print("fgdfgf")
-    print(game_info)
-    # Generate dummy data for the average rating
+
     # Calculate the average rating based on feedback
     locations = []
     for game in game_info:
@@ -79,6 +77,12 @@ def periodic_table():
 
     return render_template('periodic_table.html', svg_content=svg_content, locations=locations)
 
+@periodictable.route('/set-location', methods=['POST'])
+def set_location():
+    data = request.get_json()
+    print(data)
+    session['game_name'] = data['game_name']
+    return jsonify(success=True)
 
 @periodictable.route('/start-game-session')
 def start_game_session():
