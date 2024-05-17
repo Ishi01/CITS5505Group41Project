@@ -29,7 +29,12 @@
         {% for rank, entry in enumerate(rank_list, start=1) %}
         <tr>
           <td>{{ rank }}</td>
-          <td>{{ entry.username }}</td>
+          <td>
+            <a
+              href="{{ url_for('user.user_profile', user_name=entry.username) }}"
+              >{{ entry.username }}</a
+            >
+          </td>
           <td>{{ entry.total_score }}</td>
         </tr>
         {% endfor %}

@@ -57,8 +57,7 @@ flask db upgrade
 ### Add Fake Data
 
 ```
-pip install faker
-python fake_data.py
+python add_data.py
 ```
 
 ### Run Test File

@@ -15,6 +15,8 @@ def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(config_class)
 
+    # Set default value for SCRIPT_MODE
+    app.config.setdefault('SCRIPT_MODE', False)
 
     # Flask Session
     app.config['SESSION_TYPE'] = 'sqlalchemy'
@@ -27,14 +29,14 @@ def create_app(config_class=Config):
     login.init_app(app)
     Session(app)
 
-
-
     from app import models
     with app.app_context():
-        if not app.config['TESTING'] and 'quiz_questions' in inspect(db.engine).get_table_names():
+        # Only load quiz questions if not in testing or script mode
+        if not app.config['TESTING'] and not app.config['SCRIPT_MODE'] and 'quiz_questions' in inspect(db.engine).get_table_names():
             from app.load_data import load_quiz_questions
             load_quiz_questions()
-            
+
+    # Register blueprints
     from app.routes import main
     app.register_blueprint(main)
     from app.worldmap import worldmap
@@ -43,5 +45,5 @@ def create_app(config_class=Config):
     app.register_blueprint(creategame)
     from app.user import user
     app.register_blueprint(user)
-    
+
     return app
