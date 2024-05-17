@@ -72,7 +72,6 @@ class GameLeaderboard(db.Model):
     __table_args__ = (
         sa.PrimaryKeyConstraint('user_id', 'game_name'),
     )
-
     user_id: so.Mapped[int] = so.mapped_column(sa.Integer, primary_key=True)
     username: so.Mapped[str] = so.mapped_column(sa.String(64))
     game_name: so.Mapped[str] = so.mapped_column(sa.String(100), primary_key=True)

@@ -296,6 +296,7 @@ $(document).ready(function () {
                 $('#answerInput').prop('disabled', false);
                 $('#submitAnswerButton').prop('disabled', false);
                 $('#overlay').hide(); 
+                $('#feedback').hide();
                 // Start the timer
                 var serverStartTime = data.start_time * 1000; // Convert to milliseconds
                 window.timerInterval = setInterval(function () {
@@ -316,7 +317,7 @@ $(document).ready(function () {
             case 'end':
                 // Stop the timer and display results
                 clearInterval(window.timerInterval); // Stop the timer
-                feedback(`Game Over!<br>Total Time: ${data.total_time_spent}s<br>Score: ${data.score} out of ${data.total_questions}`);
+                feedback(`Game Over!<br>Total Time: ${data.total_time_spent}s<br>Score: ${data.score} out of ${data.total_questions}`, true);
 
                 $('#pass').hide(); // Hide the pass button
                 $('#submitAnswerButton').prop('disabled', true);
@@ -442,10 +443,16 @@ $(document).ready(function () {
         }
     }
 
-    function feedback(message) {
+    function feedback(message, endOfGame=false) {
         $('#feedback').stop(true, true);
-        $('#feedback').html(message);
-        $('#feedback').show().delay(5000).fadeOut(5000);
+        $('#feedback span').html(message);
+    
+        if (endOfGame) {
+            $('#feedback').show();
+            $('.rating-buttons').show();
+        } else {
+            $('#feedback').show().delay(3000).fadeOut(5000);
+        }
     }
 
     $('.location-row').click(function() {
