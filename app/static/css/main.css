@@ -15,8 +15,21 @@ a{
 
 /* container and background styling */
 
+
+.d-flex{
+    background-color: var(--dark_background);
+    color: var(--color_text);
+}
+
+.row {
+    background-color: var(--dark_background);
+    color: var(--color_text);
+    margin: 0%;
+}
+
+
 .container-fluid, .row > [class^="col-"] {
-    background-color: var(--light_background);
+    background-color: var(--dark_background);
     color: var(--color_text);
     margin: 0%;
 }
@@ -99,8 +112,8 @@ small {
 img {
     width: fit-content;
     height: auto;
+    cursor: pointer;
 }
-
 
 /* navbar styling */
 .navbar-nav {
