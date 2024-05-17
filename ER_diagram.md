@@ -6,6 +6,7 @@ erDiagram
         VARCHAR(64) username
         VARCHAR(120) email
         VARCHAR(128) password_hash
+        BOOLEAN is_admin
     }
     games {
         INTEGER id PK

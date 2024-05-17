@@ -173,7 +173,7 @@ def end_game_session():
     # Clear game-specific session variables
     keys_to_clear = ['questions', 'locations', 'answers', 'current_index', 'results', 'start_time', 'previous_time']
     for key in keys_to_clear:
-        session.pop(key, None)  # Remove each key safely
+        session.pop(key, None)
     return jsonify(success=True, total_time_spent=round(total_time_spent,2), score=score, total_questions=total_questions)
 
 @worldmap.route('/submit-rating', methods=['POST'])
