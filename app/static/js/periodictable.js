@@ -32,7 +32,7 @@ $(document).ready(function () {
         }
         if (currentMode === 0) {
             $('#answerInput').on('input', function () {
-                if (event.which != 13) { 
+                if (event.which != 13) {
                     highlightPathFromInput(currentMode); // Highlight country if text matches input
                 }
             });
@@ -55,7 +55,7 @@ $(document).ready(function () {
         }
         else if (currentMode === 1) {
             $('#answerInput').on('input', function () {
-                if (event.which != 13) { 
+                if (event.which != 13) {
                     highlightPathFromInput(currentMode); // Highlight country if text matches input
                 }
             });
@@ -78,7 +78,7 @@ $(document).ready(function () {
     // Function to reset SVG path styles to only the paths contained in selectedPaths
     function resetSVGStyles() {
         $(svgPath).each(function () {
-            if(isPathAllowed(getFirstClassName(this))) {
+            if (isPathAllowed(getFirstClassName(this))) {
                 $(this).css({
                     'fill': '',
                     'stroke': '',
@@ -116,7 +116,7 @@ $(document).ready(function () {
     // Apply selected style to a path
     function selectPathMode0(path) {
         let className = getFirstClassName(path);
-        if(isPathAllowed(className)) {
+        if (isPathAllowed(className)) {
             if (className) {
                 className = className.replace(/_/g, ' '); // Replace all underscores with spaces
                 $('#answerInput').val(className);
@@ -127,14 +127,14 @@ $(document).ready(function () {
     }
 
     function selectPathMode1(path) {
-        if(isPathAllowed(getFirstClassName(path))) {
+        if (isPathAllowed(getFirstClassName(path))) {
             updateSelectedCountriesDisplay(path);
         }
     }
 
     function updateSelectedCountriesDisplay(path) {
         let country = $(path).attr('class').split(/\s+/)[0];
-        let countryId = 'tab-' + country.replace(/\s+/g, '-') 
+        let countryId = 'tab-' + country.replace(/\s+/g, '-')
         let countryTab = $('#' + countryId);
         if (!countryTab.length) {
             // No existing tab for the country, add a new one
@@ -143,7 +143,7 @@ $(document).ready(function () {
                 class: 'country-tab',
                 text: country.replace(/_/g, ' '),
                 click: function () {
-                    removePath(path); 
+                    removePath(path);
                 }
             }).css({
                 transform: 'scale(0)',
@@ -155,15 +155,15 @@ $(document).ready(function () {
                     opacity: 1
                 });
             }, 10);
-            selectedPaths.push($('#' + getFirstClassName(path)));            
+            selectedPaths.push($('#' + getFirstClassName(path)));
             adjustTabsPosition();
-            $(document).trigger('tabs-update'); 
+            $(document).trigger('tabs-update');
             resetSVGStyles();
         } else {
             removePath(path);
         }
     }
-    
+
     function adjustTabsPosition() {
         // This function will adjust the flex positioning of the tabs
         var tabsCount = $('.country-tab').length;
@@ -178,9 +178,9 @@ $(document).ready(function () {
         let country = getFirstClassName(path);
         let countryId = 'tab-' + country.replace(/\s+/g, '-')
         $('#' + countryId).remove();
-        console.log($(svgPath+'.' + getFirstClassName(path)));
+        console.log($(svgPath + '.' + getFirstClassName(path)));
         selectedPaths = removePathFromSelected(country); // Update selectedPaths
-       
+
         adjustTabsPosition(); // Adjust the positions of remaining tabs
         $(document).trigger('tabs-update'); // Notify the document about the update
         resetSVGStyles();
@@ -197,11 +197,11 @@ $(document).ready(function () {
     }
 
     // Handler for mouseover to temporarily highlight SVG paths
-    
+
     $(svgPath).on('mouseover', function () {
         console.log(this);
         highlightPath(this);
-        
+
     });
 
     $(svgPath).on('mouseout', function () {
@@ -211,7 +211,7 @@ $(document).ready(function () {
     function highlightPathFromInput(currentMode) {
         try {
             let inputVal = $('#answerInput').val().replace(/ /g, '_'); // Convert spaces to underscores
-            let pathToHighlight = $(svgPath+'.' + inputVal);
+            let pathToHighlight = $(svgPath + '.' + inputVal);
             if (pathToHighlight.length) {
                 if (currentMode === 0) {
                     resetSVGStyles();
@@ -219,7 +219,7 @@ $(document).ready(function () {
                 } else if (currentMode === 1) {
                     // In Mode 1, add the path to the selection list if it's not already included
                     let className = getFirstClassName(pathToHighlight[0]);
-                    let pathClass = svgPath+'.' + className;
+                    let pathClass = svgPath + '.' + className;
                     if (!selectedPaths.includes(pathClass)) {
                         resetSVGStyles();
                         highlightPath(pathToHighlight);
@@ -229,11 +229,11 @@ $(document).ready(function () {
         } catch (error) {
         }
     }
-    
+
 
     function getFirstClassName(element) {
         return $(element).attr('class').split(/\s+/)[0];
-    }    
+    }
 
     function isPathAllowed(className) {
         return selectOnly.includes(className) || selectOnly.length === 0;
@@ -241,19 +241,19 @@ $(document).ready(function () {
 
     function isPathSelected(elementId) {
         return selectedPaths.some(pathObj =>
-            Object.values(pathObj).some(path => 
+            Object.values(pathObj).some(path =>
                 path.id === elementId
             )
         );
     }
-    
+
     function removePathFromSelected(className) {
         // Filter the selectedPaths array to exclude any paths that have the specified class
         return selectedPaths.filter(path => {
             return !path.hasClass(className);
         });
     }
-    
+
     //////////////////////////////////////
     //              Buttons             //
     //////////////////////////////////////
@@ -295,7 +295,7 @@ $(document).ready(function () {
                 $('#pass').show();
                 $('#answerInput').prop('disabled', false);
                 $('#submitAnswerButton').prop('disabled', false);
-                $('#overlay').hide(); 
+                $('#overlay').hide();
                 $('#feedback').hide();
                 // Start the timer
                 var serverStartTime = data.start_time * 1000; // Convert to milliseconds
@@ -317,13 +317,13 @@ $(document).ready(function () {
             case 'end':
                 // Stop the timer and display results
                 clearInterval(window.timerInterval); // Stop the timer
-                feedback(`Game Over!<br>Total Time: ${data.total_time_spent}s<br>Score: ${data.score} out of ${data.total_questions}`, true);
+                feedback(`Game Over!<br>Total Time: ${data.total_time_spent}s<br>Score: ${data.score} out of ${data.total_questions}`, false, true);
 
                 $('#pass').hide(); // Hide the pass button
                 $('#submitAnswerButton').prop('disabled', true);
                 $('#endGame').hide(); // Hide the end game button
                 $('#answerInput').prop('disabled', true);
-                $('#overlay').show(); 
+                $('#overlay').show();
                 break;
         }
     }
@@ -333,7 +333,7 @@ $(document).ready(function () {
         $.ajax({
             url: '/get-next-question',
             type: 'GET',
-            success: function(response) {
+            success: function (response) {
                 if (response.error) {
                     if (response.error === "No more questions or session not started") {
                         endGame();  // Call the function to handle end of the game
@@ -345,7 +345,7 @@ $(document).ready(function () {
                     updateGameUI('question', response);
                 }
             },
-            error: function(error) {
+            error: function (error) {
                 console.error("Error fetching next question:", error);
             }
         });
@@ -354,10 +354,15 @@ $(document).ready(function () {
     function submitAnswer() {
         var answerData;
         if (currentMode === 0) {
-            answerData = {
-                answer: [getCountryNameFromPath(selectedPaths[0]).replace(/_/g, ' ')],
-                question: $('#question').text()
-            };
+            if (selectedPaths.length > 0) {
+                answerData = {
+                    answer: [getCountryNameFromPath(selectedPaths[0]).replace(/_/g, ' ')],
+                    question: $('#question').text()
+                };
+            } else {
+                feedback('No element selected!');
+                return;
+            }
         } else {
             let selectedAnswerCountries = selectedPaths.map(function (path) {
                 if ($(path).length) {
@@ -377,15 +382,15 @@ $(document).ready(function () {
             contentType: 'application/json',
             data: JSON.stringify(answerData),
             success: function (response) {
-            if (response.is_correct) {
-                feedback('Correct!');
-            } else {
-                feedback('Incorrect. Try again!');
-                // Do something here? (lives?)
-            }
-            if (response.next_question) {
-                getNextQuestion();  // Fetch next question only on correct answer
-            }
+                if (response.is_correct) {
+                    feedback('Correct!');
+                } else {
+                    feedback('Incorrect. Try again!');
+                    // Do something here? (lives?)
+                }
+                if (response.next_question) {
+                    getNextQuestion();  // Fetch next question only on correct answer
+                }
             },
             error: function (error) {
                 console.error("Error checking answer:", error);
@@ -443,33 +448,81 @@ $(document).ready(function () {
         }
     }
 
-    function feedback(message, endOfGame=false) {
+    // Function to display feedback messages
+    function feedback(message1 = false, message2 = false, endOfGame = false) {
         $('#feedback').stop(true, true);
-        $('#feedback span').html(message);
+    
+        if (message1 !== false) {
+            $('#feedback span#feedback1').html(message1);
+        }
+        
+        if (message2 !== false) {
+            $('#feedback span#feedback2').html(message2).show();
+        } else {
+            $('#feedback span#feedback2').hide();
+        }
     
         if (endOfGame) {
             $('#feedback').show();
-            $('.rating-buttons').show();
+            $('.thumbs-up, .thumbs-down').show();
         } else {
             $('#feedback').show().delay(3000).fadeOut(5000);
+            $('.thumbs-up, .thumbs-down').hide();
         }
     }
+    
+    // Example usage
+    const data = {
+        total_time_spent: 123,
+        score: 10,
+        total_questions: 15
+    };
+    feedback(`Game Over!<br>Total Time: ${data.total_time_spent}s<br>Score: ${data.score} out of ${data.total_questions}`, false, true);
+    
 
-    $('.location-row').click(function() {
+    $('.thumbs-up').click(function () {
+        submitRating('positive');
+    });
+
+    $('.thumbs-down').click(function () {
+        submitRating('negative');
+    });
+
+    function submitRating(ratingType) {
+        $.ajax({
+            url: '/submit-rating',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({ rating_type: ratingType }),
+            success: function (response) {
+                if (response.success) {
+                    console.log('Rating submitted:', ratingType);
+                    feedback(false, 'Rating submitted! Thanks! ', true);
+                } else {
+                    feedback(false, 'Error: ' + response.error, true);
+                }
+            },
+            error: function (error) {
+                console.error("Error submitting rating:", error);
+            }
+        });
+    }
+
+    $('.location-row').click(function () {
         var selectedLocation = $(this).children('td').first().text();
         $.ajax({
             url: '/set-location',
             type: 'POST',
             data: JSON.stringify({ game_name: selectedLocation }),
             contentType: 'application/json;charset=UTF-8',
-            success: function(response) {
+            success: function (response) {
                 if (response.success) {
                     startGameSession();
                 }
             }
         });
     });
-    
+
 
     //////////////////////////////////////
     // World map zoom and pan functions //
@@ -480,7 +533,7 @@ $(document).ready(function () {
     let scaleSVG = 1;
     let minScale = 1;
     let maxScale = 1;
-    
+
     let boundBox = {
         xOffset: 0,
         yOffset: 0,

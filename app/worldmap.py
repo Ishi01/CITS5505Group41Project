@@ -11,7 +11,7 @@ from flask import (
     request,
     session,
 )
-from app.models import QuizQuestion, User, UserGameHistory
+from app.models import QuizQuestion, User, UserGameHistory, Feedback
 from flask_session import Session
 from app import db, login
 
@@ -41,22 +41,37 @@ def world():
             QuizQuestion.location,
             QuizQuestion.user_id,
             QuizQuestion.description,
-            sa.func.count(QuizQuestion.question_id).label('question_count')  # Assuming the primary key is named 'question_id'
+            db.func.count(QuizQuestion.question_id).label('question_count')  # Assuming the primary key is named 'question_id'
         ) \
         .group_by(QuizQuestion.game_name) \
         .all()
 
-    # Generate dummy data for the average rating
-    locations = [{
-        'name': game.game_name,
-        'user': 'admin' if (game.user_id == 0) else User.query.get(game.user_id).username,
-        'description': game.description,
-        'question_count': game.question_count,
-        'average_rating': round(random.uniform(1, 5), 2)  # Random average rating between 1 and 5
-    } for game in game_info]
+    # Calculate the average rating based on feedback
+    locations = []
+    for game in game_info:
+        feedbacks = Feedback.query \
+            .filter(Feedback.game_name == game.game_name) \
+            .with_entities(
+                db.func.sum(Feedback.feedback).label('sum_feedback'),
+                db.func.count().label('total_feedback')
+            ) \
+            .first()
+        
+        if feedbacks and feedbacks.total_feedback > 0:
+            average_rating = (feedbacks.sum_feedback / feedbacks.total_feedback) * 100
+        else:
+            average_rating = None  # Or set it to a default value, e.g., 0
 
-    # Sort locations by average rating in descending order
-    locations.sort(key=lambda x: x['average_rating'], reverse=True)
+        locations.append({
+            'name': game.game_name,
+            'user': 'admin' if (game.user_id == 0) else User.query.get(game.user_id).username,
+            'description': game.description,
+            'question_count': game.question_count,
+            'average_rating': average_rating
+        })
+
+    # Sort locations by average rating in descending order, handle None values appropriately
+    locations.sort(key=lambda x: x['average_rating'] if x['average_rating'] is not None else -1, reverse=True)
 
     return render_template('world.html', svg_content=svg_content, script="game", locations=locations)
 
@@ -178,14 +193,34 @@ def end_game_session():
 
 @worldmap.route('/submit-rating', methods=['POST'])
 def submit_rating():
-    data = request.get_json()
-    rating_type = data.get('rating_type')
+    if current_user.is_authenticated:
+        data = request.get_json()
+        rating_type = data.get('rating_type')
+        game_name = session.get('game_name')
 
-    if rating_type == 'positive':
-        pass ## replace with db function
-    elif rating_type == 'negative':
-        pass ## replace with db function
-    else:
-        return jsonify(error="Invalid rating type"), 400
+        if not game_name:
+            return jsonify(error="Game name not found in session"), 400
+
+        if rating_type == 'positive':
+            feedback_value = 1
+        elif rating_type == 'negative':
+            feedback_value = 0
+        else:
+            return jsonify(error="Invalid rating type"), 400
+
+        # Check if feedback already exists
+        existing_feedback = Feedback.query.filter_by(game_name=game_name, user_id=current_user.id).first()
+
+        if existing_feedback:
+            # Update the existing feedback
+            existing_feedback.feedback = feedback_value
+        else:
+            # Create a new feedback entry if it does not exist
+            feedback = Feedback(game_name=game_name, user_id=current_user.id, feedback=feedback_value)
+            # Add the new feedback to the database
+            db.session.add(feedback)
+
+        # Commit changes to the database
+        db.session.commit()
 
     return jsonify(success=True)
