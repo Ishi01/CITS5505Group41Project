@@ -120,13 +120,6 @@ svg:active {
   text-align: center;
 }
 
-#answerInput {
-  flex: 3;
-  padding: 8px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-}
-
 .button-container {
   flex: 4;
   display: flex;

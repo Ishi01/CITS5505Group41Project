@@ -16,9 +16,8 @@ a{
 /* container and background styling */
 
 .container-fluid, .row > [class^="col-"] {
-    background-color: var(--dark_background);
+    background-color: var(--light_background);
     color: var(--color_text);
-    align-items: center;
     margin: 0%;
 }
 

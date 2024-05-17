@@ -46,22 +46,24 @@
 <div id="tabsContainer">
 </div>
 
-<div class="container-fluid" style="height: 15vh;">
-  <div class="row align-items-center" style="width: 100%; padding-top: .2rem; padding-bottom: .2rem;">
-    <div class="col-md-4">
-      <p id="question" style="font-weight: bold; color: #c5c6c7;">Question:</p>
+
+<!-- This hardcoding is ugly but necessary due to the limitations of svg containers-->
+<div class="container-fluid align-items-center" style="height: 15vh;">
+  <div class="row flex-nowrap align-items-center " style="width: 100%; padding-top: .5%; padding-bottom: .2rem;">
+    <div class="col-md-5">
+      <p id="question" style="font-weight: bold; color: #c5c6c7;">Please Select a Quiz from the Table Above</p>
     </div>
 
     <div class="col-md-3">
-      <input type="text" id="answerInput" class="clickable-child" placeholder="Type your answer here">
+      <input type="text" id="answerInput" class="clickable-child"  style="padding: .2rem;" placeholder="Type your answer here">
     </div> 
 
     <div class="col-md-2">
-      <button id="submitAnswerButton" class="clickable-child" >Submit Answer</button>
+      <button id="submitAnswerButton" class="clickable-child btn btn-outline-primary" >Submit Answer</button>
     </div> 
 
-    <div class="col-md-2">
-      <button id="pass" class="clickable-child" style="display: none; width: 100%;">Pass</button>
+    <div class="col-md-1">
+      <button id="pass" class="clickable-child btn btn-outline-primary" style="display: none; width: 100%;">Pass</button>
     </div>
 
     <div class="col-md-1">

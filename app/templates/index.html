@@ -43,7 +43,7 @@
 
     <!--Buttons to select which game to start-->
     <div class="row justify-content-center">
-        <div class="col-3 d-flex align-items-center position-relative justify-content-center" onclick="location.href='{{ url_for('main.periodic_table')}}'"> <!-- <- ignore this compiler error, its caused by quotation shenanigans-->
+        <div class="col-3 d-flex align-items-center position-relative justify-content-center" onclick="location.href='{{ url_for('main.periodic_table') }}'"> <!-- <- ignore this compiler error, its caused by quotation shenanigans-->
             <!--Image credit: https://chemistrydocs.com/periodic-table-notes/-->
             <img src="{{ url_for('static', filename='/images/periodicbutton.png') }}" alt="Periodic Table Quiz Button" class="img-fluid rounded">
             <div class="stack-Txt position-absolute">

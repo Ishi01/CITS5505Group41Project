@@ -1,3 +1,11 @@
+:root {
+    --dark_background: #0b0c10;
+    --light_background: #1f2833;
+    --color_text: #c5c6c7;
+    --color_title: #1ce3a7;
+    --link_color: #66fcf1;
+}
+
 svg * {
     user-select: none;
 }
@@ -11,3 +19,82 @@ svg g text {
     place-items: center;
     margin: 0;
 }
+
+#NonMetals > path{
+    fill: rgb(86, 189, 223);
+}
+
+#AlkaliMetals > path{
+    fill: rgb(255, 50, 50);
+}
+
+#EarthMetals > path{
+    fill: rgb(255, 100, 100);
+}
+
+#SemiMetals > path{
+    fill: lightseagreen;
+}
+
+#Halogens > path{
+    fill: lightskyblue;
+}
+
+#InertGases > path{
+    fill: rgb(173, 240, 255);
+}
+
+#PTMetals > path{
+    fill: rgb(71, 226, 71);
+}
+
+#Unclass > path{
+    fill: rgb(3, 179, 3);
+}
+
+#TransMetals > path{
+    fill: green;
+}
+
+#Lanths > path{
+    fill: rgb(255, 187, 61);
+}
+
+#Actins > path{
+    fill: rgb(246, 160, 0);
+}
+
+#titleText{
+    fill: #c5c6c7!important;
+}
+
+#elementText > text {
+    fill: #000000;
+}
+
+#empty{
+    fill: #0b0c10;
+}
+
+g > text {
+    font-size: 1.5rem;
+    fill: var(--color_text);
+}
+
+
+g > path {
+    fill: var(--color_text);
+}
+
+g.top {
+    fill: var(--color_title);
+}
+
+.st1 {
+    color: var(--dark_background)!important;
+}
+
+#Layer_1{
+    background-color: var(--dark_background);
+}
+
