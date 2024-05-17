@@ -4,6 +4,7 @@
 {{ super() }}
 
 <script src="{{ url_for('static', filename='js/world.js') }}"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/feedback.css') }}" />
 <link rel="stylesheet" href="{{ url_for('static', filename='css/overlay.css') }}" />
 <link rel="stylesheet" href="{{ url_for('static', filename='css/bottombar.css') }}" />
 <link rel="stylesheet" href="{{ url_for('static', filename='css/world.css') }}" />
@@ -40,7 +41,15 @@
   </div>
 
 </div>
-<span id="feedback"></span>
+<div id="feedback" class="feedback" style="display: none;">
+  <div class="rating-buttons" style="display: none;">
+    <button class="thumbs-up">👍</button>
+  </div>
+  <span></span>
+  <div class="rating-buttons" style="display: none;">
+    <button class="thumbs-down">👎</button>
+  </div>
+</div>
 <div id="tabsContainer">
 </div>
 <div class="container">
@@ -51,7 +60,5 @@
     <button id="pass" class="clickable-child" style="display: none;">Pass</button>
     <span id="timer" class="clickable-child"></span>
   </div>
-  
-  <span id="feedback"></span>
 </div>
 {% endblock %}

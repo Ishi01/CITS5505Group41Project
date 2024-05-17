@@ -175,3 +175,17 @@ def end_game_session():
     for key in keys_to_clear:
         session.pop(key, None)  # Remove each key safely
     return jsonify(success=True, total_time_spent=round(total_time_spent,2), score=score, total_questions=total_questions)
+
+@worldmap.route('/submit-rating', methods=['POST'])
+def submit_rating():
+    data = request.get_json()
+    rating_type = data.get('rating_type')
+
+    if rating_type == 'positive':
+        pass ## replace with db function
+    elif rating_type == 'negative':
+        pass ## replace with db function
+    else:
+        return jsonify(error="Invalid rating type"), 400
+
+    return jsonify(success=True)

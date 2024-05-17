@@ -1,0 +1,36 @@
+#feedback {
+    font-size: 18px;
+    color: rgb(0, 0, 0);
+    margin-bottom: 12px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.05);
+    z-index: 1001;
+    display: flex;
+    align-items: center;
+    position: fixed;
+    justify-content: center;
+    pointer-events: none;
+    bottom: 22%;
+    left: 0;
+    width: 100%;
+}
+
+.feedback {
+    background-color: rgba(255, 255, 255, 0.50);
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.rating-buttons {
+    display: flex;
+    justify-content: space-around;
+    padding-top: 10px;
+}
+
+.rating-buttons button {
+    font-size: 24px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    user-select: all;
+}

@@ -291,6 +291,7 @@ $(document).ready(function () {
                 $('#answerInput').prop('disabled', false);
                 $('#submitAnswerButton').prop('disabled', false);
                 $('#overlay').hide(); 
+                $('#feedback').hide();
                 // Start the timer
                 var serverStartTime = data.start_time * 1000; // Convert to milliseconds
                 window.timerInterval = setInterval(function () {
@@ -299,6 +300,7 @@ $(document).ready(function () {
                     var seconds = Math.floor(elapsedTime / 1000); // Convert milliseconds to seconds
                     $('#timer').text(seconds + 's');
                 }, 1000); // Update the timer every second
+                
                 break;
             case 'question':
                 // Update the UI with the new question and reset necessary fields
@@ -332,7 +334,7 @@ $(document).ready(function () {
             case 'end':
                 // Stop the timer and display results
                 clearInterval(window.timerInterval); // Stop the timer
-                feedback(`Game Over!<br>Total Time: ${data.total_time_spent}s<br>Score: ${data.score} out of ${data.total_questions}`);
+                feedback(`Game Over!<br>Total Time: ${data.total_time_spent}s<br>Score: ${data.score} out of ${data.total_questions}`, true);
 
                 $('#pass').hide(); // Hide the pass button
                 $('#submitAnswerButton').prop('disabled', true);
@@ -342,6 +344,8 @@ $(document).ready(function () {
                 break;
         }
     }
+
+
 
     // Function to fetch the next question from the server
     function getNextQuestion() {
@@ -458,10 +462,43 @@ $(document).ready(function () {
         }
     }
 
-    function feedback(message) {
+    function feedback(message, endOfGame=false) {
         $('#feedback').stop(true, true);
-        $('#feedback').html(message);
-        $('#feedback').show().delay(5000).fadeOut(5000);
+        $('#feedback span').html(message);
+    
+        if (endOfGame) {
+            $('#feedback').show();
+            $('.rating-buttons').show();
+        } else {
+            $('#feedback').show().delay(3000).fadeOut(5000);
+        }
+    }
+    
+    $('.thumbs-up').click(function() {
+        submitRating('positive');
+    });
+
+    $('.thumbs-down').click(function() {
+        submitRating('negative');
+    });
+
+    function submitRating(ratingType) {
+        $.ajax({
+            url: '/submit-rating',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({rating_type: ratingType}),
+            success: function (response) {
+                if (response.success) {
+                    console.log('Rating submitted:', ratingType);
+                } else {
+                    alert('Error: ' + response.error);
+                }
+            },
+            error: function (error) {
+                console.error("Error submitting rating:", error);
+            }
+        });
     }
 
     $('.location-row').click(function() {

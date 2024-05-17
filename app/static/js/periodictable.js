@@ -133,7 +133,7 @@ $(document).ready(function () {
     }
 
     function updateSelectedCountriesDisplay(path) {
-        let country = $(path).attr('id').split(/\s+/)[0];
+        let country = $(path).attr('class').split(/\s+/)[0];
         let countryId = 'tab-' + country.replace(/\s+/g, '-') 
         let countryTab = $('#' + countryId);
         if (!countryTab.length) {
@@ -178,7 +178,7 @@ $(document).ready(function () {
         let country = getFirstClassName(path);
         let countryId = 'tab-' + country.replace(/\s+/g, '-')
         $('#' + countryId).remove();
-        console.log($(svgPath+'#' + getFirstClassName(path)));
+        console.log($(svgPath+'.' + getFirstClassName(path)));
         selectedPaths = removePathFromSelected(country); // Update selectedPaths
        
         adjustTabsPosition(); // Adjust the positions of remaining tabs
@@ -211,7 +211,7 @@ $(document).ready(function () {
     function highlightPathFromInput(currentMode) {
         try {
             let inputVal = $('#answerInput').val().replace(/ /g, '_'); // Convert spaces to underscores
-            let pathToHighlight = $(svgPath+'#' + inputVal);
+            let pathToHighlight = $(svgPath+'.' + inputVal);
             if (pathToHighlight.length) {
                 if (currentMode === 0) {
                     resetSVGStyles();
@@ -219,7 +219,7 @@ $(document).ready(function () {
                 } else if (currentMode === 1) {
                     // In Mode 1, add the path to the selection list if it's not already included
                     let className = getFirstClassName(pathToHighlight[0]);
-                    let pathClass = svgPath+'#' + className;
+                    let pathClass = svgPath+'.' + className;
                     if (!selectedPaths.includes(pathClass)) {
                         resetSVGStyles();
                         highlightPath(pathToHighlight);
@@ -232,7 +232,7 @@ $(document).ready(function () {
     
 
     function getFirstClassName(element) {
-        return $(element).attr('id').split(/\s+/)[0];
+        return $(element).attr('class').split(/\s+/)[0];
     }    
 
     function isPathAllowed(className) {
@@ -434,7 +434,7 @@ $(document).ready(function () {
 
     function getCountryNameFromPath(path) {
         let $path = $(path);
-        let className = $path.attr('id').split(/\s+/)[0];
+        let className = $path.attr('class').split(/\s+/)[0];
         if (className) {
             return className.replace(/_/g, ' '); // Replace underscores with spaces
         } else {

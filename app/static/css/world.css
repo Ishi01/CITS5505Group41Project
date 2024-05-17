@@ -49,22 +49,7 @@ svg:active {
   cursor: grabbing;
 }
 
-#feedback {
-  font-size: 18px;
-  color: rgb(0, 0, 0);
-  margin-top: 0px;
-  margin-bottom: 12px;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.05);
-  z-index: 1001;
-  display: flex;
-  align-items: center;
-  position: fixed;
-  justify-content: center;
-  pointer-events: none;
-  bottom: 22%;
-  left: 0;
-  width: 100%;
-}
+
 
 #tabsContainer {
   position: fixed;

@@ -99,10 +99,10 @@ def check_game_name():
 def get_data(category):
     if category == 'countries':
         svg_path = os.path.join(current_app.root_path, 'static', 'world.svg')
-        path_selector = r'<path.*?class="(.*?)"'
+        path_selector = r'<path[^>]*?\bclass="([^"\s]*)'
     elif category == 'elements':
         svg_path = os.path.join(current_app.root_path, 'static', 'pt.svg')
-        path_selector = r'<path.*?id="(.*?)"'
+        path_selector = r'<path[^>]*?\bclass="([^"\s]*)'
     else:
         return jsonify([])  # Return empty list if category is not recognized
 
