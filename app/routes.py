@@ -148,4 +148,28 @@ def get_rankings():
 
 @main.route('/leaderboard')
 def leaderboard():
-    return render_template('leaderboard.html')
+    # Query the game_leaderboard view for rankings
+    rankings = db.session.query(
+        GameLeaderboard.username,
+        GameLeaderboard.game_name,
+        GameLeaderboard.correct_answers,
+        GameLeaderboard.attempts,
+        GameLeaderboard.completion_time
+    ).order_by(
+        GameLeaderboard.game_name,
+        GameLeaderboard.correct_answers.desc(),
+        GameLeaderboard.attempts.asc(),
+        GameLeaderboard.completion_time.asc()
+    ).all()
+
+    # Group rankings by game_name
+    grouped_rankings = defaultdict(list)
+    for ranking in rankings:
+        grouped_rankings[ranking.game_name].append({
+            'username': ranking.username,
+            'correct_answers': ranking.correct_answers,
+            'attempts': ranking.attempts,
+            'completion_time': ranking.completion_time
+        })
+
+    return render_template('leaderboard.html', grouped_rankings=grouped_rankings, enumerate=enumerate)

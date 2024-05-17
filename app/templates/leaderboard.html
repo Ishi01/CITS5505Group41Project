@@ -1,7 +1,7 @@
 {% extends "base.html" %} 
 {% block header %} 
 {{ super() }}
-<script src="{{ url_for('static', filename='js/leaderboard.js') }}"></script>
+<!-- <script src="{{ url_for('static', filename='js/leaderboard.js') }}"></script> -->
 <link rel="stylesheet" href="{{ url_for('static', filename='css/leaderboard.css') }}" />
 
 {% endblock %} {% block content %}
@@ -11,8 +11,37 @@
   </div>
 </div>
 <div class="container-fluid min-vh-100">
-  <div class="col-md-12" id="leaderboard-container">
-    <!-- Leaderboard tables will be dynamically inserted here -->
+  <div class="col-md-12" id="leaderboard-container" data-user-profile-base-url="{{ url_for('user.user_profile', user_name='') }}">
+    {% for game_name, entries in grouped_rankings.items() %}
+    <div class="leaderboard">
+      <h3>{{ game_name }}</h3>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Rank</th>
+            <th scope="col">Username</th>
+            <th scope="col">Correct Answers</th>
+            <th scope="col">Attempts</th>
+            <th scope="col">Completion Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for rank, entry in enumerate(entries, start=1) %}
+          <tr>
+            <td>{{ rank }}</td>
+            <td>
+              <a href="{{ url_for('user.user_profile', user_name=entry.username) }}"
+                >{{ entry.username }}</a>
+            </td>
+            <td>{{ entry.correct_answers }}</td>
+            <td>{{ entry.attempts }}</td>
+            <td>{{ entry.completion_time }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% endfor %}
   </div>
 </div>
 {% endblock %}

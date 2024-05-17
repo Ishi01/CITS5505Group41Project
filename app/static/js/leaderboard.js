@@ -1,44 +1,49 @@
-function updateLeaderboard() {
-  $.getJSON("/get-rankings", function (data) {
-    var leaderboardContainer = $("#leaderboard-container");
-    leaderboardContainer.empty(); // Clear existing content
+$(document).ready(function() {
+  function updateLeaderboard() {
+    // Retrieve the base URL from the data attribute
+    var userProfileBaseUrl = $("#leaderboard-container").data("user-profile-base-url");
 
-    $.each(data, function (game_name, entries) {
-      // Create a new div for each game leaderboard
-      var leaderboardDiv = $("<div>").addClass("leaderboard");
+    $.getJSON("/get-rankings", function (data) {
+      var leaderboardContainer = $("#leaderboard-container");
+      leaderboardContainer.empty(); // Clear existing content
 
-      // Create a new table for each game
-      var table = $("<table>").addClass("table table-striped");
-      var thead = $("<thead>");
-      var tbody = $("<tbody>");
-      
-      thead.append(
-        "<tr><th scope='col'>Rank</th><th scope='col'>Username</th><th scope='col'>Correct Answers</th><th scope='col'>Attempts</th><th scope='col'>Completion Time</th></tr>"
-      );
-      table.append(thead);
+      $.each(data, function (game_name, entries) {
+        // Create a new div for each game leaderboard
+        var leaderboardDiv = $("<div>").addClass("leaderboard");
 
-      $.each(entries, function (i, entry) {
-        tbody.append(
-          "<tr><td>" +
-          (i + 1) +
-          "</td><td>" +
-          entry.username +
-          "</td><td>" +
-          entry.correct_answers +
-          "</td><td>" +
-          entry.attempts +
-          "</td><td>" +
-          entry.completion_time +
-          "</td></tr>"
+        // Create a new table for each game
+        var table = $("<table>").addClass("table table-striped");
+        var thead = $("<thead>");
+        var tbody = $("<tbody>");
+        
+        thead.append(
+          "<tr><th scope='col'>Rank</th><th scope='col'>Username</th><th scope='col'>Correct Answers</th><th scope='col'>Attempts</th><th scope='col'>Completion Time</th></tr>"
         );
+        table.append(thead);
+
+        $.each(entries, function (i, entry) {
+          // Construct the profile URL using the base URL
+          var profileUrl = userProfileBaseUrl + entry.username;
+          tbody.append(
+            "<tr><td>" +
+            (i + 1) +
+            "</td><td><a href='" + profileUrl + "'>" + entry.username + "</a></td><td>" +
+            entry.correct_answers +
+            "</td><td>" +
+            entry.attempts +
+            "</td><td>" +
+            entry.completion_time +
+            "</td></tr>"
+          );
+        });
+
+        table.append(tbody);
+        leaderboardDiv.append("<h3>" + game_name + "</h3>").append(table);
+        leaderboardContainer.append(leaderboardDiv);
       });
-
-      table.append(tbody);
-      leaderboardDiv.append("<h3>" + game_name + "</h3>").append(table);
-      leaderboardContainer.append(leaderboardDiv);
     });
-  });
-}
+  }
 
-// Initial update
-updateLeaderboard();
+  // Initial update
+  updateLeaderboard();
+});
