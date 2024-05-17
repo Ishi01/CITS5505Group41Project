@@ -11,15 +11,21 @@ from flask import (
     request,
     session,
 )
-from app.models import QuizQuestion, User
+from app.models import QuizQuestion, User, UserGameHistory
 from flask_session import Session
-
+from app import db, login
 
 worldmap = Blueprint('worldmap', __name__)
 
 import random
 from flask import render_template, current_app
 from os import path
+from flask_login import LoginManager, current_user
+
+@login.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
 
 @worldmap.route('/world')
 def world():
@@ -142,12 +148,33 @@ def end_game_session():
     # Assuming each correct answer is stored as True in a list of results.
     score = sum(result[0] for result in session.get('results', {}).values())
     total_questions = len(session['questions'])
+    attempts = sum(result[2] for result in session.get('results', {}).values())
 
     print( session.get('results', {}).values())
     print( session.get('results'))
     print(score, total_questions)
     #### Write to leaderboard / database here ####
 
-    # Clear all session variables
-    session.clear()
+    if current_user.is_authenticated:
+        new_history = UserGameHistory(
+            user_id=current_user.id,
+            game_name=session.get('game_name'),
+            correct_answers=score,
+            attempts=attempts,
+            completion_time=total_time_spent
+        )
+        # Add the record to the session and commit to the database
+        db.session.add(new_history)
+        db.session.commit()
+    else:
+        
+        ### Make some kind of function here that tells the user to login to save
+        pass
+
+
+
+    # Clear game-specific session variables
+    keys_to_clear = ['questions', 'locations', 'answers', 'current_index', 'results', 'start_time', 'previous_time']
+    for key in keys_to_clear:
+        session.pop(key, None)  # Remove each key safely
     return jsonify(success=True, total_time_spent=round(total_time_spent,2), score=score, total_questions=total_questions)

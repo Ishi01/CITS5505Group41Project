@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block header %}
+{{ super() }}
+<script src="{{ url_for('static', filename='js/manage.js') }}"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/manage.css') }}" />
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Manage Games and Users</h2>
+
+    <section>
+        <h3>Games</h3>
+        <ul>
+            {% for game in games %}
+            <li>{{ game.game_name }} - <button onclick="deleteGame('{{ game.game_name }}')">Delete Game</button></li>
+            {% endfor %}
+        </ul>
+    </section>
+
+    <section>
+        <h3>Users</h3>
+        <ul>
+            {% for user in users %}
+            <li>{{ user.username }} ({{ user.email }}) - <button onclick="deleteUser('{{ user.id }}')">Delete User</button></li>
+            {% endfor %}
+        </ul>
+    </section>
+</div>
+{% endblock %}
