@@ -38,6 +38,10 @@
                 <li class="nav-item">
                     <a class="btn btn-outline-primary" href="{{ url_for('worldmap.world') }}">World Map</a>
                 </li>
+                <li class="nav-item">
+                    <a class="btn btn-outline-primary" href="{{ url_for('main.leaderboard') }}">Leaderboard</a>
+                </li>
+                
                 {% if current_user.is_anonymous %}
                 <li class="nav-item">
                     <a class="btn btn-outline-primary" href="{{ url_for('main.login') }}">Login</a>
@@ -49,6 +53,7 @@
                 <li class="nav-item">
                     <a class="btn btn-outline-primary" href="{{ url_for('main.logout') }}">Logout</a>
                 </li>
+               
                 {% endif %}
             </ul>
         </div>

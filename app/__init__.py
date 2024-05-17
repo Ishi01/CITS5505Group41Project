@@ -15,6 +15,9 @@ def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(config_class)
 
+    # Set default value for SCRIPT_MODE
+    app.config.setdefault('SCRIPT_MODE', False)
+
     # Flask Session
     app.config['SESSION_TYPE'] = 'sqlalchemy'
     app.config['SESSION_SQLALCHEMY'] = db

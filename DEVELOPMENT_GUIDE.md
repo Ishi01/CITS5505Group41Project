@@ -4,22 +4,25 @@ This guide provides detailed instructions for setting up development environment
 
 ## Setting Up Development Environment
 
-
 1. Create a virtual environment:
    ```sh
    python3 -m venv venv
    ```
 2. Activate the virtual environment
    Activate the virtual environment every time you start a new terminal session.
+
    - On Windows:
-  
-    ```
-    venv\Scripts\activate
-    ```
+
+   ```
+   venv\Scripts\activate
+   ```
+
    - On MacOS/Linux:
-    ```
-    source venv/bin/activate
-    ```
+
+   ```
+   source venv/bin/activate
+   ```
+
 3. Installing Dependencies
    ```sh
     pip install -r requirements_macos.txt  # For macOS
@@ -31,8 +34,6 @@ This guide provides detailed instructions for setting up development environment
 
 ## Database Setup
 
-
-  
 ### Creating Migrations
    
    Whenever make changes to the database models, create a migration script:
@@ -66,6 +67,19 @@ This guide provides detailed instructions for setting up development environment
 
 ## Testing
 
+### Add Fake Data
+
+```
+python add_data.py
+```
+
+### Run Test File
+
+```
+python -m unittest test_leaderboard.py
+```
+
+
    **To be completed:**
    For now testing can be complete with: 
    ```sh
@@ -77,10 +91,10 @@ This guide provides detailed instructions for setting up development environment
    ```
 
 ## Updating Requirements
-Whenever you add a new dependency, update the appropriate requirements_*.txt file and ensure it's documented:
-```sh
+Whenever you add a new dependency, update the appropriate requirements\_\*.txt file and ensure it's documented:
+```
 pip freeze > requirements_macos.txt  # For macOS
 ```
-```sh
+```
 pip freeze > requirements_windows.txt  # For Windows
 ```
