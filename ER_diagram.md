@@ -27,4 +27,14 @@ erDiagram
         VARCHAR(100) location
     }
 
+    users ||--o{ user_game_history : "has history in"
+    user_game_history {
+        INTEGER id PK
+        INTEGER user_id FK
+        VARCHAR(100) game_name
+        INTEGER correct_answers
+        INTEGER attempts
+        REAL completion_time
+    }
+
 ```
