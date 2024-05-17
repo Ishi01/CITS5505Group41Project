@@ -1,11 +1,45 @@
+import click
 import json
-from app import db
-from app.models import QuizQuestion
+from flask import current_app
 from flask.cli import with_appcontext
 
+
+@click.command('add-all')
 @with_appcontext
-def load_quiz_questions():
-    # Check if any data already exists in the database
+def add_all():
+    # Invoke the commands directly using the click runner
+    runner = current_app.test_cli_runner()
+    result_admin = runner.invoke(current_app.cli.get_command(current_app, 'add-admin'))
+    result_test = runner.invoke(current_app.cli.get_command(current_app, 'add-test'))
+
+    if result_admin.exit_code == 0:
+        click.echo(result_admin.output)
+    else:
+        click.echo(f'Error creating admin user: {result_admin.output}')
+
+    if result_test.exit_code == 0:
+        click.echo(result_test.output)
+    else:
+        click.echo(f'Error adding test questions: {result_test.output}')
+
+@click.command('add-admin')
+@with_appcontext
+def add_admin():
+    from app.models import User, db  # Import within function to avoid import issues
+    admin_email = 'admin@admin.com'
+    if User.query.filter_by(email=admin_email).first() is None:
+        admin_user = User(username='admin', email=admin_email, is_admin=True)
+        admin_user.set_password(current_app.config['ADMIN_PASSWORD'])
+        db.session.add(admin_user)
+        db.session.commit()
+        click.echo('Admin user created successfully.')
+    else:
+        click.echo('Admin user already exists.')
+
+@click.command('add-test')
+@with_appcontext
+def add_test():
+    from app.models import QuizQuestion, db
     if QuizQuestion.query.first() is None:
         # Data from the dictionary
         qa_dict = {
@@ -64,7 +98,6 @@ def load_quiz_questions():
                 },
             }
         }
-
         # Populate the database
         for category, games in qa_dict.items():
             for game_name, game_info in games.items():
@@ -84,4 +117,11 @@ def load_quiz_questions():
                         db.session.add(question)
 
         db.session.commit()
-        print(f"Loaded quiz questions into the database.")
+        click.echo('Loaded quiz questions into the database.')
+    else:
+        click.echo('Quiz questions already exist in the database.')
+
+def register_commands(app):
+    app.cli.add_command(add_all)
+    app.cli.add_command(add_admin)
+    app.cli.add_command(add_test)

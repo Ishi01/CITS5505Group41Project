@@ -5,7 +5,7 @@ This guide provides detailed instructions for setting up development environment
 ## Setting Up Development Environment
 
 1. Create a virtual environment:
-   ```
+   ```sh
    python3 -m venv venv
    ```
 2. Activate the virtual environment
@@ -24,33 +24,46 @@ This guide provides detailed instructions for setting up development environment
    ```
 
 3. Installing Dependencies
-   ```
+   ```sh
     pip install -r requirements_macos.txt  # For macOS
    ```
-   or
-   ```
-   pip install -r requirements_windows.txt  # For Windows
+     or
+   ```sh
+    pip install -r requirements_windows.txt  # For Windows
    ```
 
 ## Database Setup
 
 ### Creating Migrations
-
-Whenever make changes to the database models, create a migration script:
-
-```
-flask db migrate -m "description_of_changes"
-```
-
-Commit the generated migration scripts to version control system
-
+   
+   Whenever make changes to the database models, create a migration script:
+   ```sh
+   flask db migrate -m "description_of_changes"
+   ```
+   Commit the generated migration scripts to version control system
 ### Applying Migrations
+   When there are new migrations added to the project, apply migrations to update the database,run:
+   ```sh
+   flask db upgrade
+   ```
 
-When there are new migrations added to the project, apply migrations to update the database,run:
+### Initialsing Admin User
 
-```
-flask db upgrade
-```
+   First, set a local environment variable for ADMIN_PASSWORD
+   ```sh
+    export ADMIN_PASSWORD=your_password  # For macOS
+   ```
+   or
+   ```sh
+    set ADMIN_PASSWORD=your_password  # For Windows
+   ```
+
+   Then run:
+   ```sh
+    flask add-admin
+   ```
+
+   The username will be `admin` with the password set as your ADMIN_PASSWORD environment variable.
 
 ## Testing
 
@@ -66,14 +79,22 @@ python add_data.py
 python -m unittest test_leaderboard.py
 ```
 
+
+   **To be completed:**
+   For now testing can be complete with: 
+   ```sh
+   flask add-test
+   ```
+   or to add both the admin and test data
+   ```sh
+   flask add-all
+   ```
+
 ## Updating Requirements
-
 Whenever you add a new dependency, update the appropriate requirements\_\*.txt file and ensure it's documented:
-
 ```
 pip freeze > requirements_macos.txt  # For macOS
 ```
-
 ```
 pip freeze > requirements_windows.txt  # For Windows
 ```

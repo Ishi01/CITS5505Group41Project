@@ -4,7 +4,7 @@ from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
-from sqlalchemy import inspect
+from app.commands import register_commands
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -28,22 +28,18 @@ def create_app(config_class=Config):
     migrate.init_app(app, db)
     login.init_app(app)
     Session(app)
-
-    from app import models
-    with app.app_context():
-        # Only load quiz questions if not in testing or script mode
-        if not app.config['TESTING'] and not app.config['SCRIPT_MODE'] and 'quiz_questions' in inspect(db.engine).get_table_names():
-            from app.load_data import load_quiz_questions
-            load_quiz_questions()
-
-    # Register blueprints
+            
     from app.routes import main
     app.register_blueprint(main)
     from app.worldmap import worldmap
     app.register_blueprint(worldmap)
     from app.creategame import creategame
     app.register_blueprint(creategame)
+    from app.manage import manage
+    app.register_blueprint(manage)
     from app.user import user
     app.register_blueprint(user)
+    
+    register_commands(app)
 
     return app
