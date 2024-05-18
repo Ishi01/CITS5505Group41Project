@@ -1,7 +1,17 @@
 @import url("base.css");
 @import url("overlay.css");
 @import url("bottombar.css");
+@import url("questioncontainer.css");
 @import url("feedback.css");
+
+/* Overwrite questioncontainer text colour (from questioncontainer.css)*/
+#question {
+    color: #e7e7e7;
+}
+/* Overwrite timer text colour (from questioncontainer.css)*/
+#timer {
+    color: #e7e7e7;
+}
 
 html,
 body {

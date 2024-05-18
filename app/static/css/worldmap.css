@@ -1,6 +1,7 @@
 @import url("base.css");
 @import url("overlay.css");
 @import url("bottombar.css");
+@import url("questioncontainer.css");
 @import url("feedback.css");
 
 :root {
@@ -32,7 +33,6 @@ svg * {
 #svg-container {
   will-change: transform;
   border: none;
-  display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
@@ -62,8 +62,6 @@ svg:active {
 /* TABS CSS - TABS CSS - TABS CSS */
 
 #tabsContainer {
-  position: fixed;
-  bottom: 60px;
   /* Adjust the value based on the height of the input container */
   left: 0;
   width: 100%;

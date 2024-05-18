@@ -1,0 +1,28 @@
+.question-container {
+    position: absolute;
+    top: 1vh;  /* Align top to maintain the vertical margin */
+    left: 0;   /* Align left edge of container to the left edge of the viewport */
+    right: 0;  /* Align right edge of container to the right edge of the viewport */
+    user-select: none;
+    pointer-events: none;
+    display: flex;
+    align-items: center;     /* Center vertically in the flex container */
+    text-align: center;
+    background-color: #33333307;
+    padding: 0 10px; /* Ensure content doesn't touch the screen edges */
+}
+
+#question {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    flex: 1;                /* Allows the question to take up flex space */
+    text-align: center;     /* Center the text of the question */
+}
+
+.timer-container {
+    display: flex;          /* Ensures the timer components are in line */
+    align-items: center;    /* Center align the timer components vertically */
+    margin-left: auto;      /* Pushes the timer container to the right */
+    padding-right: 10px;    /* Adds padding to the right for spacing */
+}
