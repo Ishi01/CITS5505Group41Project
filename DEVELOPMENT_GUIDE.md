@@ -67,6 +67,16 @@ This guide provides detailed instructions for setting up development environment
 
 ## Testing
 
+### Unit Tests
+
+Unit tests can be run with the following command
+
+```sh
+python -m unittest discover -s ./tests -p "test_*.py"
+```
+
+### System Tests
+
 ### Add Fake Data
 
 ```

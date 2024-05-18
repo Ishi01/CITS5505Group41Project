@@ -3,6 +3,9 @@ from app.models import User
 from werkzeug.security import generate_password_hash
 
 class AuthTestCase(BaseTestCase):
+    def setUp(self):
+        super().setUp()
+
     def test_login_page(self):
         response = self.client.get('/login')
         self.assertEqual(response.status_code, 200)
@@ -35,9 +38,43 @@ class AuthTestCase(BaseTestCase):
             'username': 'newuser',
             'email': 'new@example.com',
             'password': 'newpassword123',
-            'password2': 'newpassword123'  # Assume your form has a confirm password field
+            'password2': 'newpassword123' 
         }, follow_redirects=True)
         self.assertIn(b'Congratulations, you are now a registered user!', response.data)
+
+    def test_registration_with_invalid_email(self):
+        response = self.client.post('/register', data={
+            'username': 'newuser',
+            'email': 'invalid-email',
+            'password': 'newpassword123',
+            'password2': 'newpassword123'
+        }, follow_redirects=True)
+        self.assertIn(b'Invalid email address', response.data)
+
+    # Test for submitting a form with an empty username
+    def test_registration_with_empty_username(self):
+        response = self.client.post('/register', data={
+            'username': '',  # Empty username
+            'email': 'user@example.com',
+            'password': 'password123',
+            'password2': 'password123'
+        }, follow_redirects=True)
+        self.assertIn(b'This field is required.', response.data)
+
+    # Test for attempting to register with a duplicate email
+    def test_unsuccessful_registration_with_duplicate_email(self):
+        user = User(username='userone', email='duplicate@example.com')
+        db.session.add(user)
+        db.session.commit()
+
+        # Try to register with the same email
+        response = self.client.post('/register', data={
+            'username': 'usertwo',
+            'email': 'duplicate@example.com',  # Duplicate email
+            'password': 'newpassword123',
+            'password2': 'newpassword123'
+        }, follow_redirects=True)
+        self.assertIn(b'Please use a different email address.', response.data)
 
     def test_logout(self):
         # Log in a user
@@ -46,3 +83,6 @@ class AuthTestCase(BaseTestCase):
         # Now log out
         response = self.client.get('/logout', follow_redirects=True)
         self.assertIn(b"Home", response.data)
+
+    def tearDown(self):
+        super().tearDown()

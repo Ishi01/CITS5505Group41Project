@@ -10,13 +10,16 @@ class Config:
         'sqlite:///' + os.path.join(basedir, 'app.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False 
     SCRIPT_MODE = False   
-    SESSION_TYPE = 'filesystem'
-    SESSION_FILE_DIR = None  # Ensure this is not set
+    SESSION_TYPE = 'sqlalchemy'
+    SESSION_SQLALCHEMY_TABLE = 'sessions'
     SESSION_PERMANENT = False
-    SESSION_USE_SIGNER = True
-    SESSION_FILE_THRESHOLD = 500
-    SESSION_CACHE = FileSystemCache('/path/to/session/dir', threshold=500, mode=0o600)
-        
+
+## Development Config
+class DevelopmentConfig(Config):
+    DEBUG = True
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL') or 'sqlite:///' + os.path.join(basedir, 'dev.db')
+
+## Testing Config
 class TestConfig(Config):
     TESTING = True
     SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'
@@ -29,3 +32,7 @@ class TestConfig(Config):
     SESSION_PERMANENT = False  # Ensure sessions don't 'expire' during tests
     LOGIN_DISABLED = False
     SESSION_CACHE = FileSystemCache('./test_sessions', threshold=500, mode=0o600)
+
+## Deployment Config
+class DeploymentConfig(Config):
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or 'sqlite:///' + os.path.join(basedir, 'prod.db')
