@@ -1,10 +1,7 @@
-/* color scheming */
-:root {
-    --dark_background: #0b0c10;
-    --light_background: #1f2833;
-    --color_text: #c5c6c7;
-    --color_title: #1ce3a7;
-    --link_color: #66fcf1;
+@import url("base.css");
+
+html {
+    background-color: var(--dark_background);
 }
 
 /*link styling */
@@ -15,8 +12,22 @@ a{
 
 /* container and background styling */
 
-.container-fluid, .row{
+
+.d-flex{
     background-color: var(--dark_background);
+    color: var(--color_text);
+}
+
+.row {
+    background-color: var(--dark_background);
+    color: var(--color_text);
+    margin: 0%;
+}
+
+
+.container-fluid, .row > [class^="col-"] {
+    background-color: var(--dark_background);
+    color: var(--color_text);
     margin: 0%;
 }
 
@@ -26,13 +37,22 @@ a{
 
 }
 
+/*button styling */
+.btn-secondary{
+    color: var(--color_text);
+    border-color: var(--color_text);
+    background-color: var(--light_background);
+    margin-top: .2rem;
+    margin-bottom: .2rem;
+}
+
 /* Image styling */
 
 img {
     width: fit-content;
     height: auto;
+    cursor: pointer;
 }
-
 
 /* navbar styling */
 .navbar-nav {
@@ -43,7 +63,6 @@ img {
 .nav-item{
     padding-left: 8px;
 }
-
  .nav-item > .btn-outline-primary, #homepagebutton{
     color: var(--link_color);
     border-color: var(--link_color);
@@ -78,7 +97,7 @@ h4 {
     1px -1px 0 #000;
 }
 
-/* this auto finds text within the {{ }} style input and styles them, temp prototype since this will probably cause problems */
+/* this auto finds text within the {{ }} style input and styles them */
 p > label, #floating_text{
     color: var(--color_text);
     margin-bottom: .2rem;

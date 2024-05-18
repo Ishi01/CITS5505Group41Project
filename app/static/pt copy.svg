@@ -1,160 +1,158 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 21.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 800 450" xml:space="preserve">
+	 viewBox="0 0 800 450" style="enable-background:new 0 0 800 450;" xml:space="preserve">
 <style type="text/css">
-	<!--
 	.st0{fill:#FFFFFF;}
 	.st1{fill:#FFFFFF;stroke:#000000;}
-	-->
-	.funni{fill:#c5c6c7!important;}
 	.st2{font-family:'ArialMT';}
 	.st3{font-size:12px;}
 	.st4{font-size:14px;}
 	.top{z-index:1000;}
 </style>
-<g transform="translate(-.5,-80)">
-	<path class="st0" id="empty" d="M144,387v-36h36v36H144z"/>
-	<path class="st0" id="empty" d="M144,347v-36h36v36H144z"/>
+<g transform="translate(-.5,-56.5)">
+	<path class="st0" d="M144,387v-36h36v36H144z"/>
+	<path class="st0" d="M144,347v-36h36v36H144z"/>
 	<g class="top">
 		<g id="Unclass" transform="translate(384,387)">
-			<path id="Mt" class="Mt Meitnerium" d="M0,0v-36h36V0H0z" />
-			<path id="Ds" class="Ds Darmstadtium" d="M40,0v-36h36V0H40z" />
-			<path id="Rg" class="Rg Roentgenium" d="M80,0v-36h36V0H80z" />
-			<path id="Nh" class="Nh Nihonium" d="M160,0v-36h36V0H160z" />
-			<path id="Fl" class="Fl Flerovium" d="M200,0v-36h36V0H200z" />
-			<path id="Mc" class="Mc Moscovium" d="M240,0v-36h36V0H240z" />
-			<path id="Lv" class="Lv Livermorium" d="M280,0v-36h36V0H280z" />
-			<path id="Ts" class="Ts Tennessine" d="M320,0v-36h36V0H320z" />
-			<path id="Og" class="Og Oganesson" d="M360,0v-36h36V0H360z" />
+			<path id="Mt" class="st1" d="M0,0v-36h36V0H0z"/>
+			<path id="Ds" class="st1" d="M40,0v-36h36V0H40z"/>
+			<path id="Rg" class="st1" d="M80,0v-36h36V0H80z"/>
+			<path id="Nh" class="st1" d="M160,0v-36h36V0H160z"/>
+			<path id="Fl" class="st1" d="M200,0v-36h36V0H200z"/>
+			<path id="Mc" class="st1" d="M240,0v-36h36V0H240z"/>
+			<path id="Lv" class="st1" d="M280,0v-36h36V0H280z"/>
+			<path id="Ts" class="st1" d="M320,0v-36h36V0H320z"/>
+			<path id="Og" class="st1" d="M360,0v-36h36V0H360z"/>
 		</g>
 		<g id="NonMetals">
-			<path id="H" class="H Hydrogen" d="M64,147v-36h36v36H64z" />
-			<path id="Se" class="Se Selenium" d="M664,267v-36h36v36H664z" />
-			<path id="P" class="P Phosphorus" d="M624,227v-36h36v36H624z" />
-			<path id="S" class="S Sulfur" d="M664,227v-36h36v36H664z" />
-			<path id="C" class="C Carbon" d="M584,187v-36h36v36H584z" />
-			<path id="N" class="N Nitrogen" d="M624,187v-36h36v36H624z" />
-			<path id="O" class="O Oxygen" d="M664,187v-36h36v36H664z" />
+			<path id="H" class="st1" d="M64,147v-36h36v36H64z"/>
+			<path id="Se" class="st1" d="M664,267v-36h36v36H664z"/>
+			<path id="P" class="st1" d="M624,227v-36h36v36H624z"/>
+			<path id="S" class="st1" d="M664,227v-36h36v36H664z"/>
+			<path id="C" class="st1" d="M584,187v-36h36v36H584z"/>
+			<path id="N" class="st1" d="M624,187v-36h36v36H624z"/>
+			<path id="O" class="st1" d="M664,187v-36h36v36H664z"/>
 		</g>
 		<g id="AlkaliMetals" transform="translate(64)">
-			<path id="Fr" class="Fr Francium" d="M0,387v-36h36v36H0z" />
-			<path id="Cs" class="Cs Cesium" d="M0,347v-36h36v36H0z" />
-			<path id="K" class="K Potassium" d="M0,267v-36h36v36H0z" />
-			<path id="Na" class="Na Sodium" d="M0,227v-36h36v36H0z" />
-			<path id="Li" class="Li Lithium" d="M0,187v-36h36v36H0z" />
-			<path id="Rb" class="Rb Rubidium" d="M0,307v-36h36v36H0z" />
+			<path id="Fr" class="st1" d="M0,387v-36h36v36H0z"/>
+			<path id="Cs" class="st1" d="M0,347v-36h36v36H0z"/>
+			<path id="K" class="st1" d="M0,267v-36h36v36H0z"/>
+			<path id="Na" class="st1" d="M0,227v-36h36v36H0z"/>
+			<path id="Li" class="st1" d="M0,187v-36h36v36H0z"/>
+			<path id="Rb" class="st1" d="M0,307v-36h36v36H0z"/>
 		</g>
 		<g id="EarthMetals" transform="translate(104,187)">
-			<path id="Be" class="Be Beryllium" d="M0,0v-36h36V0H0z" />
-			<path id="Mg" class="Mg Magnesium" d="M0,40V4h36v36H0z" />
-			<path id="Ca" class="Ca Calcium" d="M0,80V44h36v36H0z" />
-			<path id="Sr" class="Sr Strontium" d="M0,120V84h36v36H0z" />
-			<path id="Ba" class="Ba Barium" d="M0,160v-36h36v36H0z" />
-			<path id="Ra" class="Ra Radium" d="M0,200v-36h36v36H0z" />
+			<path id="Be" class="st1" d="M0,0v-36h36V0H0z"/>
+			<path id="Mg" class="st1" d="M0,40V4h36v36H0z"/>
+			<path id="Ca" class="st1" d="M0,80V44h36v36H0z"/>
+			<path id="Sr" class="st1" d="M0,120V84h36v36H0z"/>
+			<path id="Ba" class="st1" d="M0,160v-36h36v36H0z"/>
+			<path id="Ra" class="st1" d="M0,200v-36h36v36H0z"/>
 		</g>
 		<g id="SemiMetals">
-			<path id="B" class="B Boron" d="M544,187v-36h36v36H544z" />
-			<path id="Si" class="Si Silicon" d="M584,227v-36h36v36H584z" />
-			<path id="Ge" class="Ge Germanium" d="M584,267v-36h36v36H584z" />
-			<path id="As" class="As Arsenic" d="M624,267v-36h36v36H624z" />
-			<path id="Sb" class="Sb Antimony" d="M624,307v-36h36v36H624z" />
-			<path id="Te" class="Te Tellurium" d="M664,307v-36h36v36H664z" />
-			<path id="Po" class="Po Polonium" d="M664,347v-36h36v36H664z" />
+			<path id="B" class="st1" d="M544,187v-36h36v36H544z"/>
+			<path id="Si" class="st1" d="M584,227v-36h36v36H584z"/>
+			<path id="Ge" class="st1" d="M584,267v-36h36v36H584z"/>
+			<path id="As" class="st1" d="M624,267v-36h36v36H624z"/>
+			<path id="Sb" class="st1" d="M624,307v-36h36v36H624z"/>
+			<path id="Te" class="st1" d="M664,307v-36h36v36H664z"/>
+			<path id="Po" class="st1" d="M664,347v-36h36v36H664z"/>
 		</g>
 		<g id="Halogens" transform="translate(704,187)">
-			<path id="F" class="F Fluorine" d="M0,0v-36h36V0H0z" />
-			<path id="Cl" class="Cl Chlorine" d="M0,40V4h36v36H0z" />
-			<path id="Br" class="Br Bromine" d="M0,80V44h36v36H0z" />
-			<path id="I" class="I Iodine" d="M0,120V84h36v36H0z" />
-			<path id="At" class="At Astatine" d="M0,160v-36h36v36H0z" />
+			<path id="F" class="st1" d="M0,0v-36h36V0H0z"/>
+			<path id="Cl" class="st1" d="M0,40V4h36v36H0z"/>
+			<path id="Br" class="st1" d="M0,80V44h36v36H0z"/>
+			<path id="I" class="st1" d="M0,120V84h36v36H0z"/>
+			<path id="At" class="st1" d="M0,160v-36h36v36H0z"/>
 		</g>
 		<g id="InertGases" transform="translate(744,147)">
-			<path id="He" class="He Helium" d="M0,0v-36h36V0H0z" />
-			<path id="Ne" class="Ne Neon" d="M0,40V4h36v36H0z" />
-			<path id="Ar" class="Ar Argon" d="M0,80V44h36v36H0z" />
-			<path id="Kr" class="Kr Krypton" d="M0,120V84h36v36H0z" />
-			<path id="Xe" class="Xe Xenon" d="M0,160v-36h36v36H0z" />
-			<path id="Rn" class="Rn Radon" d="M0,200v-36h36v36H0z" />
+			<path id="He" class="st1" d="M0,0v-36h36V0H0z"/>
+			<path id="Ne" class="st1" d="M0,40V4h36v36H0z"/>
+			<path id="Ar" class="st1" d="M0,80V44h36v36H0z"/>
+			<path id="Kr" class="st1" d="M0,120V84h36v36H0z"/>
+			<path id="Xe" class="st1" d="M0,160v-36h36v36H0z"/>
+			<path id="Rn" class="st1" d="M0,200v-36h36v36H0z"/>
 		</g>
 		<g id="PTMetals">
-			<path id="Al" class="Al Aluminum" d="M544,227v-36h36v36H544z" />
-			<path id="Ga" class="Ga Gallium" d="M544,267v-36h36v36H544z" />
-			<path id="In" class="In Indium" d="M544,307v-36h36v36H544z" />
-			<path id="Tl" class="Tl Thallium" d="M544,347v-36h36v36H544z" />
-			<path id="Sn" class="Sn Tin" d="M584,307v-36h36v36H584z" />
-			<path id="Pb" class="Pb Lead" d="M584,347v-36h36v36H584z" />
-			<path id="Bi" class="Bi Bismuth" d="M624,347v-36h36v36H624z" />
+			<path id="Al" class="st1" d="M544,227v-36h36v36H544z"/>
+			<path id="Ga" class="st1" d="M544,267v-36h36v36H544z"/>
+			<path id="In" class="st1" d="M544,307v-36h36v36H544z"/>
+			<path id="Tl" class="st1" d="M544,347v-36h36v36H544z"/>
+			<path id="Sn" class="st1" d="M584,307v-36h36v36H584z"/>
+			<path id="Pb" class="st1" d="M584,347v-36h36v36H584z"/>
+			<path id="Bi" class="st1" d="M624,347v-36h36v36H624z"/>
 		</g>
 		<g id="TransMetals" transform="translate(184,267)">
-			<path id="Rf" class="Rf Rutherfordium" d="M0,120V84h36v36H0z" />
-			<path id="Db" class="Db Dubnium" d="M40,120V84h36v36H40z" />
-			<path id="Sg" class="Sg Seaborgium" d="M80,120V84h36v36H80z" />
-			<path id="Bh" class="Bh Bohrium" d="M120,120V84h36v36H120z" />
-			<path id="Hs" class="Hs Hassium" d="M160,120V84h36v36H160z" />
-			<path id="Cn" class="Cn Copernicium" d="M320,120V84h36v36H320z" />
-			<path id="Hf" class="Hf Hafnium" d="M0,80V44h36v36H0z" />
-			<path id="Ta" class="Ta Tantalum" d="M40,80V44h36v36H40z" />
-			<path id="W" class="W Wolfram" d="M80,80V44h36v36H80z" />
-			<path id="Re" class="Re Rhenium" d="M120,80V44h36v36H120z" />
-			<path id="Os" class="Os Osmium" d="M160,80V44h36v36H160z" />
-			<path id="Ir" class="Ir Iridium" d="M200,80V44h36v36H200z" />
-			<path id="Pt" class="Pt Platinum" d="M240,80V44h36v36H240z" />
-			<path id="Au" class="Au Gold" d="M280,80V44h36v36H280z" />
-			<path id="Hg" class="Hg Mercury" d="M320,80V44h36v36H320z" />
-			<path id="Y" class="Y Yttrium" d="M-40,40V4h36v36H-40z" />
-			<path id="Zr" class="Zr Zirconium" d="M0,40V4h36v36H0z" />
-			<path id="Nb" class="Nb Niobium" d="M40,40V4h36v36H40z" />
-			<path id="Mo" class="Mo Molybdenum" d="M80,40V4h36v36H80z" />
-			<path id="Tc" class="Tc Technetium" d="M120,40V4h36v36H120z" />
-			<path id="Ru" class="Ru Ruthenium" d="M160,40V4h36v36H160z" />
-			<path id="Rh" class="Rh Rhodium" d="M200,40V4h36v36H200z" />
-			<path id="Pd" class="Pd Palladium" d="M240,40V4h36v36H240z" />
-			<path id="Ag" class="Ag Silver" d="M280,40V4h36v36H280z" />
-			<path id="Cd" class="Cd Cadmium" d="M320,40V4h36v36H320z" />
-			<path id="Sc" class="Sc Scandium" d="M-40,0v-36h36V0H-40z" />
-			<path id="Ti" class="Ti Titanium" d="M0,0v-36h36V0H0z" />
-			<path id="V" class="V Vanadium" d="M40,0v-36h36V0H40z" />
-			<path id="Cr" class="Cr Chromium" d="M80,0v-36h36V0H80z" />
-			<path id="Mn" class="Mn Manganese" d="M120,0v-36h36V0H120z" />
-			<path id="Fe" class="Fe Iron" d="M160,0v-36h36V0H160z" />
-			<path id="Co" class="Co Cobalt" d="M200,0v-36h36V0H200z" />
-			<path id="Ni" class="Ni Nickel" d="M240,0v-36h36V0H240z" />
-			<path id="Cu" class="Cu Copper" d="M280,0v-36h36V0H280z" />
-			<path id="Zn" class="Zn Zinc" d="M320,0v-36h36V0H320z" />
+			<path id="Rf" class="st1" d="M0,120V84h36v36H0z"/>
+			<path id="Db" class="st1" d="M40,120V84h36v36H40z"/>
+			<path id="Sg" class="st1" d="M80,120V84h36v36H80z"/>
+			<path id="Bh" class="st1" d="M120,120V84h36v36H120z"/>
+			<path id="Hs" class="st1" d="M160,120V84h36v36H160z"/>
+			<path id="Cn" class="st1" d="M320,120V84h36v36H320z"/>
+			<path id="Hf" class="st1" d="M0,80V44h36v36H0z"/>
+			<path id="Ta" class="st1" d="M40,80V44h36v36H40z"/>
+			<path id="W" class="st1" d="M80,80V44h36v36H80z"/>
+			<path id="Re" class="st1" d="M120,80V44h36v36H120z"/>
+			<path id="Os" class="st1" d="M160,80V44h36v36H160z"/>
+			<path id="Ir" class="st1" d="M200,80V44h36v36H200z"/>
+			<path id="Pt" class="st1" d="M240,80V44h36v36H240z"/>
+			<path id="Au" class="st1" d="M280,80V44h36v36H280z"/>
+			<path id="Hg" class="st1" d="M320,80V44h36v36H320z"/>
+			<path id="Y" class="st1" d="M-40,40V4h36v36H-40z"/>
+			<path id="Zr" class="st1" d="M0,40V4h36v36H0z"/>
+			<path id="Nb" class="st1" d="M40,40V4h36v36H40z"/>
+			<path id="Mo" class="st1" d="M80,40V4h36v36H80z"/>
+			<path id="Tc" class="st1" d="M120,40V4h36v36H120z"/>
+			<path id="Ru" class="st1" d="M160,40V4h36v36H160z"/>
+			<path id="Rh" class="st1" d="M200,40V4h36v36H200z"/>
+			<path id="Pd" class="st1" d="M240,40V4h36v36H240z"/>
+			<path id="Ag" class="st1" d="M280,40V4h36v36H280z"/>
+			<path id="Cd" class="st1" d="M320,40V4h36v36H320z"/>
+			<path id="Sc" class="st1" d="M-40,0v-36h36V0H-40z"/>
+			<path id="Ti" class="st1" d="M0,0v-36h36V0H0z"/>
+			<path id="V" class="st1" d="M40,0v-36h36V0H40z"/>
+			<path id="Cr" class="st1" d="M80,0v-36h36V0H80z"/>
+			<path id="Mn" class="st1" d="M120,0v-36h36V0H120z"/>
+			<path id="Fe" class="st1" d="M160,0v-36h36V0H160z"/>
+			<path id="Co" class="st1" d="M200,0v-36h36V0H200z"/>
+			<path id="Ni" class="st1" d="M240,0v-36h36V0H240z"/>
+			<path id="Cu" class="st1" d="M280,0v-36h36V0H280z"/>
+			<path id="Zn" class="st1" d="M320,0v-36h36V0H320z"/>
 		</g>
 		<g id="Lanths" transform="translate(184,447)">
-			<path id="La" class="La Lanthanum" d="M0,0v-36h36V0H0z" />
-			<path id="Ce" class="Ce Cerium" d="M40,0v-36h36V0H40z" />
-			<path id="Pr" class="Pr Praseodymium" d="M80,0v-36h36V0H80z" />
-			<path id="Nd" class="Nd Neodymium" d="M120,0v-36h36V0H120z" />
-			<path id="Pm" class="Pm Promethium" d="M160,0v-36h36V0H160z" />
-			<path id="Sm" class="Sm Samarium" d="M200,0v-36h36V0H200z" />
-			<path id="Eu" class="Eu Europium" d="M240,0v-36h36V0H240z" />
-			<path id="Gd" class="Gd Gadolinium" d="M280,0v-36h36V0H280z" />
-			<path id="Tb" class="Tb Terbium" d="M320,0v-36h36V0H320z" />
-			<path id="Dy" class="Dy Dysprosium" d="M360,0v-36h36V0H360z" />
-			<path id="Ho" class="Ho Holmium" d="M400,0v-36h36V0H400z" />
-			<path id="Er" class="Er Erbium" d="M440,0v-36h36V0H440z" />
-			<path id="Tm" class="Tm Thulium" d="M480,0v-36h36V0H480z" />
-			<path id="Yb" class="Yb Ytterbium" d="M520,0v-36h36V0H520z" />
-			<path id="Lu" class="Lu Lutetium" d="M560,0v-36h36V0H560z" />
+			<path id="La" class="st1" d="M0,0v-36h36V0H0z"/>
+			<path id="Ce" class="st1" d="M40,0v-36h36V0H40z"/>
+			<path id="Pr" class="st1" d="M80,0v-36h36V0H80z"/>
+			<path id="Nd" class="st1" d="M120,0v-36h36V0H120z"/>
+			<path id="Pm" class="st1" d="M160,0v-36h36V0H160z"/>
+			<path id="Sm" class="st1" d="M200,0v-36h36V0H200z"/>
+			<path id="Eu" class="st1" d="M240,0v-36h36V0H240z"/>
+			<path id="Gd" class="st1" d="M280,0v-36h36V0H280z"/>
+			<path id="Tb" class="st1" d="M320,0v-36h36V0H320z"/>
+			<path id="Dy" class="st1" d="M360,0v-36h36V0H360z"/>
+			<path id="Ho" class="st1" d="M400,0v-36h36V0H400z"/>
+			<path id="Er" class="st1" d="M440,0v-36h36V0H440z"/>
+			<path id="Tm" class="st1" d="M480,0v-36h36V0H480z"/>
+			<path id="Yb" class="st1" d="M520,0v-36h36V0H520z"/>
+			<path id="Lu" class="st1" d="M560,0v-36h36V0H560z"/>
 		</g>
 		<g id="Actins" transform="translate(184,487)">
-			<path id="Ac" class="Ac Actinium" d="M0,0v-36h36V0H0z" />
-			<path id="Th" class="Th Thorium" d="M40,0v-36h36V0H40z" />
-			<path id="Pa" class="Pa Protactinium" d="M80,0v-36h36V0H80z" />
-			<path id="U" class="U Uranium" d="M120,0v-36h36V0H120z" />
-			<path id="Np" class="Np Neptunium" d="M160,0v-36h36V0H160z" />
-			<path id="Pu" class="Pu Plutonium" d="M200,0v-36h36V0H200z" />
-			<path id="Am" class="Am Americium" d="M240,0v-36h36V0H240z" />
-			<path id="Cm" class="Cm Curium" d="M280,0v-36h36V0H280z" />
-			<path id="Bk" class="Bk Berkelium" d="M320,0v-36h36V0H320z" />
-			<path id="Cf" class="Cf Californium" d="M360,0v-36h36V0H360z" />
-			<path id="Es" class="Es Einsteinium" d="M400,0v-36h36V0H400z" />
-			<path id="Fm" class="Fm Fermium" d="M440,0v-36h36V0H440z" />
-			<path id="Md" class="Md Mendelevium" d="M480,0v-36h36V0H480z" />
-			<path id="No" class="No Nobelium" d="M520,0v-36h36V0H520z" />
-			<path id="Lr" class="Lr Lawrencium" d="M560,0v-36h36V0H560z" />
+			<path id="Ac" class="st1" d="M0,0v-36h36V0H0z"/>
+			<path id="Th" class="st1" d="M40,0v-36h36V0H40z"/>
+			<path id="Pa" class="st1" d="M80,0v-36h36V0H80z"/>
+			<path id="U" class="st1" d="M120,0v-36h36V0H120z"/>
+			<path id="Np" class="st1" d="M160,0v-36h36V0H160z"/>
+			<path id="Pu" class="st1" d="M200,0v-36h36V0H200z"/>
+			<path id="Am" class="st1" d="M240,0v-36h36V0H240z"/>
+			<path id="Cm" class="st1" d="M280,0v-36h36V0H280z"/>
+			<path id="Bk" class="st1" d="M320,0v-36h36V0H320z"/>
+			<path id="Cf" class="st1" d="M360,0v-36h36V0H360z"/>
+			<path id="Es" class="st1" d="M400,0v-36h36V0H400z"/>
+			<path id="Fm" class="st1" d="M440,0v-36h36V0H440z"/>
+			<path id="Md" class="st1" d="M480,0v-36h36V0H480z"/>
+			<path id="No" class="st1" d="M520,0v-36h36V0H520z"/>
+			<path id="Lr" class="st1" d="M560,0v-36h36V0H560z"/>
 		</g>
 	</g>
 	<g>
@@ -183,7 +181,7 @@
 		<text transform="matrix(1 0 0 1 38.6631 294)" class="st2 st3">5</text>
 		<text transform="matrix(1 0 0 1 38.6631 334)" class="st2 st3">6</text>
 		<text transform="matrix(1 0 0 1 38.6631 374)" class="st2 st3">7</text>
-		<g id="elementText">
+		<g>
 			<text transform="matrix(1 0 0 1 758.6631 125)" class="st2 st3">2</text>
 			<text transform="matrix(1 0 0 1 78.6631 125)" class="st2 st3">1</text>
 			<text transform="matrix(1 0 0 1 754.3301 141)" class="st2 st3">He</text>
@@ -420,15 +418,15 @@
 			<text transform="matrix(1 0 0 1 673.665 481)" class="st2 st3">Md</text>
 			<text transform="matrix(1 0 0 1 714.3301 481)" class="st2 st3">No</text>
 			<text transform="matrix(1 0 0 1 756.665 481)" class="st2 st3">Lr</text>
-			<text transform="matrix(1 0 0 1 10 93)" class="st2 st3 funni" id="titleText" >Group</text>
-			<text transform="matrix(1 0 0 1 20 108)" class="st2 st3 funni" id="titleText" >Period</text>
+			<text transform="matrix(1 0 0 1 10 93)" class="st2 st3">Group</text>
+			<text transform="matrix(1 0 0 1 20 108)" class="st2 st3">Period</text>
 		</g>
 		<g>
 			<text transform="matrix(1 0 0 1 92.7109 434)" class="st2 st4">Lanthanides</text>
 			<text transform="matrix(1 0 0 1 112.1934 472)" class="st2 st4">Actinides</text>
 		</g>
 	</g>
-	<path d="M11.5,97h1v10h-2l2.5,4l2.5-4h-2V97" />
-	<path d="M52,88.5v1h10v-2l4,2.5l-4,2.5v-2H52" />
+	<path d="M11.5,97h1v10h-2l2.5,4l2.5-4h-2V97"/>
+	<path d="M52,88.5v1h10v-2l4,2.5l-4,2.5v-2H52"/>
 </g>
 </svg>

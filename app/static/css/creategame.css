@@ -1,10 +1,10 @@
+@import url("base.css");
+
 body {
   font-family: "Arial", sans-serif;
-  background-color: #000000;
+  background-color: var(--dark_background);
   color: #ffffff;
   line-height: 1.6;
-  padding-left: 150px;
-  padding-right: 150px;
   margin: 0;
 }
 
@@ -23,8 +23,9 @@ h3 {
 }
 
 form {
-  width: 80%;
   margin: 0 auto;
+  padding-left: 150px;
+  padding-right: 150px;
 }
 
 .form-group {

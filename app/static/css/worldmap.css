@@ -1,0 +1,94 @@
+@import url("base.css");
+@import url("overlay.css");
+@import url("bottombar.css");
+@import url("feedback.css");
+
+:root {
+  --dark_background: #0b0c1000;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #0fe0f9;
+  /* background-color: #e0f7fa;  very light blue background */
+  overflow: hidden;
+}
+
+/* SVG CSS - SVG CSS - SVG CSS */
+/* SVG CSS - SVG CSS - SVG CSS */
+
+svg * {
+  user-select: none;
+}
+
+.svg-label.hidden {
+  display: none;
+}
+
+#svg-container {
+  will-change: transform;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+}
+
+svg {
+  width: 100vw;
+  height: 100vh;
+  display: block;
+  background-color: #e0f7fa;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+}
+
+svg:active {
+  cursor: grabbing;
+}
+
+.click-helper {
+  fill: none;
+  pointer-events: all;
+  stroke-width: 0;
+}
+
+/* TABS CSS - TABS CSS - TABS CSS */
+
+#tabsContainer {
+  position: fixed;
+  bottom: 60px;
+  /* Adjust the value based on the height of the input container */
+  left: 0;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0);
+  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.country-tab {
+  margin: 5px;
+  padding: 5px 10px;
+  background-color: #0b0c10;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  /* Animate the transform and opacity */
+  pointer-events: all;
+}
+
+.country-tab:hover {
+  background-color: #0056b3;
+}
+

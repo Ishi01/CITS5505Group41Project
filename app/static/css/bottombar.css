@@ -1,0 +1,100 @@
+@import url("base.css");
+
+/* Mobile device CSS - Mobile device CSS - Mobile device CSS */
+/* Mobile device CSS - Mobile device CSS - Mobile device CSS */
+/* Mobile device CSS - Mobile device CSS - Mobile device CSS */
+
+.bottom-container {
+  display: flex;
+  position: fixed;
+  bottom: 0;
+  z-index: 999;
+  width: 100%;
+  min-height: 4vh;
+  /* Ensure it remains visible above #tabsContainer */
+}
+
+.button-container button {
+  flex: 2;
+  display: flex;
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.button-container button.clickable-child {
+  pointer-events: auto;
+  padding-top: .5rem;
+}
+
+.question-container {
+
+}
+
+#question {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  margin: 0;
+  text-align: center;
+}
+
+#answerInput {
+  padding: 8px;
+  font-size: 16px;
+}
+
+#answerInput:focus {
+  outline: none;
+}
+
+#submitAnswerButton {
+  background-color: #008CBA;
+  color: white;
+}
+
+#pass {
+  flex: 1;
+  background-color: #e7e7e7;
+  color: black;
+}
+
+
+@media screen and (max-width: 950px) {
+  #question {
+    font-size: 12px;
+  }
+
+  #answerInput {
+    font-size: 12px;
+  }
+
+  #submitAnswerButton,
+  #pass,
+  #timer {
+    font-size: 12px;
+  }
+
+  #overlay {
+    font-size: 12px;
+  }
+
+  .info-table th,
+  .info-table td {
+    padding: 4px;
+  }
+
+  #tabsContainer {
+    bottom: 12vh;
+  }
+
+  @media screen and (max-width: 850px) {
+
+    #tabsContainer {
+      bottom: 14vh;
+    }
+  }
+
+}

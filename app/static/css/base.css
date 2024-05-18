@@ -1,0 +1,8 @@
+/* color scheming */
+:root {
+    --dark_background: #0b0c10;
+    --light_background: #1f2833;
+    --color_text: #c5c6c7;
+    --color_title: #1ce3a7;
+    --link_color: #66fcf1;
+}

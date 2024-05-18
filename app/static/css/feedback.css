@@ -1,0 +1,50 @@
+@import url("base.css");
+
+#feedback {
+    background-color: rgba(200, 200, 255, 0.93);
+    font-size: 18px;
+    color: rgb(0, 0, 0);
+    margin-top: 10px;
+    margin-bottom: 12px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.05);
+    z-index: 1001;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: fixed;
+    justify-content: center;
+    pointer-events: none;
+    user-select: none;
+    bottom: 18%;
+    left: 0;
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.rating-buttons {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    pointer-events: all;
+}
+
+.rating-buttons button {
+    font-size: 24px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    pointer-events: all;
+}
+
+#feedback1 {
+    margin: 0 10px; /* Ensure some space between text and buttons */
+}
+
+#feedback2-container {
+    margin-top: 10px; /* Add some space between feedback1 and feedback2 */
+}
+
+#feedback2 {
+    margin: 0;
+}

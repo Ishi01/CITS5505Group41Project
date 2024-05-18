@@ -35,6 +35,8 @@ def create_app(config_class=Config):
     app.register_blueprint(worldmap)
     from app.creategame import creategame
     app.register_blueprint(creategame)
+    from app.periodictable import periodictable
+    app.register_blueprint(periodictable)
     from app.manage import manage
     app.register_blueprint(manage)
     from app.user import user

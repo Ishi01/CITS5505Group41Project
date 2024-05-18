@@ -11,6 +11,7 @@ from sqlalchemy.types import JSON
 def load_user(id):
     return db.session.get(User, int(id))
 
+#User class, sonctains all of the user information and getters and setters for it
 class User(UserMixin, db.Model):
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
     username: so.Mapped[str] = so.mapped_column(sa.String(64), index=True, unique=True)
@@ -28,19 +29,18 @@ class User(UserMixin, db.Model):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
+#Game class, contains all of the game information and databse mapping
 class Game(db.Model):
-    id: so.Mapped[int] = so.mapped_column(primary_key=True)
-    result: so.Mapped[int] = so.mapped_column(sa.Integer)
-    timestamp: so.Mapped[datetime] = so.mapped_column(
-        index=True, default=lambda: datetime.now(timezone.utc))
-    user_id: so.Mapped[int] = so.mapped_column(sa.ForeignKey('user.id'),
-                                               index=True)
-
+    game_name: so.Mapped[str] = so.mapped_column(sa.String(100), primary_key=True, nullable=False)
+    description: so.Mapped[str] = so.mapped_column(sa.String(200), nullable=True)
+    category: so.Mapped[str] = so.mapped_column(sa.String(50), nullable=False)
+    user_id: so.Mapped[int] = so.mapped_column(sa.ForeignKey('user.id'), nullable=False)
     player: so.Mapped['User'] = so.relationship('User', back_populates='games')
 
     def __repr__(self):
-        return '<Game {}>'.format(self.result)
+        return '<Game {}>'.format(self.game_name)
 
+#QuizQuestion class, contains all of the quiz question information and database mapping
 class QuizQuestion(db.Model):
     __tablename__ = 'quiz_questions'
     question_id: so.Mapped[int] = so.mapped_column(primary_key=True)
@@ -72,7 +72,6 @@ class GameLeaderboard(db.Model):
     __table_args__ = (
         sa.PrimaryKeyConstraint('user_id', 'game_name'),
     )
-
     user_id: so.Mapped[int] = so.mapped_column(sa.Integer, primary_key=True)
     username: so.Mapped[str] = so.mapped_column(sa.String(64))
     game_name: so.Mapped[str] = so.mapped_column(sa.String(100), primary_key=True)
@@ -82,3 +81,12 @@ class GameLeaderboard(db.Model):
 
     def __repr__(self):
         return f'<GameLeaderboard User "{self.username}" Game "{self.game_name}" Correct "{self.correct_answers}">'
+
+class Feedback(db.Model):
+    __tablename__ = 'feedback'
+    game_name: so.Mapped[str] = so.mapped_column(sa.String(100), sa.ForeignKey('game.game_name'), primary_key=True, nullable=False)
+    user_id: so.Mapped[int] = so.mapped_column(sa.Integer, sa.ForeignKey('user.id'), primary_key=True, nullable=False)
+    feedback: so.Mapped[int] = so.mapped_column(sa.Integer, nullable=False)
+
+    def __repr__(self):
+        return f'<Feedback Game "{self.game_name}" User "{self.user_id}" Feedback "{self.feedback}">'
