@@ -17,7 +17,7 @@ class SeleniumTests(unittest.TestCase):
         db.create_all()
 
         # Start Flask server as a subprocess
-        self.server_process = subprocess.Popen(["python", "-m", "flask", "run"])
+        #self.server_process = subprocess.Popen(["python", "-m", "flask", "run"])
 
         # Headless Selenium WebDriver setup
         self.driver = webdriver.Chrome()
@@ -26,14 +26,14 @@ class SeleniumTests(unittest.TestCase):
 
     def tearDown(self):
         self.driver.quit()
-        self.server_process.terminate()
+        #self.server_process.terminate()
         db.session.remove()
         db.drop_all()
         self.app_context.pop()
 
     # Example test method
     def test_home_page(self):
-        self.assertTrue("Expected Text on Home Page" in self.driver.page_source)
+        self.assertTrue("<title>Home - Quick Quiz</title>" in self.driver.page_source)
 
 if __name__ == '__main__':
     unittest.main()

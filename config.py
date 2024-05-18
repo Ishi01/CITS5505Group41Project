@@ -1,5 +1,5 @@
 import os
-from cachelib.file import FileSystemCache
+from cachelib import FileSystemCache
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 # holds the configuration settings for the Flask application
