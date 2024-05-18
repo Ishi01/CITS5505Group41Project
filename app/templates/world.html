@@ -2,17 +2,13 @@
 
 {% block header %}
   {{ super() }}
-
   <script src="{{ url_for('static', filename='js/world.js') }}"></script>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/feedback.css') }}" />
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/overlay.css') }}" />
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/bottombar.css') }}" />
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/world.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/worldmap.css') }}" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, orientation=portrait" />
 {% endblock %}
 
 {% block content %}
-<div id="svg-container" style="height: 85vh;">
+<div id="svg-container">
   {{ svg_content | safe }}
   <div id="overlay">
     <table class="info-table">
@@ -53,27 +49,19 @@
 <div id="tabsContainer">
 </div>
 <!-- This hardcoding is ugly but necessary due to the limitations of svg containers-->
-<div class="container-fluid align-items-center" style="height: 15vh;">
-  <div class="row flex-nowrap align-items-center " style="width: 100%; padding-top: .5%; padding-bottom: .2rem;">
-    <div class="col-md-5">
-      <p id="question" style="font-weight: bold; color: #c5c6c7;">Please Select a Quiz from the Table Above</p>
-    </div>
-
-    <div class="col-md-3">
-      <input type="text" id="answerInput" class="clickable-child"  style="padding: .2rem;" placeholder="Type your answer here">
-    </div> 
-
-    <div class="col-md-2">
-      <button id="submitAnswerButton" class="clickable-child btn btn-outline-primary" >Submit Answer</button>
-    </div> 
-
-    <div class="col-md-1">
-      <button id="pass" class="clickable-child btn btn-outline-primary" style="display: none; width: 100%;">Pass</button>
-    </div>
-
-    <div class="col-md-1">
+<div class="d-flex flex-column justify-content-center bottom-container">
+  
+  <div class="row d-flex justify-content-center question-container">
+      <p id="question"><strong>Question:</strong> </p>
       <span id="timer" class="clickable-child"></span>
-    </div>
   </div>
+  <div class="row d-flex justify-content-center">
+      <input type="text" id="answerInput" class="clickable-child" placeholder="Type/Select your Answer">
+  </div>
+  <div class="row d-flex justify-content-center button-container">
+      <button id="submitAnswerButton" class="btn btn-outline-secondary clickable-child" >Submit Answer</button>
+      <button id="pass" class="btn btn-outline-secondary clickable-child">Pass</button>
+  </div>
+  
 </div>
 {% endblock %}

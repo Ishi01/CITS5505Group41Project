@@ -287,7 +287,6 @@ $(document).ready(function () {
     function updateGameUI(action, data) {
         switch (action) {
             case 'start':
-                $('#pass').show();
                 $('#answerInput').prop('disabled', false);
                 $('#submitAnswerButton').prop('disabled', false);
                 $('#overlay').hide();
@@ -335,11 +334,11 @@ $(document).ready(function () {
                 // Stop the timer and display results
                 clearInterval(window.timerInterval); // Stop the timer
                 feedback(`Game Over!<br>Total Time: ${data.total_time_spent}s<br>Score: ${data.score} out of ${data.total_questions}`, false, true);
-                $('#pass').hide(); // Hide the pass button
                 $('#submitAnswerButton').prop('disabled', true);
                 $('#endGame').hide(); // Hide the end game button
                 $('#answerInput').prop('disabled', true);
                 $('#overlay').show();
+                removeAllPaths();
                 break;
         }
     }
@@ -669,8 +668,8 @@ $(document).ready(function () {
 
     let svg = $('#svg-container svg');
 
-    let scaleSVG = 2.74;
-    let minScale = 2.74;
+    let scaleSVG = 2.48;
+    let minScale = 2.48;
     let maxScale = 14;
 
     let boundBox = {
@@ -932,7 +931,7 @@ $(document).ready(function () {
     // Function to adjust margins dynamically based on the number of tabs
     function adjustContainerMargin() {
         var tabsHeight = $('#tabsContainer').outerHeight(true); // true includes margin in the calculation
-        $('.container').css('margin-top', tabsHeight + 'px'); // Apply bottom margin to '.container'
+        $('.bottom-container').css('margin-top', tabsHeight + 'px'); // Apply bottom margin to '.bottom-container'
     }
 
     // Trigger this adjustment when tabs are added or removed

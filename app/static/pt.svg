@@ -6,13 +6,13 @@
 	.st0{fill:#FFFFFF;}
 	.st1{fill:#FFFFFF;stroke:#000000;}
 	-->
-	.funni{fill:#c5c6c7;!important}
+	.funni{fill:#c5c6c7!important;}
 	.st2{font-family:'ArialMT';}
 	.st3{font-size:12px;}
 	.st4{font-size:14px;}
 	.top{z-index:1000;}
 </style>
-<g transform="translate(-.5,-56.5)">
+<g transform="translate(-.5,-80)">
 	<path class="st0" id="empty" d="M144,387v-36h36v36H144z"/>
 	<path class="st0" id="empty" d="M144,347v-36h36v36H144z"/>
 	<g class="top">

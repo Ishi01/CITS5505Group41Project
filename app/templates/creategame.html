@@ -4,17 +4,16 @@
 {{ super() }}
 <meta name="viewport" content="width=device-width, initial-scale=1.0, orientation=portrait">
 <script src="{{ url_for('static', filename='js/game.js') }}"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-<link rel="stylesheet" href="{{ url_for('static', filename='css/game.css') }}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='css/creategame.css') }}" />
 {% endblock %}
 
 {% block content %}
-<form action="{{ url_for('creategame.submit_game') }}" method="post" id="quizForm">
-    <div class="container-fluid">
-        <div class="col-md-12 d-flex justify-content-center" style="padding-bottom: 1rem;">
-            <h1>Create Your Quiz Game</h1>
-        </div>
+<div class="container-fluid">
+    <div class="col-md-12 d-flex justify-content-center" style="padding-bottom: 1rem; padding-top: 1rem">
+        <h1>Create Your Quiz Game</h1>
     </div>
+</div>
+<form action="{{ url_for('creategame.submit_game') }}" method="post" id="quizForm">
     <div class="form-group">
         <label for="jsonInput">Upload JSON File:</label>
         <input type="file" id="jsonInput" accept=".json">
@@ -32,7 +31,7 @@
 
     <div class="form-group" style="margin-bottom: 0%!important;">
         <label for="description" class="form-label">Description:</label>
-        <textarea id="description" name="description[]" class="form-control" required aria-describedby="descriptionHelp"></textarea>
+        <textarea id="description" name="description[]" required aria-describedby="descriptionHelp"></textarea>
     </div>
 
 

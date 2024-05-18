@@ -1,3 +1,12 @@
+@import url("base.css");
+@import url("overlay.css");
+@import url("bottombar.css");
+@import url("feedback.css");
+
+:root {
+  --dark_background: #0b0c1000;
+}
+
 html,
 body {
   height: 100%;
@@ -17,10 +26,6 @@ svg * {
 }
 
 .svg-label.hidden {
-  display: none;
-}
-
-.svg-label {
   display: none;
 }
 
@@ -48,6 +53,14 @@ svg:active {
   cursor: grabbing;
 }
 
+.click-helper {
+  fill: none;
+  pointer-events: all;
+  stroke-width: 0;
+}
+
+/* TABS CSS - TABS CSS - TABS CSS */
+
 #tabsContainer {
   position: fixed;
   bottom: 60px;
@@ -62,8 +75,6 @@ svg:active {
   z-index: 1000;
   pointer-events: none;
 }
-
-
 
 .country-tab {
   margin: 5px;
@@ -81,8 +92,3 @@ svg:active {
   background-color: #0056b3;
 }
 
-.click-helper {
-  fill: none;
-  pointer-events: all;
-  stroke-width: 0;
-}

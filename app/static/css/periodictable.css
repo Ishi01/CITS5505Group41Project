@@ -1,9 +1,11 @@
-:root {
-    --dark_background: #0b0c10;
-    --light_background: #1f2833;
-    --color_text: #c5c6c7;
-    --color_title: #1ce3a7;
-    --link_color: #66fcf1;
+@import url("base.css");
+@import url("overlay.css");
+@import url("bottombar.css");
+@import url("feedback.css");
+
+html,
+body {
+  background-color: var(--dark_background);
 }
 
 svg * {
@@ -15,12 +17,14 @@ svg g text {
 }
 
 #svg-container {
-    width: 100%;
-    height: 100vh;
+    will-change: transform;
+    border: none;
     display: flex;
     justify-content: center;
     align-items: center;
-}
+    width: 100%;
+    height: 85vh;
+  }
 
 svg {
     max-width: 100%;
@@ -116,7 +120,6 @@ g > text {
     font-size: 1.5rem;
     fill: var(--color_text);
 }
-
 
 g > path {
     fill: var(--color_text);

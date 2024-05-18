@@ -111,7 +111,7 @@ def leaderboard():
             'username': ranking.username,
             'correct_answers': ranking.correct_answers,
             'attempts': ranking.attempts,
-            'completion_time': ranking.completion_time
+            'completion_time': str(round(ranking.completion_time, 2)) + "s"
         })
 
     return render_template('leaderboard.html', grouped_rankings=grouped_rankings, enumerate=enumerate)

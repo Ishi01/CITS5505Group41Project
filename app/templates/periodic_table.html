@@ -3,15 +3,36 @@
 {% block header %}
   {{ super() }}
   <script src="{{ url_for('static', filename='js/periodictable.js') }}"></script>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/feedback.css') }}" />
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/overlay.css') }}" />
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/bottombar.css') }}" />
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/pt.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/periodictable.css') }}" />
 {% endblock %}
 
 {% block content %}
 <div id="svg-container">
     {{ svg_content | safe }}
+    <div id="overlay">
+      <table class="info-table">
+        <thead>
+          <tr>
+            <th>Game Name</th>
+            <th>Description</th>
+            <th>Created by</th>
+            <th>Questions</th>
+            <th>User rating</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for location in locations %}
+          <tr class="location-row">
+            <td>{{ location.name }}</td>
+            <td>{{ location.description }}</td>
+            <td>{{ location.user }}</td>
+            <td>{{ location.question_count }}</td>
+            <td>{{ location.average_rating }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
 </div>
 <div id="feedback" style="display: none;">
   <div class="rating-buttons">
@@ -23,22 +44,20 @@
     <span id="feedback2"></span>
   </div>
 </div>
-<div class="d-flex flex-column justify-content-center" style="width: 100%;">
+
+<div class="d-flex flex-column justify-content-center bottom-container">
+  
   <div class="row d-flex justify-content-center">
-      <button class="btn btn-outline-primary" id="getQAelements">Get a Question</button>
-  </div> 
-  <div class="row d-flex justify-content-center">
-      <p id="question"><strong>Question:</strong></p>
+      <p id="question"><strong>Question:</strong> </p>
+      <span id="timer" class="clickable-child"></span>
   </div>
   <div class="row d-flex justify-content-center">
-      <input type="text" id="answerInput" style="width: 20%; text-align: center;" placeholder="Type/Select your Answer">
+      <input type="text" id="answerInput" class="clickable-child" placeholder="Type/Select your Answer">
   </div>
-  <div class="row d-flex justify-content-center" style="padding-top: .5rem;">
-      <button class="btn btn-outline-secondary" id="submitAnswerButton">Submit Answer</button>
+  <div class="row d-flex justify-content-center button-container">
+      <button id="submitAnswerButton" class="btn btn-outline-secondary clickable-child" >Submit Answer</button>
+      <button id="pass" class="btn btn-outline-secondary clickable-child">Pass</button>
   </div>
-  <span id="timer" class="clickable-child"></span>
+  
 </div>
-<div class="d-flex min-vh-100"></div>
-
-
 {% endblock %}
