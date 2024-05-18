@@ -1,14 +1,21 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  {{ super() }}
-  <script src="{{ url_for('static', filename='js/world.js') }}"></script>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/worldmap.css') }}" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, orientation=portrait" />
+{{ super() }}
+<script src="{{ url_for('static', filename='js/world.js') }}"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/worldmap.css') }}" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, orientation=portrait" />
 {% endblock %}
 
 {% block content %}
+
 <div id="svg-container">
+  <div class="question-container">
+    <div id="question"><strong>Question:</strong> </div>
+    <div class="timer-container">
+      <span id="timer" class="clickable-child"></span>
+    </div>
+  </div>
   {{ svg_content | safe }}
   <div id="overlay">
     <table class="info-table">
@@ -36,32 +43,30 @@
   </div>
 
 </div>
-<div id="feedback" style="display: none;">
-  <div class="rating-buttons">
-    <button class="thumbs-up" style="display: none;">👍</button>
-    <span id="feedback1"></span>
-    <button class="thumbs-down" style="display: none;">👎</button>
-  </div>
-  <div id="feedback2-container">
-    <span id="feedback2"></span>
-  </div>
-</div>
-<div id="tabsContainer">
-</div>
+
+
 <!-- This hardcoding is ugly but necessary due to the limitations of svg containers-->
+
 <div class="d-flex flex-column justify-content-center bottom-container">
-  
-  <div class="row d-flex justify-content-center question-container">
-      <p id="question"><strong>Question:</strong> </p>
-      <span id="timer" class="clickable-child"></span>
+  <div id="tabsContainer">
+  </div>
+  <div id="feedback" style="display: none;">
+    <div class="rating-buttons">
+      <button class="thumbs-up" style="display: none;">👍</button>
+      <span id="feedback1"></span>
+      <button class="thumbs-down" style="display: none;">👎</button>
+    </div>
+    <div id="feedback2-container">
+      <span id="feedback2"></span>
+    </div>
   </div>
   <div class="row d-flex justify-content-center">
-      <input type="text" id="answerInput" class="clickable-child" placeholder="Type/Select your Answer">
+    <input type="text" id="answerInput" class="clickable-child" placeholder="Type/Select your Answer">
   </div>
   <div class="row d-flex justify-content-center button-container">
-      <button id="submitAnswerButton" class="btn btn-outline-secondary clickable-child" >Submit Answer</button>
-      <button id="pass" class="btn btn-outline-secondary clickable-child">Pass</button>
+    <button id="submitAnswerButton" class="btn btn-outline-secondary clickable-child">Submit Answer</button>
+    <button id="pass" class="btn btn-outline-secondary clickable-child">Pass</button>
   </div>
-  
+
 </div>
 {% endblock %}

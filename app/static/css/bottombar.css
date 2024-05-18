@@ -11,7 +11,6 @@
   z-index: 999;
   width: 100%;
   min-height: 4vh;
-  /* Ensure it remains visible above #tabsContainer */
 }
 
 .button-container button {
@@ -27,18 +26,6 @@
 .button-container button.clickable-child {
   pointer-events: auto;
   padding-top: .5rem;
-}
-
-.question-container {
-
-}
-
-#question {
-  font-size: 18px;
-  font-weight: bold;
-  color: #333;
-  margin: 0;
-  text-align: center;
 }
 
 #answerInput {
