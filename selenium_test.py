@@ -25,14 +25,6 @@ class SeleniumTests(unittest.TestCase):
         time.sleep(2)  # Add a 2-second delay
         self.driver.get(self.localhost)
 
-        with self.client:
-            self.client.post('/register', data={
-                'username': 'newuser',
-                'email': 'new@example.com',
-                'password': 'newpassword123',
-                'password2': 'newpassword123' 
-            }, follow_redirects=True)
-
 
     def tearDown(self):
         self.driver.quit()
@@ -51,6 +43,21 @@ class SeleniumTests(unittest.TestCase):
     def test_periodictable_page(self):
         self.driver.get(self.localhost + "periodictable")
         self.assertTrue("<title>Periodic Table - Quick Quiz</title>" in self.driver.page_source)
+
+    def test_register(self):
+        # Navigate to the registration page
+        self.driver.get(self.localhost + "/register")
+
+        # Find form fields and submit them
+        self.driver.find_element(By.NAME, "username").send_keys("newuser")
+        self.driver.find_element(By.NAME, "email").send_keys("new@example.com")
+        self.driver.find_element(By.NAME, "password").send_keys("newpassword123")
+        self.driver.find_element(By.NAME, "password2").send_keys("newpassword123")
+        self.driver.find_element(By.NAME, "submit").click()
+
+        # Check if registration was successful by looking for some confirmation in the page source
+        success_text = "Congratulations, you are now a registered user!"
+        self.assertTrue(success_text in self.driver.page_source)
 
     def test_register_page(self):
         self.driver.get(self.localhost + "register")
