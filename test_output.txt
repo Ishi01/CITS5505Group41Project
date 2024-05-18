@@ -9,3 +9,20 @@ C:\Users\stuar\CITS5505Group41Project\myenv\Lib\site-packages\flask_session\file
 Ran 3 tests in 0.936s
 
 OK
+
+
+
+---- test_filesystem_cache ----
+
+(venv) haz@Zihans-MBP CITS5505Group41Project % python -m unittest test_filesystem_cache.py
+
+....Value of key0 after setting 101 keys: None
+Value of key100 after setting 101 keys: value100
+.
+----------------------------------------------------------------------
+Ran 5 tests in 0.053s
+
+OK
+
+--- which means ---
+The cache correctly handles setting, getting, adding, deleting, and clearing items, and respects the configured threshold by evicting the oldest items when necessary. This means that the cache is reliable and ready for use in this application.
