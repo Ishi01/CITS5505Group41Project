@@ -115,12 +115,7 @@ $(document).ready(function () {
 
     // Add new question block
     $('#addQuestion').click(function () {
-        var newQuestion = $('.question_block:first').clone(true);
-        newQuestion.find('input[type="text"], textarea').val('');
-        newQuestion.find('.form-text.text-danger').hide();
-        newQuestion.find('input, textarea').css('border', '');
-        $('#questions_container').append(newQuestion);
-        newQuestion.find('input[type="text"]:first').focus();
+        cloneQuestionBlock();
     });
 
     // Add new data input (country/element)

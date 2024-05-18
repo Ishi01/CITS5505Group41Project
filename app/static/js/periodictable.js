@@ -1,5 +1,5 @@
 $(document).ready(function () {
-
+    $('#feedback').hide();
     var selectedPaths = []; // Array to store the currently selected paths
     var currentMode = 0; // Single Click Mode
     var selectOnly = [];
@@ -8,10 +8,10 @@ $(document).ready(function () {
     const svgPath = $('#svg-container svg g g g path');
 
     attachInputHandlers();
-
+    
     function attachInputHandlers() {
         $('#answerInput').off('input keypress');
-        $(svgPath).off('click dblclick touchstart touchend')
+        $(svgPath).off('click dblclick touchstart touchend');
         function handleTouchEnd(event, currentMode) {
             event.preventDefault();
             let now = new Date().getTime();
@@ -292,7 +292,6 @@ $(document).ready(function () {
     function updateGameUI(action, data) {
         switch (action) {
             case 'start':
-                $('#pass').show();
                 $('#answerInput').prop('disabled', false);
                 $('#submitAnswerButton').prop('disabled', false);
                 $('#overlay').hide();
@@ -318,8 +317,6 @@ $(document).ready(function () {
                 // Stop the timer and display results
                 clearInterval(window.timerInterval); // Stop the timer
                 feedback(`Game Over!<br>Total Time: ${data.total_time_spent}s<br>Score: ${data.score} out of ${data.total_questions}`, false, true);
-
-                $('#pass').hide(); // Hide the pass button
                 $('#submitAnswerButton').prop('disabled', true);
                 $('#endGame').hide(); // Hide the end game button
                 $('#answerInput').prop('disabled', true);
@@ -470,15 +467,6 @@ $(document).ready(function () {
             $('.thumbs-up, .thumbs-down').hide();
         }
     }
-    
-    // Example usage
-    const data = {
-        total_time_spent: 123,
-        score: 10,
-        total_questions: 15
-    };
-    feedback(`Game Over!<br>Total Time: ${data.total_time_spent}s<br>Score: ${data.score} out of ${data.total_questions}`, false, true);
-    
 
     $('.thumbs-up').click(function () {
         submitRating('positive');
@@ -497,7 +485,7 @@ $(document).ready(function () {
             success: function (response) {
                 if (response.success) {
                     console.log('Rating submitted:', ratingType);
-                    feedback(false, 'Rating submitted! Thanks! ', true);
+                    feedback(false, 'Rating submitted!', true);
                 } else {
                     feedback(false, 'Error: ' + response.error, true);
                 }
@@ -560,7 +548,7 @@ $(document).ready(function () {
     // Function to adjust margins dynamically based on the number of tabs
     function adjustContainerMargin() {
         var tabsHeight = $('#tabsContainer').outerHeight(true); // true includes margin in the calculation
-        $('.container').css('margin-top', tabsHeight + 'px'); // Apply bottom margin to '.container'
+        $('.bottom-container').css('margin-top', tabsHeight + 'px'); // Apply bottom margin to '.bottom-container'
     }
 
     // Trigger this adjustment when tabs are added or removed

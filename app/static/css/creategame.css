@@ -1,0 +1,109 @@
+@import url("base.css");
+
+body {
+  font-family: "Arial", sans-serif;
+  background-color: var(--dark_background);
+  color: #ffffff;
+  line-height: 1.6;
+  margin: 0;
+}
+
+header {
+  background-color: #007bff;
+  color: #ffffff;
+  padding: 20px 0;
+  text-align: center;
+}
+
+h1,
+h2,
+h3 {
+  color: #ffffff;
+  text-align: center;
+}
+
+form {
+  margin: 0 auto;
+  padding-left: 150px;
+  padding-right: 150px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  color: #ffffff;
+}
+
+input[type="text"],
+textarea,
+select {
+  width: 100%;
+  display: block;
+  padding: 8px;
+  margin-top: 5px;
+  box-sizing: border-box;
+  background-color: #333;
+  color: #ffffff;
+  border: 1px solid #ddd;
+}
+
+textarea {
+  height: 60px;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  background-color: #444;
+  outline: none;
+}
+
+.btn-link,
+.btn-primary {
+  padding: 10px 10px;
+  text-decoration: none;
+  display: block;
+  width: 100%;
+
+  color: #ffffff;
+  background-color: #007bff;
+  border: none;
+  cursor: pointer;
+  width: 30%;
+  margin: 20px auto;
+  text-align: center;
+}
+
+.form-text,
+.text-danger {
+  color: #cccccc;
+}
+
+.text-danger {
+  color: #ff0000;
+}
+
+datalist {
+  background-color: #333;
+}
+
+ui-autocomplete {
+  position: absolute;
+  z-index: 1050; /* make sure it's above other elements */
+  max-height: 200px; /* limit height and make it scrollable */
+  overflow-y: auto;
+  overflow-x: hidden;
+  border: 1px solid #ccc;
+  background-color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-top: none;
+  list-style: none;
+}
+
+.input-group {
+  position: relative;
+}

@@ -287,7 +287,6 @@ $(document).ready(function () {
     function updateGameUI(action, data) {
         switch (action) {
             case 'start':
-                $('#pass').show();
                 $('#answerInput').prop('disabled', false);
                 $('#submitAnswerButton').prop('disabled', false);
                 $('#overlay').hide();
@@ -335,11 +334,11 @@ $(document).ready(function () {
                 // Stop the timer and display results
                 clearInterval(window.timerInterval); // Stop the timer
                 feedback(`Game Over!<br>Total Time: ${data.total_time_spent}s<br>Score: ${data.score} out of ${data.total_questions}`, false, true);
-                $('#pass').hide(); // Hide the pass button
                 $('#submitAnswerButton').prop('disabled', true);
                 $('#endGame').hide(); // Hide the end game button
                 $('#answerInput').prop('disabled', true);
                 $('#overlay').show();
+                removeAllPaths();
                 break;
         }
     }
@@ -356,7 +355,7 @@ $(document).ready(function () {
                     if (response.error === "No more questions or session not started") {
                         endGame();  // Call the function to handle end of the game
                     } else {
-                        alert('Game Over or Error: ' + response.error);
+                        console.error('Game Over or Error: ' + response.error);
                     }
                 } else {
                     console.log(response);
@@ -447,7 +446,7 @@ $(document).ready(function () {
                 if (response.success) {
                     getNextQuestion();  // Get the next question if skip was successful
                 } else {
-                    alert('Error: ' + response.error);
+                    console.error('Error: ' + response.error);
                 }
             },
             error: function (error) {
@@ -468,6 +467,7 @@ $(document).ready(function () {
 
     // Function to display feedback messages
     function feedback(message1 = false, message2 = false, endOfGame = false) {
+        console.log('Feedback function called', { message1, message2, endOfGame }); 
         $('#feedback').stop(true, true);
     
         if (message1 !== false) {
@@ -669,8 +669,8 @@ $(document).ready(function () {
 
     let svg = $('#svg-container svg');
 
-    let scaleSVG = 2.74;
-    let minScale = 2.74;
+    let scaleSVG = 2.48;
+    let minScale = 2.48;
     let maxScale = 14;
 
     let boundBox = {
@@ -932,7 +932,7 @@ $(document).ready(function () {
     // Function to adjust margins dynamically based on the number of tabs
     function adjustContainerMargin() {
         var tabsHeight = $('#tabsContainer').outerHeight(true); // true includes margin in the calculation
-        $('.container').css('margin-top', tabsHeight + 'px'); // Apply bottom margin to '.container'
+        $('.bottom-container').css('margin-top', tabsHeight + 'px'); // Apply bottom margin to '.bottom-container'
     }
 
     // Trigger this adjustment when tabs are added or removed

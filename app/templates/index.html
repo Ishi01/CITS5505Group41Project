@@ -9,7 +9,7 @@
     <!--Title of website ocde-->
     <div class="container-fluid">
         <div class="col-md-12 d-flex justify-content-center">
-            <h1 style="margin-bottom: 2rem;">(Insert website name here)</h1>
+            <h1 style="margin-bottom: 2rem;">Quick Quiz</h1>
         </div>
     </div>
 
@@ -20,9 +20,11 @@
             <h3>You are currently not logged in, if you would like to save your score information please</h3>
         </div>
         <div class="col-md-12 d-flex justify-content-center">
-            <a  id="homepagebutton" class="btn btn-outline-primary" href="{{ url_for('main.login') }}">Login</a>
-            <h3 style="margin-left: 1rem; margin-right: 1rem;">or</h3>
-            <a id="homepagebutton" class="btn btn-outline-primary" href="{{ url_for('main.register') }}">Register</a>
+            <div class="row d-flex justify-content-center">
+                <a  id="homepagebutton" class="btn btn-outline-primary" href="{{ url_for('main.login') }}">Login</a>
+                <h3 style="margin-left: 1rem; margin-right: 1rem; align-self: center;">or</h3>
+                <a id="homepagebutton" class="btn btn-outline-primary" href="{{ url_for('main.register') }}">Register</a>
+            </div>
         </div>
     </div>
     <!--If user is logged in, display welcome message-->
@@ -45,7 +47,7 @@
     <div class="row justify-content-center">
         <div class="col-3 d-flex align-items-center position-relative justify-content-center" onclick="location.href='{{ url_for('periodictable.periodic_table')}}'"> <!-- <- ignore this compiler error, its caused by quotation shenanigans-->
             <!--Image credit: https://chemistrydocs.com/periodic-table-notes/-->
-            <img src="{{ url_for('static', filename='/images/periodicbutton.png') }}" alt="Periodic Table Quiz Button" class="img-fluid rounded">
+            <img id="imgButton" src="{{ url_for('static', filename='/images/periodicbutton.png') }}" alt="Periodic Table Quiz Button" class="img-fluid rounded">
             <div class="stack-Txt position-absolute">
                 <h4 class="stack-Txt-child">Periodic Table Quiz</h4>
             </div>
@@ -53,7 +55,7 @@
 
         <div class="col-3 d-flex align-items-center position-relative justify-content-center" onclick="location.href='{{ url_for('worldmap.world') }}'"> <!--  <- ignore this one too-->
             <!--Image credit: https://www.pxfuel.com/en/desktop-wallpaper-graok-->
-            <img src="{{ url_for('static', filename='/images/worldbutton.jpg') }}" alt="World Map Quiz Button" class="img-fluid rounded">
+            <img id="imgButton" src="{{ url_for('static', filename='/images/worldbutton.jpg') }}" alt="World Map Quiz Button" class="img-fluid rounded">
             <div class="stack-Txt position-absolute">
                 <h4 class="stack-Txt-child">World Map Quiz</h4>
             </div>
