@@ -1,6 +1,8 @@
 #feedback {
+    background-color: rgba(200, 200, 255, 0.93);
     font-size: 18px;
     color: rgb(0, 0, 0);
+    margin-top: 10px;
     margin-bottom: 12px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.05);
     z-index: 1001;
@@ -10,17 +12,12 @@
     position: fixed;
     justify-content: center;
     pointer-events: none;
+    user-select: none;
     bottom: 18%;
     left: 0;
     width: 100%;
-}
-
-.feedback {
-    background-color: rgba(200, 200, 255, 0.93);
     padding: 10px;
     border-radius: 5px;
-    margin-top: 10px;
-    user-select: none;
 }
 
 .rating-buttons {

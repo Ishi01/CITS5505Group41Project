@@ -38,7 +38,6 @@ svg {
   width: 100vw;
   height: 100vh;
   display: block;
-  position: flex;
   background-color: #e0f7fa;
   top: 0;
   left: 0;
@@ -48,8 +47,6 @@ svg {
 svg:active {
   cursor: grabbing;
 }
-
-
 
 #tabsContainer {
   position: fixed;
@@ -66,71 +63,7 @@ svg:active {
   pointer-events: none;
 }
 
-.container {
-  display: flex;
-  align-items: center;
-  position: fixed;
-  bottom: 0;
-  background-color: #f5f5f5;
-  z-index: 999;
-  width: 100%;
-  min-height: 4vh;
-  /* Ensure it remains visible above #tabsContainer */
-}
 
-.button-container {
-  display: flex;
-  width: 100%;
-  pointer-events: none;
-}
-
-.button-container button.clickable-child {
-  display: flex;
-  align-items: center;
-  pointer-events: auto;
-}
-
-#startGame,
-#submitAnswerButton,
-#pass {
-  padding: 10px;
-  font-size: 16px;
-  border: none;
-  cursor: pointer;
-}
-
-#question {
-  flex: 2;
-  font-size: 18px;
-  font-weight: bold;
-  color: #333;
-  margin: 0;
-  text-align: center;
-}
-
-#answerInput {
-  flex: 3;
-  padding: 8px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-}
-
-.button-container {
-  flex: 4;
-  display: flex;
-}
-
-#submitAnswerButton {
-  flex: 3;
-  background-color: #008CBA;
-  color: white;
-}
-
-#pass {
-  flex: 1;
-  background-color: #e7e7e7;
-  color: black;
-}
 
 .country-tab {
   margin: 5px;

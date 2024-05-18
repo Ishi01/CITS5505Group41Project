@@ -356,7 +356,7 @@ $(document).ready(function () {
                     if (response.error === "No more questions or session not started") {
                         endGame();  // Call the function to handle end of the game
                     } else {
-                        alert('Game Over or Error: ' + response.error);
+                        console.error('Game Over or Error: ' + response.error);
                     }
                 } else {
                     console.log(response);
@@ -447,7 +447,7 @@ $(document).ready(function () {
                 if (response.success) {
                     getNextQuestion();  // Get the next question if skip was successful
                 } else {
-                    alert('Error: ' + response.error);
+                    console.error('Error: ' + response.error);
                 }
             },
             error: function (error) {
@@ -468,6 +468,7 @@ $(document).ready(function () {
 
     // Function to display feedback messages
     function feedback(message1 = false, message2 = false, endOfGame = false) {
+        console.log('Feedback function called', { message1, message2, endOfGame }); 
         $('#feedback').stop(true, true);
     
         if (message1 !== false) {

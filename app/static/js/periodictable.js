@@ -1,5 +1,5 @@
 $(document).ready(function () {
-
+    $('#feedback').hide();
     var selectedPaths = []; // Array to store the currently selected paths
     var currentMode = 0; // Single Click Mode
     var selectOnly = [];
@@ -8,10 +8,10 @@ $(document).ready(function () {
     const svgPath = $('#svg-container svg g g g path');
 
     attachInputHandlers();
-
+    
     function attachInputHandlers() {
         $('#answerInput').off('input keypress');
-        $(svgPath).off('click dblclick touchstart touchend')
+        $(svgPath).off('click dblclick touchstart touchend');
         function handleTouchEnd(event, currentMode) {
             event.preventDefault();
             let now = new Date().getTime();
@@ -470,15 +470,6 @@ $(document).ready(function () {
             $('.thumbs-up, .thumbs-down').hide();
         }
     }
-    
-    // Example usage
-    const data = {
-        total_time_spent: 123,
-        score: 10,
-        total_questions: 15
-    };
-    feedback(`Game Over!<br>Total Time: ${data.total_time_spent}s<br>Score: ${data.score} out of ${data.total_questions}`, false, true);
-    
 
     $('.thumbs-up').click(function () {
         submitRating('positive');
@@ -497,7 +488,7 @@ $(document).ready(function () {
             success: function (response) {
                 if (response.success) {
                     console.log('Rating submitted:', ratingType);
-                    feedback(false, 'Rating submitted! Thanks! ', true);
+                    feedback(false, 'Rating submitted!', true);
                 } else {
                     feedback(false, 'Error: ' + response.error, true);
                 }
