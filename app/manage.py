@@ -14,7 +14,7 @@ def manage_page():
     
     games = QuizQuestion.query.group_by(QuizQuestion.game_name).all()
     users = User.query.all()
-    return render_template('manage.html', games=games, users=users)
+    return render_template('manage.html', games=games, users=users, title='Manage')
 
 @login_required
 @manage.route('/delete_game', methods=['POST'])

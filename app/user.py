@@ -48,4 +48,4 @@ def user_profile(user_id=None, user_name=None):
     )
 
     # Render the template with the user's data and game history
-    return render_template('user.html', user=user, game_history=game_history)
+    return render_template('user.html', user=user, game_history=game_history, title=user.username)

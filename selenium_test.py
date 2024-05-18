@@ -3,6 +3,7 @@ import unittest
 import subprocess
 from flask_sqlalchemy import SQLAlchemy
 from selenium import webdriver
+from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from app import create_app, db
 from config import TestConfig
@@ -24,6 +25,15 @@ class SeleniumTests(unittest.TestCase):
         time.sleep(2)  # Add a 2-second delay
         self.driver.get(self.localhost)
 
+        with self.client:
+            self.client.post('/register', data={
+                'username': 'newuser',
+                'email': 'new@example.com',
+                'password': 'newpassword123',
+                'password2': 'newpassword123' 
+            }, follow_redirects=True)
+
+
     def tearDown(self):
         self.driver.quit()
         #self.server_process.terminate()
@@ -31,9 +41,44 @@ class SeleniumTests(unittest.TestCase):
         db.drop_all()
         self.app_context.pop()
 
-    # Example test method
     def test_home_page(self):
         self.assertTrue("<title>Home - Quick Quiz</title>" in self.driver.page_source)
+
+    def test_worldmap_page(self):
+        self.driver.get(self.localhost + "worldmap")
+        self.assertTrue("<title>World Map - Quick Quiz</title>" in self.driver.page_source)
+
+    def test_periodictable_page(self):
+        self.driver.get(self.localhost + "periodictable")
+        self.assertTrue("<title>Periodic Table - Quick Quiz</title>" in self.driver.page_source)
+
+    def test_register_page(self):
+        self.driver.get(self.localhost + "register")
+        self.assertTrue("<title>Register - Quick Quiz</title>" in self.driver.page_source)
+        self.driver.find_element(By.NAME, "username").send_keys("testuser")
+        self.driver.find_element(By.NAME, "password").send_keys("testpassword")
+        self.driver.find_element(By.NAME, "submit").click()
+        self.assertTrue("Congratulations, you are now a registered user!" in self.driver.page_source)
+
+    def test_login_page(self):
+        self.driver.get(self.localhost + "login")
+        self.assertTrue("<title>Sign In - Quick Quiz</title>" in self.driver.page_source)
+        self.driver.find_element(By.NAME, "username").send_keys("testuser")
+        self.driver.find_element(By.NAME, "password").send_keys("testpassword")
+        self.driver.find_element(By.NAME, "submit").click()
+        self.assertTrue("testuser" in self.driver.page_source)
+
+    def test_manage_page(self):
+        self.driver.get(self.localhost + "manage")
+        self.assertTrue("<title>Manage - Quick Quiz</title>" in self.driver.page_source)
+
+    def test_user_page(self):
+        self.driver.get(self.localhost + "user/newuser")
+        self.assertTrue("<title>newuser - Quick Quiz</title>" in self.driver.page_source)
+
+    def test_leaderboard_page(self):
+        self.driver.get(self.localhost + "leaderboard")
+        self.assertTrue("<title>Leaderboard - Quick Quiz</title>" in self.driver.page_source)
 
 if __name__ == '__main__':
     unittest.main()

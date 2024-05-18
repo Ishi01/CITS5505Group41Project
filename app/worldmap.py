@@ -73,7 +73,7 @@ def world():
     # Sort locations by average rating in descending order, handle None values appropriately
     locations.sort(key=lambda x: x['average_rating'] if x['average_rating'] is not None else -1, reverse=True)
 
-    return render_template('world.html', svg_content=svg_content, script="game", locations=locations)
+    return render_template('world.html', svg_content=svg_content, script="game", locations=locations, title='World Map')
 
 @worldmap.route('/set-location', methods=['POST'])
 def set_location():

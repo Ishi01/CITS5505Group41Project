@@ -77,6 +77,18 @@ python -m unittest discover -s ./tests -p "test_*.py"
 
 ### System Tests
 
+Selenium can be run by starting a server using:
+
+```sh
+python -m flask run
+```
+
+and then
+
+```sh
+python -m selenium_test
+```
+
 ### Add Fake Data
 
 ```

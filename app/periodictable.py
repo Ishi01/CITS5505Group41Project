@@ -75,7 +75,7 @@ def periodic_table():
     locations.sort(key=lambda x: x['average_rating'] if x['average_rating'] is not None else -1, reverse=True)
 
 
-    return render_template('periodic_table.html', svg_content=svg_content, locations=locations)
+    return render_template('periodic_table.html', svg_content=svg_content, locations=locations, title='Periodic Table')
 
 @periodictable.route('/set-location', methods=['POST'])
 def set_location():
