@@ -16,6 +16,7 @@ from collections import defaultdict
 
 main = Blueprint('main', __name__)
 
+#Starting route, sends to homepage labeled index.html
 @main.route('/')
 @main.route('/index')
 def index():

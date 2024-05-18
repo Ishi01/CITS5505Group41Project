@@ -11,6 +11,7 @@ from sqlalchemy.types import JSON
 def load_user(id):
     return db.session.get(User, int(id))
 
+#User class, sonctains all of the user information and getters and setters for it
 class User(UserMixin, db.Model):
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
     username: so.Mapped[str] = so.mapped_column(sa.String(64), index=True, unique=True)
@@ -28,6 +29,7 @@ class User(UserMixin, db.Model):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
+#Game class, contains all of the game information and databse mapping
 class Game(db.Model):
     game_name: so.Mapped[str] = so.mapped_column(sa.String(100), primary_key=True, nullable=False)
     description: so.Mapped[str] = so.mapped_column(sa.String(200), nullable=True)
@@ -38,6 +40,7 @@ class Game(db.Model):
     def __repr__(self):
         return '<Game {}>'.format(self.game_name)
 
+#QuizQuestion class, contains all of the quiz question information and database mapping
 class QuizQuestion(db.Model):
     __tablename__ = 'quiz_questions'
     question_id: so.Mapped[int] = so.mapped_column(primary_key=True)

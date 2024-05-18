@@ -15,8 +15,22 @@ a{
 
 /* container and background styling */
 
-.container-fluid, .row{
+
+.d-flex{
     background-color: var(--dark_background);
+    color: var(--color_text);
+}
+
+.row {
+    background-color: var(--dark_background);
+    color: var(--color_text);
+    margin: 0%;
+}
+
+
+.container-fluid, .row > [class^="col-"] {
+    background-color: var(--dark_background);
+    color: var(--color_text);
     margin: 0%;
 }
 
@@ -26,13 +40,80 @@ a{
 
 }
 
+
+/*button styling */
+
+.btn-secondary{
+    color: var(--color_text);
+    border-color: var(--color_text);
+    background-color: var(--light_background);
+    margin-top: .2rem;
+    margin-bottom: .2rem;
+}
+
+
+/* Form styling */
+
+form{
+    background-color: var(--dark_background);
+    color: var(--color_text);
+    margin: 0%;
+    padding: 0%;
+}
+
+.form-text{
+    background-color: var(--dark_background)!important;
+    margin-top: 0%;
+}
+
+select{
+    background-color: var(--light_background);
+    color: var(--color_text);
+}
+
+#description{
+    background-color: var(--light_background);
+    color: var(--color_text);
+    border: 1px solid var(--color_text);
+    margin-left: 1%;
+    width: 80%;
+    margin-bottom: 2%;
+}
+
+
+.form-group > input{
+    background-color: var(--light_background);
+    color: var(--color_text);
+}
+
+.country-inputs > input{
+    background-color: var(--light_background);
+    color: var(--color_text);
+    margin-left: .5rem;
+    margin-bottom: .5rem;
+}
+
+
+.form-group{
+    background-color: var(--dark_background);
+    color: var(--color_text);
+    margin: 0%;
+    padding: 0%;
+    padding-left: 2%;
+}
+
+small {
+    color: var(--dark_background);
+    background-color: var(--dark_background);
+}
+
 /* Image styling */
 
 img {
     width: fit-content;
     height: auto;
+    cursor: pointer;
 }
-
 
 /* navbar styling */
 .navbar-nav {
@@ -43,7 +124,6 @@ img {
 .nav-item{
     padding-left: 8px;
 }
-
  .nav-item > .btn-outline-primary, #homepagebutton{
     color: var(--link_color);
     border-color: var(--link_color);
@@ -78,7 +158,7 @@ h4 {
     1px -1px 0 #000;
 }
 
-/* this auto finds text within the {{ }} style input and styles them, temp prototype since this will probably cause problems */
+/* this auto finds text within the {{ }} style input and styles them */
 p > label, #floating_text{
     color: var(--color_text);
     margin-bottom: .2rem;

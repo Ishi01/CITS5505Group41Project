@@ -10,7 +10,11 @@
 
 {% block content %}
 <form action="{{ url_for('creategame.submit_game') }}" method="post" id="quizForm">
-    <h2>Create Your Quiz Game</h2>
+    <div class="container-fluid">
+        <div class="col-md-12 d-flex justify-content-center" style="padding-bottom: 1rem;">
+            <h1>Create Your Quiz Game</h1>
+        </div>
+    </div>
     <div class="form-group">
         <label for="jsonInput">Upload JSON File:</label>
         <input type="file" id="jsonInput" accept=".json">
@@ -22,52 +26,58 @@
         </select>
         <br>
         <label for="game_name">Game Name:</label>
-        <input type="text" id="game_name" name="game_name" required aria-describedby="gameNameHelp">
+        <input type="text" id="game_name" name="game_name[]" required aria-describedby="gameNameHelp">
         <small id="game_name_error" class="form-text text-danger"></small>
     </div>
 
-    <div class="form-group">
-        <label for="description">Description:</label>
-        <textarea id="description" name="description" required aria-describedby="descriptionHelp"></textarea>
+    <div class="form-group" style="margin-bottom: 0%!important;">
+        <label for="description" class="form-label">Description:</label>
+        <textarea id="description" name="description[]" class="form-control" required aria-describedby="descriptionHelp"></textarea>
     </div>
 
-    <h3>Add Questions</h3>
+
+    <h3 style="padding-left: 2%;">Add Questions</h3>
+
+    <!--Quesitons container, of which a new copy is added everytime the add new question buttion is pressed-->
     <div id="questions_container">
         <div class="question_block form-group">
             <label for="question_text[]">Question:</label>
             <input type="text" name="question_text[]" required>
-
-            <label for="location[]" class="location-label">Location Lock:</label>
-            <select name="location[]" class="location-select" required>
-                <option value="global">global (whole map)</option>
-                <option value="Europe">Europe</option>
-                <option value="East Asia">East Asia</option>
-                <option value="North America">North America</option>
-                <option value="South America">South America</option>
-                <option value="Middle East">Middle East</option>
-            </select>
-
-            <div class="data-inputs">
-                <label class="data-label">Answer Countries:</label>
-                <input type="text" class="answer-data" name="data[]" list="dataList" required>
+        
+            <div class="form-group col-md-12 justify-content-center">   
+                <label for="location[]" class="location-label">Location Lock:</label>
+                <select name="location[]" class="location-select" required>
+                    <option value="global">global (whole map)</option>
+                    <option value="Europe">Europe</option>
+                    <option value="East Asia">East Asia</option>
+                    <option value="North America">North America</option>
+                    <option value="South America">South America</option>
+                    <option value="Middle East">Middle East</option>
+                </select>
+            </div> 
+            <div class="form-group col-md-12 justify-content-center">
+                <div class="data-inputs">
+                    <label class="data-label">Answer Countries:</label>
+                    <input type="text" class="answer-data" name="data[]" list="dataList" required>
+                </div>
+                <button type="button" class="btn btn-link add-data">Add Another Answer</button>
+                <button type="button" class="btn btn-link remove-data">Remove Last Answer</button>
+                <datalist id="dataList">
+                    <!-- This datalist will be populated with country or element options via JavaScript -->
+                </datalist>
+                <div id="error_message" class="form-text text-danger" style="display: none;"></div>
             </div>
-            <button type="button" class="btn btn-link add-data">Add Another Answer</button>
-            <button type="button" class="btn btn-link remove-data">Remove Last Answer</button>
-            <datalist id="dataList">
-                <!-- This datalist will be populated with country or element options via JavaScript -->
-            </datalist>
-            <div id="error_message" class="form-text text-danger" style="display: none;"></div>
+        </div>    
+    </div>
+    <div class="form-group min-vh-100" style="margin: 0%;">
+        <div  style="margin-bottom: 1rem;">
             <br>
-            <button type="button" class="btn btn-link remove-question">Remove This Question</button>
+            <button type="button" id="addQuestion" class="btn btn-link">Add Another Question</button>
         </div>
-    </div>
-    <div>
-        <br>
-        <button type="button" id="addQuestion" class="btn btn-link">Add Another Question</button>
-    </div>
-    <div>
-        <button type="submit" class="btn btn-primary">Submit Game</button>
-        <div id="responseMessage" class="form-text" style="display: none;"></div>
+        <div>
+            <button type="submit" class="btn btn-primary">Submit Game</button>
+            <div id="responseMessage" class="form-text" style="display: none;"></div>
+        </div>
     </div>
     <button type="button" id="exportToJson" class="btn btn-link">Export to JSON</button>
 </form>

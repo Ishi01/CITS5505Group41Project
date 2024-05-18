@@ -2,16 +2,19 @@
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="0 0 800 450" xml:space="preserve">
 <style type="text/css">
+	<!--
 	.st0{fill:#FFFFFF;}
-	.top{fill:#FFFFFF;stroke:#000000;}
+	.st1{fill:#FFFFFF;stroke:#000000;}
+	-->
+	.funni{fill:#c5c6c7;!important}
 	.st2{font-family:'ArialMT';}
 	.st3{font-size:12px;}
 	.st4{font-size:14px;}
 	.top{z-index:1000;}
 </style>
 <g transform="translate(-.5,-56.5)">
-	<path class="st0" d="M144,387v-36h36v36H144z" />
-	<path class="st0" d="M144,347v-36h36v36H144z" />
+	<path class="st0" id="empty" d="M144,387v-36h36v36H144z"/>
+	<path class="st0" id="empty" d="M144,347v-36h36v36H144z"/>
 	<g class="top">
 		<g id="Unclass" transform="translate(384,387)">
 			<path id="Mt" class="Mt Meitnerium" d="M0,0v-36h36V0H0z" />
@@ -180,7 +183,7 @@
 		<text transform="matrix(1 0 0 1 38.6631 294)" class="st2 st3">5</text>
 		<text transform="matrix(1 0 0 1 38.6631 334)" class="st2 st3">6</text>
 		<text transform="matrix(1 0 0 1 38.6631 374)" class="st2 st3">7</text>
-		<g>
+		<g id="elementText">
 			<text transform="matrix(1 0 0 1 758.6631 125)" class="st2 st3">2</text>
 			<text transform="matrix(1 0 0 1 78.6631 125)" class="st2 st3">1</text>
 			<text transform="matrix(1 0 0 1 754.3301 141)" class="st2 st3">He</text>
@@ -417,8 +420,8 @@
 			<text transform="matrix(1 0 0 1 673.665 481)" class="st2 st3">Md</text>
 			<text transform="matrix(1 0 0 1 714.3301 481)" class="st2 st3">No</text>
 			<text transform="matrix(1 0 0 1 756.665 481)" class="st2 st3">Lr</text>
-			<text transform="matrix(1 0 0 1 10 93)" class="st2 st3">Group</text>
-			<text transform="matrix(1 0 0 1 20 108)" class="st2 st3">Period</text>
+			<text transform="matrix(1 0 0 1 10 93)" class="st2 st3 funni" id="titleText" >Group</text>
+			<text transform="matrix(1 0 0 1 20 108)" class="st2 st3 funni" id="titleText" >Period</text>
 		</g>
 		<g>
 			<text transform="matrix(1 0 0 1 92.7109 434)" class="st2 st4">Lanthanides</text>
