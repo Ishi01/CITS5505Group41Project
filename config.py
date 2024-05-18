@@ -30,9 +30,10 @@ class TestConfig(Config):
     SCRIPT_MODE = True
     SERVER_NAME = 'localhost.localdomain'
     SESSION_PERMANENT = False  # Ensure sessions don't 'expire' during tests
-    LOGIN_DISABLED = False
+    LOGIN_DISABLED = True
     SESSION_CACHE = FileSystemCache('./test_sessions', threshold=500, mode=0o600)
 
 ## Deployment Config
 class DeploymentConfig(Config):
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or 'sqlite:///' + os.path.join(basedir, 'prod.db')
+    SESSION_USE_SIGNER = True

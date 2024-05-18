@@ -1,5 +1,5 @@
 from flask import Flask
-from config import Config, TestConfig
+from config import Config
 from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -32,19 +32,9 @@ def create_app(config_class=Config):
         app.extensions_setup_done = True
 
     # Register blueprints
-    from app.routes import main
-    app.register_blueprint(main)
-    from app.worldmap import worldmap
-    app.register_blueprint(worldmap)
-    from app.creategame import creategame
-    app.register_blueprint(creategame)
-    from app.periodictable import periodictable
-    app.register_blueprint(periodictable)
-    from app.manage import manage
-    app.register_blueprint(manage)
-    from app.user import user
-    app.register_blueprint(user)
-    
+    from app.blueprints import register_blueprints
+    register_blueprints(app)
+    # Register click commands
     register_commands(app)
 
     return app
