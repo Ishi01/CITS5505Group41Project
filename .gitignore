@@ -15,6 +15,10 @@ venv*/
 myenv/
 create_venv.bat
 
+#Testing
+test_output.txt
+test_sessions/
+
 # Database
 *.db
 

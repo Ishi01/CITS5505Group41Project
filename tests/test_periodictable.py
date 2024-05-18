@@ -85,6 +85,26 @@ class TestPeriodicTable(BaseTestCase):
             self.assertEqual(feedback_entry.feedback, 1, "Feedback value should be 1 for positive rating")
             self.assertEqual(feedback_entry.user_id, self.user.id, "User ID should match the logged in user's ID")
 
+    def test_submit_rating_no_session_periodictable(self):
+        with self.client as c:
+            # Attempt to submit a rating without setting the session
+            response = c.post(url_for('periodictable.submit_rating'), json={
+                'rating_type': 'positive',
+                'game_name': 'Element Quiz'
+            })
+            self.assertNotEqual(response.status_code, 200, "Expected failure due to no session set")
+
+    def test_submit_invalid_rating_type_periodictable(self):
+        with self.client as c:
+            c.post(url_for('periodictable.set_location'), json={'game_name': 'Element Quiz'})
+            response = c.post(url_for('periodictable.submit_rating'), json={
+                'rating_type': 'neutral',
+            })
+            data = response.get_json()
+            self.assertTrue(data['error'], "Expected failure due to invalid rating type")
+
+
+
 
     def tearDown(self):
         super().tearDown()

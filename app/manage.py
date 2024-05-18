@@ -23,7 +23,11 @@ def delete_game():
     if not current_user.is_admin:
         return jsonify({'status': 'error', 'message': 'Access denied'}), 403
     
-    QuizQuestion.query.filter_by(game_name=game_name).delete()
+    game = QuizQuestion.query.filter_by(game_name=game_name).first()
+    if not game:
+        return jsonify({'status': 'error', 'message': f'Game "{game_name}" does not exist'}), 404
+    
+    db.session.delete(game)
     db.session.commit()
     return jsonify({'status': 'success', 'message': f'Game "{game_name}" deleted successfully!'})
 
@@ -34,6 +38,14 @@ def delete_user():
     if not current_user.is_admin:
         return jsonify({'status': 'error', 'message': 'Access denied'}), 403
     
-    User.query.filter_by(id=user_id).delete()
+    # Prevent deletion of critical user accounts
+    if user_id == '0' or User.query.get(user_id).username == 'admin':
+        return jsonify({'status': 'error', 'message': 'Deleting this user is not allowed'}), 403
+
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({'status': 'error', 'message': 'User does not exist'}), 404
+
+    db.session.delete(user)
     db.session.commit()
     return jsonify({'status': 'success', 'message': 'User deleted successfully!'})

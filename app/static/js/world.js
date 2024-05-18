@@ -4,6 +4,7 @@ $(document).ready(function () {
     var currentMode = 0; // Single Click Mode, 1 is Multi-Select Mode
     var selectOnly = []; // Restricts selection to only these countries
     let lastTouchTime = 0; // to store the time of the last touch
+    let currentGame = '';
 
     attachInputHandlers();
 

@@ -11,7 +11,7 @@ class TestManage(BaseTestCase):
         super().setUp()
         # Create an admin user
         self.admin_user = User(
-            username='adminuser', 
+            username='admin', 
             email='admin@example.com', 
             is_admin=True)
         self.admin_user.set_password('adminpass')
@@ -41,7 +41,7 @@ class TestManage(BaseTestCase):
         # Login as admin for testing
         with self.client:
             response = self.client.post('/login', data={
-                'username': 'adminuser',
+                'username': 'admin',
                 'password': 'adminpass'
             }, follow_redirects=True)
             self.assertTrue(current_user.is_authenticated, response)
@@ -86,6 +86,24 @@ class TestManage(BaseTestCase):
         # Check if the user still exists in the database using the stored user ID
         deleted_user = User.query.get(user_id)
         self.assertIsNone(deleted_user, "The user should have been deleted from the database")
+
+    def test_delete_game_as_normal_user(self):
+        self.client.get('/logout', follow_redirects=True)
+        self.client.post('/login', data={
+            'username': 'normaluser',
+            'password': 'normalpass'
+        }, follow_redirects=True)
+        response = self.client.post(url_for('manage.delete_game'), data={'game_name': 'Test Game'}, follow_redirects=True)
+        self.assertNotEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 403)
+
+    def test_delete_nonexistent_game(self):
+        response = self.client.post(url_for('manage.delete_game'), data={'game_name': 'Nonexistent Game'}, follow_redirects=True)
+        self.assertNotEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 404)
+        data = response.get_json()
+        self.assertEqual(data['status'], 'error')
+
 
     def tearDown(self):
         super().tearDown()

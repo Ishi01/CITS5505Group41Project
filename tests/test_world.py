@@ -12,7 +12,7 @@ class TestWorldMap(BaseTestCase):
         super().setUp()
         # Create a test user with all required fields, including email
         self.user = User(username='testuser', email='test@example.com')
-        self.user.set_password('testpass')  # Properly hash password
+        self.user.set_password('testpass')
         db.session.add(self.user)
         db.session.commit()
 
@@ -87,20 +87,36 @@ class TestWorldMap(BaseTestCase):
             with c.session_transaction() as sess:
                 self.assertEqual(sess['game_name'], 'Test Game')
                 self.assertEqual(response.status_code, 200, response.get_data(as_text=True))
-            
-            # Submit a positive rating for the game
+                
+                # Submit a positive rating for the game
+                response = c.post(url_for('worldmap.submit_rating'), json={
+                    'rating_type': 'positive'
+                })
+                data = response.get_json()
+                self.assertTrue(data['success'], data)
+                
+                # Verify that the feedback was correctly inserted into the database
+                feedback_entry = Feedback.query.filter_by(game_name=sess['game_name'], user_id=current_user.id).first()
+                self.assertIsNotNone(feedback_entry, "Feedback entry should not be None")
+                self.assertEqual(feedback_entry.feedback, 1, "Feedback value should be 1 for positive rating")
+                self.assertEqual(feedback_entry.user_id, self.user.id, "User ID should match the logged in user's ID")
+
+    def test_submit_rating_no_session(self):
+        with self.client as c:
+            # Attempt to submit a rating without setting the session
             response = c.post(url_for('worldmap.submit_rating'), json={
-                'rating_type': 'positive', 
-                'game_name': 'Test Game'
+                'rating_type': 'positive'
+            })
+            self.assertNotEqual(response.status_code, 200, "Expected failure due to no session set")
+
+    def test_submit_invalid_rating_type(self):
+        with self.client as c:
+            c.post(url_for('worldmap.set_location'), json={'game_name': 'Test Game'})
+            response = c.post(url_for('worldmap.submit_rating'), json={
+                'rating_type': 'neutral'
             })
             data = response.get_json()
-            self.assertTrue(data['success'], data)
-            
-            # Verify that the feedback was correctly inserted into the database
-            feedback_entry = Feedback.query.filter_by(game_name='Test Game', user_id=current_user.id).first()
-            self.assertIsNotNone(feedback_entry, "Feedback entry should not be None")
-            self.assertEqual(feedback_entry.feedback, 1, "Feedback value should be 1 for positive rating")
-            self.assertEqual(feedback_entry.user_id, self.user.id, "User ID should match the logged in user's ID")
+            self.assertTrue(data['error'], "Expected failure due to invalid rating type")
 
     def tearDown(self):
         super().tearDown()
