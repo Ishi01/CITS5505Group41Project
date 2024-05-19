@@ -445,7 +445,7 @@ $(document).ready(function () {
                     console.error('Error: ' + response.error);
                 }
             },
-            error: function (error) {
+            error: function(xhr, status, error) {
             }
         });
     }

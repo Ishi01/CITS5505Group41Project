@@ -94,16 +94,13 @@ python -m unittest discover -s ./tests -p "test_*.py"
 
 ### System Tests
 
-Selenium can be run by starting a server using:
-
-```sh
-python -m flask run
-```
-
-and then
-
+Simple selenium tests can be run run using:
 ```sh
 python -m selenium_test
+```
+For a full demonstration of registering an account, logging in, creating a game, playing the game, and viewing the score on the leaderboard run:
+```sh
+python -m selenium_test_complex
 ```
 
 ## Updating Requirements
