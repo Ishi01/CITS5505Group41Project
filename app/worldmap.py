@@ -112,13 +112,19 @@ def get_next_question():
 
     return jsonify(success=True, question=question_text, is_multiple_choice=is_multiple_choice, location=current_location)
 
+from flask import jsonify, request, session
+import json
+import time
+
 @worldmap.route('/game-answer', methods=['POST'])
 def check_answer():
     data = request.json
     question_text = data['question']
+    
     # Deserialize answers before checking
     if 'answers' in session and question_text in json.loads(session['answers']):
         correct_answers = json.loads(session['answers'])[question_text]
+        
         if 'answer' in data:
             user_answers = set(map(str.lower, data['answer']))
             correct_answers_set = set(map(str.lower, json.loads(correct_answers)))
@@ -126,30 +132,31 @@ def check_answer():
             print(correct_answers_set)
             is_correct = user_answers == correct_answers_set
             next_question = is_correct
+
+            # Generate hint based on the number of attempts
+            current_time = int(time.time())
+            time_spent = current_time - session['previous_time']
+            
+            if question_text not in session.get('results', {}):
+                session['results'][question_text] = [is_correct, time_spent, 1]
+            else:
+                session['results'][question_text][0] = is_correct
+                session['results'][question_text][1] += time_spent
+                session['results'][question_text][2] += 1
+
+            attempts = session['results'][question_text][2]
+            min_length = min(len(answer) for answer in correct_answers_set)  # Find the shortest answer length
+            hint_length = min(attempts, min_length)  # Use the smaller of attempts or the shortest answer length
+            hint = " ".join(f"{word[:hint_length].upper()}..." for word in correct_answers_set if len(word) >= hint_length)
+
+            return jsonify(success=True, is_correct=is_correct, next_question=next_question, hint=hint, attempts=attempts)
         else:
             is_correct = False
             next_question = True
-
-        current_time = int(time.time())
-        time_spent = current_time - session['previous_time']
-        if question_text not in session.get('results', {}):
-            session['results'][question_text] = [is_correct, time_spent, 1]
-        else:
-            session['results'][question_text][0] = is_correct
-            session['results'][question_text][1] += time_spent
-            session['results'][question_text][2] += 1
-
-        # Get the number of attempts from session results
-        attempts = session['results'][question_text][2]
-
-        # Generate hint based on the number of attempts, without causing an index error
-        min_length = min(len(answer) for answer in correct_answers_set)  # Find the shortest answer length
-        hint_length = min(attempts, min_length)  # Use the smaller of attempts or the shortest answer length
-        hint = " ".join(f"{word[:hint_length].upper()}..." for word in correct_answers_set if len(word) >= hint_length)
-
-        return jsonify(success=True, is_correct=is_correct, next_question=next_question, hint=hint)
+            return jsonify(success=True, is_correct=is_correct, next_question=next_question)
     else:
         return jsonify(error="Question not found or session invalid"), 404
+
 
 
 @worldmap.route('/skip-question', methods=['POST'])
