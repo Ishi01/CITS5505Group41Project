@@ -48,8 +48,22 @@ class LeaderboardTestCase(BaseTestCase):
             attempts=5,
             completion_time=20.5
         )
+        history5 = UserGameHistory(
+            user_id=user1.id,
+            game_name='Quiz 3',
+            correct_answers=0,
+            attempts=5,
+            completion_time=50.5
+        )
+        history6 = UserGameHistory(
+            user_id=user1.id,
+            game_name='Quiz 3',
+            correct_answers=1,
+            attempts=5,
+            completion_time=5.5
+        )
 
-        db.session.add_all([history1, history2, history3, history4])
+        db.session.add_all([history1, history2, history3, history4, history5, history6])
         db.session.commit()
 
         # Print data from user_game_history for debugging
