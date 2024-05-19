@@ -18,7 +18,11 @@ class User(UserMixin, db.Model):
     email: so.Mapped[str] = so.mapped_column(sa.String(120), index=True, unique=True)
     password_hash: so.Mapped[Optional[str]] = so.mapped_column(sa.String(256))
     is_admin: so.Mapped[bool] = so.mapped_column(sa.Boolean, default=False, nullable=False)
-    games: so.WriteOnlyMapped['Game'] = so.relationship(back_populates='player')
+    user_game_histories = so.relationship(
+            'UserGameHistory',
+            back_populates='user',
+            cascade='delete, delete-orphan'
+        )
 
     def __repr__(self):
         return '<User {}>'.format(self.username)
@@ -35,7 +39,6 @@ class Game(db.Model):
     description: so.Mapped[str] = so.mapped_column(sa.String(200), nullable=True)
     category: so.Mapped[str] = so.mapped_column(sa.String(50), nullable=False)
     user_id: so.Mapped[int] = so.mapped_column(sa.ForeignKey('user.id'), nullable=False)
-    player: so.Mapped['User'] = so.relationship('User', back_populates='games')
 
     def __repr__(self):
         return '<Game {}>'.format(self.game_name)
@@ -59,11 +62,12 @@ class UserGameHistory(db.Model):
     __tablename__ = 'user_game_history'
     id: so.Mapped[int] = so.mapped_column(primary_key=True, autoincrement=True)
     user_id: so.Mapped[int] = so.mapped_column(sa.Integer, sa.ForeignKey('user.id'), nullable=False)
-    game_name: so.Mapped[int] = so.mapped_column(sa.Integer, nullable=False)
+    game_name: so.Mapped[str] = so.mapped_column(sa.String(100), nullable=False)
     correct_answers: so.Mapped[int] = so.mapped_column(sa.Integer, nullable=False)
     attempts: so.Mapped[int] = so.mapped_column(sa.Integer, nullable=False)
     completion_time: so.Mapped[float] = so.mapped_column(sa.REAL, nullable=False)
-    
+    user = so.relationship('User', back_populates='user_game_histories')
+
     def __repr__(self):
         return f'<UserGameHistory User "{self.user_id}" Game "{self.game_name}" Correct "{self.correct_answers}">'
     

@@ -73,7 +73,7 @@ def world():
     # Sort locations by average rating in descending order, handle None values appropriately
     locations.sort(key=lambda x: x['average_rating'] if x['average_rating'] is not None else -1, reverse=True)
 
-    return render_template('world.html', svg_content=svg_content, script="game", locations=locations)
+    return render_template('world.html', svg_content=svg_content, script="game", locations=locations, title='World Map')
 
 @worldmap.route('/set-location', methods=['POST'])
 def set_location():
@@ -112,13 +112,19 @@ def get_next_question():
 
     return jsonify(success=True, question=question_text, is_multiple_choice=is_multiple_choice, location=current_location)
 
+from flask import jsonify, request, session
+import json
+import time
+
 @worldmap.route('/game-answer', methods=['POST'])
 def check_answer():
     data = request.json
     question_text = data['question']
+    
     # Deserialize answers before checking
     if 'answers' in session and question_text in json.loads(session['answers']):
         correct_answers = json.loads(session['answers'])[question_text]
+        
         if 'answer' in data:
             user_answers = set(map(str.lower, data['answer']))
             correct_answers_set = set(map(str.lower, json.loads(correct_answers)))
@@ -126,21 +132,31 @@ def check_answer():
             print(correct_answers_set)
             is_correct = user_answers == correct_answers_set
             next_question = is_correct
+
+            # Generate hint based on the number of attempts
+            current_time = int(time.time())
+            time_spent = current_time - session['previous_time']
+            
+            if question_text not in session.get('results', {}):
+                session['results'][question_text] = [is_correct, time_spent, 1]
+            else:
+                session['results'][question_text][0] = is_correct
+                session['results'][question_text][1] += time_spent
+                session['results'][question_text][2] += 1
+
+            attempts = session['results'][question_text][2]
+            min_length = min(len(answer) for answer in correct_answers_set)  # Find the shortest answer length
+            hint_length = min(attempts, min_length)  # Use the smaller of attempts or the shortest answer length
+            hint = " ".join(f"{word[:hint_length].upper()}..." for word in correct_answers_set if len(word) >= hint_length)
+
+            return jsonify(success=True, is_correct=is_correct, next_question=next_question, hint=hint, attempts=attempts)
         else:
             is_correct = False
             next_question = True
-        current_time = int(time.time())
-        time_spent = current_time - session['previous_time']
-        if question_text not in session.get('results', {}):
-            session['results'][question_text] = [is_correct, time_spent, 1]
-        else:
-            session['results'][question_text][0] = is_correct
-            session['results'][question_text][1] += time_spent
-            session['results'][question_text][2] += 1
-
-        return jsonify(success=True, is_correct=is_correct, next_question=next_question)
+            return jsonify(success=True, is_correct=is_correct, next_question=next_question)
     else:
         return jsonify(error="Question not found or session invalid"), 404
+
 
 
 @worldmap.route('/skip-question', methods=['POST'])
@@ -193,34 +209,36 @@ def end_game_session():
 
 @worldmap.route('/submit-rating', methods=['POST'])
 def submit_rating():
-    if current_user.is_authenticated:
-        data = request.get_json()
-        rating_type = data.get('rating_type')
-        game_name = session.get('game_name')
+    if not current_user.is_authenticated:
+        return jsonify(success=False, error="User not authenticated")
+    
+    data = request.get_json()
+    rating_type = data.get('rating_type')
+    game_name = session.get('game_name')
 
-        if not game_name:
-            return jsonify(error="Game name not found in session"), 400
+    if not game_name:
+        return jsonify(error="Game name not found in session"), 400
 
-        if rating_type == 'positive':
-            feedback_value = 1
-        elif rating_type == 'negative':
-            feedback_value = 0
-        else:
-            return jsonify(error="Invalid rating type"), 400
+    if rating_type == 'positive':
+        feedback_value = 1
+    elif rating_type == 'negative':
+        feedback_value = 0
+    else:
+        return jsonify(error="Invalid rating type"), 400
 
-        # Check if feedback already exists
-        existing_feedback = Feedback.query.filter_by(game_name=game_name, user_id=current_user.id).first()
+    # Check if feedback already exists
+    existing_feedback = Feedback.query.filter_by(game_name=game_name, user_id=current_user.id).first()
 
-        if existing_feedback:
-            # Update the existing feedback
-            existing_feedback.feedback = feedback_value
-        else:
-            # Create a new feedback entry if it does not exist
-            feedback = Feedback(game_name=game_name, user_id=current_user.id, feedback=feedback_value)
-            # Add the new feedback to the database
-            db.session.add(feedback)
+    if existing_feedback:
+        # Update the existing feedback
+        existing_feedback.feedback = feedback_value
+    else:
+        # Create a new feedback entry if it does not exist
+        feedback = Feedback(game_name=game_name, user_id=current_user.id, feedback=feedback_value)
+        # Add the new feedback to the database
+        db.session.add(feedback)
 
-        # Commit changes to the database
-        db.session.commit()
+    # Commit changes to the database
+    db.session.commit()
 
     return jsonify(success=True)

@@ -11,7 +11,7 @@ from flask import (
     request,
     session,
 )
-from app.models import QuizQuestion, User, Feedback
+from app.models import QuizQuestion, User, Feedback, UserGameHistory
 from flask_session import Session
 from app import db, login
 
@@ -46,9 +46,7 @@ def periodic_table():
         ) \
         .group_by(QuizQuestion.game_name) \
         .all()
-    print("fgdfgf")
-    print(game_info)
-    # Generate dummy data for the average rating
+
     # Calculate the average rating based on feedback
     locations = []
     for game in game_info:
@@ -77,7 +75,7 @@ def periodic_table():
     locations.sort(key=lambda x: x['average_rating'] if x['average_rating'] is not None else -1, reverse=True)
 
 
-    return render_template('periodic_table.html', svg_content=svg_content, locations=locations)
+    return render_template('periodic_table.html', svg_content=svg_content, locations=locations, title='Periodic Table')
 
 @periodictable.route('/set-location', methods=['POST'])
 def set_location():
@@ -167,16 +165,32 @@ def end_game_session():
     # Assuming each correct answer is stored as True in a list of results.
     score = sum(result[0] for result in session.get('results', {}).values())
     total_questions = len(session['questions'])
+    attempts = sum(result[2] for result in session.get('results', {}).values())
 
     print( session.get('results', {}).values())
     print( session.get('results'))
     print(score, total_questions)
-    #### Write to leaderboard / database here ####
 
+    #### Write to leaderboard / database here ####
+    if current_user.is_authenticated:
+        new_history = UserGameHistory(
+            user_id=current_user.id,
+            game_name=session.get('game_name'),
+            correct_answers=score,
+            attempts=attempts,
+            completion_time=total_time_spent
+        )
+        # Add the record to the session and commit to the database
+        db.session.add(new_history)
+        db.session.commit()
+    else:
+        ### Make some kind of function here that tells the user to login to save
+        pass
+    
     # Clear game-specific session variables
     keys_to_clear = ['questions', 'locations', 'answers', 'current_index', 'results', 'start_time', 'previous_time']
     for key in keys_to_clear:
-        session.pop(key, None)  # Remove each key safely
+        session.pop(key, None)
     return jsonify(success=True, total_time_spent=round(total_time_spent,2), score=score, total_questions=total_questions)
 
 @periodictable.route('/submit-rating', methods=['POST'])
