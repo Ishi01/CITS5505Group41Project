@@ -44,10 +44,30 @@ $(document).ready(function () {
             $('#answerInput').on('keypress', function (event) {
                 if (event.which == 13) { // 13 is the keycode for Enter
                     let inputVal = $('#answerInput').val().replace(/ /g, '_'); // Convert spaces to underscores
-                    let pathClass = $('#svg-container svg path.' + inputVal);
-                    if (selectOnly.includes(inputVal) || selectOnly.length == 0) {
+                    let match = selectOnly.find(country => country.toLowerCase() === inputVal.toLowerCase());
+                    if (match) {
                         removeAllPaths();
+                        let pathClass = $('#svg-container svg path.' + match);
                         updateSelectedCountriesDisplay(pathClass);
+                    }
+                    else if(selectOnly.length == 0) {
+                        let pathClass = null;
+                        $('#svg-container svg path').each(function() {
+                            let currentClass = $(this).attr('class');
+                            // Assuming class might have multiple classes, split and check each
+                            if (currentClass) {
+                                let classes = currentClass.split(/\s+/);
+                                if (classes.some(c => c.toLowerCase() === inputVal.toLowerCase())) {
+                                    pathClass = $('#svg-container svg path.' + classes[0]);
+                                    return false; // Break the loop if a match is found
+                                }
+                            }
+                        });
+            
+                        if (pathClass) {
+                            removeAllPaths();
+                            updateSelectedCountriesDisplay(pathClass);
+                        }            
                     }
                 }
             });
@@ -61,9 +81,29 @@ $(document).ready(function () {
             $('#answerInput').on('keypress', function (event) {
                 if (event.which == 13) { // 13 is the keycode for Enter
                     let inputVal = $('#answerInput').val().replace(/ /g, '_'); // Convert spaces to underscores
-                    let pathClass = $('#svg-container svg path.' + inputVal);
-                    if (selectOnly.includes(inputVal) || selectOnly.length == 0) {
+                    let match = selectOnly.find(country => country.toLowerCase() === inputVal.toLowerCase());
+                    if (match) {
+                        let pathClass = $('#svg-container svg path.' + match);
                         updateSelectedCountriesDisplay(pathClass);
+                    }
+                    else if(selectOnly.length == 0) {
+                        let pathClass = null;
+                        $('#svg-container svg path').each(function() {
+                            let currentClass = $(this).attr('class');
+                            // Assuming class might have multiple classes, split and check each
+                            if (currentClass) {
+                                let classes = currentClass.split(/\s+/);
+                                if (classes.some(c => c.toLowerCase() === inputVal.toLowerCase())) {
+                                    pathClass = $('#svg-container svg path.' + classes[0]);
+                                    return false; // Break the loop if a match is found
+                                }
+                            }
+                        });
+            
+                        if (pathClass) {
+                            // Update display if a matching path is found
+                            updateSelectedCountriesDisplay(pathClass);
+                        }            
                     }
                 }
             });
