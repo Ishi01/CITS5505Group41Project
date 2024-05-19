@@ -90,8 +90,8 @@ $(document).ready(function () {
         for (selectedPath of selectedPaths) {
             if (isPathAllowed(getFirstClassName(selectedPath))) {
                 $(selectedPath).css({
-                    'fill': 'purple',
-                    'stroke': '#225522',
+                    'fill': 'yellow',
+                    'stroke': '#44CE00',
                     'stroke-width': '2'
                 });
             }
