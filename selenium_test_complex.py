@@ -1,3 +1,4 @@
+import multiprocessing
 import os
 import shutil
 import time
@@ -16,55 +17,33 @@ from selenium.webdriver.support import expected_conditions as EC
 from flask_migrate import upgrade
 
 class SeleniumTests(unittest.TestCase):
+
     localhost = "http://localhost:5000/"
-
+    
     def setUp(self):
+        self.server_process = multiprocessing.Process(target=os.system, args=('python app_server.py',))
+        self.server_process.start()
 
-        # Delete the database file if it exists
-        db_path = os.path.join("./", 'app.db')
-        if os.path.exists(db_path):
-            os.remove(db_path)
-            print(f"Deleted existing database at {db_path}")
-
-        # Create app with the test configuration
-        self.testApp = create_app(Config)
-        self.app_context = self.testApp.app_context()
-        self.app_context.push()
-
-        # After pushing the app context, run migrations
-        upgrade()
-
-        # Start the Flask server in a background thread
-        python_executable = sys.executable
-        self.server_process = subprocess.Popen([python_executable, "-m", "flask", "run"])
+        # Give the server time to start
+        time.sleep(1)
 
         # Set up Selenium WebDriver
         options = webdriver.ChromeOptions()
         options.add_argument("--headless")
         self.driver = webdriver.Chrome(options=options)
-        self.driver.get(self.localhost)
+        self.driver.get('http://localhost:5000')
+
 
     def tearDown(self):
-        self.driver.quit()
+        
+       # Terminate the Flask server process
         self.server_process.terminate()
-        self.server_process.wait()
-        with self.app_context:
-            db.session.remove()
-            # Connect to the database and drop the view if it exists
-            with db.engine.connect() as connection:
-                connection.execute(text('DROP VIEW IF EXISTS game_leaderboard'))
-                connection.execute(text('DROP TABLE IF EXISTS alembic_version'))
-                connection.execute(text('DROP TABLE IF EXISTS sessions'))
-            # Now attempt to drop all tables
-            db.drop_all()
-            db.engine.dispose()
-            db_path = os.path.join("./", 'app.db')
-            if os.path.exists(db_path):
-                os.remove(db_path)
-                print(f"Deleted existing database at {db_path}")
+        self.server_process.join()
 
-        self.app_context.pop()
-        shutil.rmtree('./flask_session', ignore_errors=True)
+        self.driver.quit()
+
+        shutil.rmtree('./test_session', ignore_errors=True)
+
 
     ## Creates a user named "creator"
     ## Logins in as "creator"
