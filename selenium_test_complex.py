@@ -19,22 +19,17 @@ class SeleniumTests(unittest.TestCase):
     localhost = "http://localhost:5000/"
 
     def setUp(self):
-        # Create app with the test configuration
-        self.testApp = create_app(Config)
-        self.app_context = self.testApp.app_context()
-        self.app_context.push()
+
         # Delete the database file if it exists
         db_path = os.path.join("./", 'app.db')
         if os.path.exists(db_path):
             os.remove(db_path)
             print(f"Deleted existing database at {db_path}")
-        # Extract the database URI from the app configuration
-        database_uri = self.testApp.config['SQLALCHEMY_DATABASE_URI']
-        if database_uri.startswith("sqlite:///"):
-            db_path = database_uri[10:]  # strip the sqlite:/// prefix
-            if os.path.exists(db_path):
-                os.remove(db_path)
-                print(f"Deleted existing database at {db_path}")
+
+        # Create app with the test configuration
+        self.testApp = create_app(Config)
+        self.app_context = self.testApp.app_context()
+        self.app_context.push()
 
         # After pushing the app context, run migrations
         upgrade()

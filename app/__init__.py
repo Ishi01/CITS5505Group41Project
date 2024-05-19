@@ -19,8 +19,15 @@ def create_app(config_class=Config):
     migrate.init_app(app, db)
     login.init_app(app)
     
-    if not hasattr(app, 'session_interface'):
+    if not hasattr(app, 'extensions_setup_done'):
+        if app.config['TESTING']:
+            app.config['SESSION_TYPE'] = 'filesystem'
+        else:
+            app.config['SESSION_TYPE'] = 'sqlalchemy'
+            app.config['SESSION_SQLALCHEMY'] = db
+        
         Session(app)
+        app.extensions_setup_done = True
 
     # Register blueprints
     from app.blueprints import register_blueprints

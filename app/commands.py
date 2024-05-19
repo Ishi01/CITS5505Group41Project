@@ -96,6 +96,24 @@ def add_test():
                         },
                     },
                 },
+                'Molecules': {
+                    'description': 'Identify the elements that make up these common molecules.',
+                    'user_id': 0,
+                    'locations': {
+                        'various': {
+                            "What elements make up water?": ["H", "O"],
+                            "What elements are found in carbon dioxide?": ["C", "O"],
+                            "Which elements compose ammonia?": ["N", "H"],
+                            "What elements are in methane?": ["C", "H"],
+                            "Which elements make up glucose?": ["C", "H", "O"],
+                            "What elements are present in sulfuric acid?": ["H", "S", "O"],
+                            "Which elements are in sodium chloride (table salt)?": ["Na", "Cl"],
+                            "What elements make up ethanol?": ["C", "H", "O"],
+                            "Which elements are found in propane?": ["C", "H"],
+                            "What elements are in hydrogen peroxide?": ["H", "O"]
+                        },
+                    },
+                },
             }
         }
         # Populate the database
