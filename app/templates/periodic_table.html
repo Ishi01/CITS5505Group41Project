@@ -8,6 +8,12 @@
 
 {% block content %}
 <div id="svg-container">
+  <div class="question-container">
+    <div id="question"><strong>Question:</strong> </div>
+    <div class="timer-container">
+      <span id="timer" class="clickable-child"></span>
+    </div>
+  </div>
     {{ svg_content | safe }}
     <div id="overlay">
       <table class="info-table">
@@ -34,22 +40,18 @@
       </table>
     </div>
 </div>
-<div id="feedback" style="display: none;">
-  <div class="rating-buttons">
-    <button class="thumbs-up" style="display: none;">👍</button>
-    <span id="feedback1"></span>
-    <button class="thumbs-down" style="display: none;">👎</button>
-  </div>
-  <div id="feedback2-container">
-    <span id="feedback2"></span>
-  </div>
-</div>
-
 <div class="d-flex flex-column justify-content-center bottom-container">
-  
-  <div class="row d-flex justify-content-center">
-      <p id="question"><strong>Question:</strong> </p>
-      <span id="timer" class="clickable-child"></span>
+  <div id="tabsContainer" style="display: none;">
+  </div>
+  <div id="feedback" style="display: none;">
+    <div class="rating-buttons">
+      <button class="thumbs-up" style="display: none;">👍</button>
+      <span id="feedback1"></span>
+      <button class="thumbs-down" style="display: none;">👎</button>
+    </div>
+    <div id="feedback2-container">
+      <span id="feedback2"></span>
+    </div>
   </div>
   <div class="row d-flex justify-content-center">
       <input type="text" id="answerInput" class="clickable-child" placeholder="Type/Select your Answer">
@@ -58,6 +60,5 @@
       <button id="submitAnswerButton" class="btn btn-outline-secondary clickable-child" >Submit Answer</button>
       <button id="pass" class="btn btn-outline-secondary clickable-child">Pass</button>
   </div>
-  
 </div>
 {% endblock %}

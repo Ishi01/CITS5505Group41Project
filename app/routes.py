@@ -114,4 +114,4 @@ def leaderboard():
             'completion_time': str(round(ranking.completion_time, 2)) + "s"
         })
 
-    return render_template('leaderboard.html', grouped_rankings=grouped_rankings, enumerate=enumerate)
+    return render_template('leaderboard.html', grouped_rankings=grouped_rankings, enumerate=enumerate, title='Leaderboard')

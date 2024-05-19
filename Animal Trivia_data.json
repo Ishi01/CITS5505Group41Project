@@ -1,0 +1,85 @@
+{
+  "category": "countries",
+  "game_name": "Animal Trivia",
+  "description": "Trivia game about animals and where they are found.",
+  "questions": [
+    {
+      "question_text": "Where can you find the Bengal Tiger? (3 answers)",
+      "location": "global",
+      "data": [
+        "India",
+        "Bangladesh",
+        "Nepal"
+      ]
+    },
+    {
+      "question_text": "In which country would you find the Komodo Dragon? (1 answer)",
+      "location": "global",
+      "data": [
+        "Indonesia"
+      ]
+    },
+    {
+      "question_text": "Where is the natural habitat of the Giant Panda? (1 answer)",
+      "location": "global",
+      "data": [
+        "China"
+      ]
+    },
+    {
+      "question_text": "Which countries are home to the African Elephant? (3 answers)",
+      "location": "global",
+      "data": [
+        "Kenya",
+        "South_Africa",
+        "Botswana"
+      ]
+    },
+    {
+      "question_text": "Where can you find the Red Kangaroo? (1 answer)",
+      "location": "global",
+      "data": [
+        "Australia"
+      ]
+    },
+    {
+      "question_text": "Which countries are home to the Amazon River Dolphin? (3 answers)",
+      "location": "global",
+      "data": [
+        "Brazil",
+        "Peru",
+        "Colombia"
+      ]
+    },
+    {
+      "question_text": "In which country can you find the Bald Eagle? (1 answer)",
+      "location": "global",
+      "data": [
+        "United_States"
+      ]
+    },
+    {
+      "question_text": "Where can you find the Tasmanian Devil? (1 answer)",
+      "location": "global",
+      "data": [
+        "Australia"
+      ]
+    },
+    {
+      "question_text": "In which country can you find the Lemur? (1 answer)",
+      "location": "global",
+      "data": [
+        "Madagascar"
+      ]
+    },
+    {
+      "question_text": "Where can you find the Jaguar? (3 answers)",
+      "location": "global",
+      "data": [
+        "Brazil",
+        "Argentina",
+        "Peru"
+      ]
+    }
+  ]
+}

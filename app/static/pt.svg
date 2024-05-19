@@ -1,17 +1,5 @@
-<?xml version='1.0' encoding='utf-8'?>
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="0 0 800 450" xml:space="preserve">
-<style type="text/css">
-	<!--
-	.st0{fill:#FFFFFF;}
-	.st1{fill:#FFFFFF;stroke:#000000;}
-	-->
-	.funni{fill:#c5c6c7!important;}
-	.st2{font-family:'ArialMT';}
-	.st3{font-size:12px;}
-	.st4{font-size:14px;}
-	.top{z-index:1000;}
-</style>
 <g transform="translate(-.5,-80)">
 	<path class="st0" id="empty" d="M144,387v-36h36v36H144z"/>
 	<path class="st0" id="empty" d="M144,347v-36h36v36H144z"/>
