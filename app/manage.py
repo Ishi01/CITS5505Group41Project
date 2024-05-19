@@ -8,6 +8,8 @@ manage = Blueprint('manage', __name__)
 @login_required
 @manage.route('/manage', methods=['GET'])
 def manage_page():
+    if not current_user.is_authenticated:
+        return jsonify({'status': 'error', 'message': 'Please log in to access this page'}), 401
     # Ensure the user has admin privileges
     if not current_user.is_admin:
         return jsonify({'status': 'error', 'message': 'Access denied'}), 403

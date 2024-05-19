@@ -23,15 +23,14 @@ class DevelopmentConfig(Config):
 class TestConfig(Config):
     TESTING = True
     SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'
-    SECRET_KEY = os.environ.get('SECRET_KEY') or 'you-will-never-guess'
+    SECRET_KEY = os.environ.get('SECRET_KEY') or 'test-confg-secret-key'
     WTF_CSRF_ENABLED = False
     SESSION_TYPE = 'filesystem'
-    SESSION_FILE_DIR = './test_sessions'
-    SCRIPT_MODE = True
-    SERVER_NAME = 'localhost.localdomain'
-    SESSION_PERMANENT = False  # Ensure sessions don't 'expire' during tests
-    LOGIN_DISABLED = True
     SESSION_CACHE = FileSystemCache('./test_sessions', threshold=500, mode=0o600)
+    SCRIPT_MODE = True
+    SERVER_NAME = 'localhost:5000'
+    SESSION_SQLALCHEMY_TABLE = None
+    SESSION_PERMANENT = False
 
 ## Deployment Config
 class DeploymentConfig(Config):

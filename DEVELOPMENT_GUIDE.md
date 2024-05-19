@@ -65,6 +65,23 @@ This guide provides detailed instructions for setting up development environment
 
    The username will be `admin` with the password set as your ADMIN_PASSWORD environment variable.
 
+## Development Test Set Data
+
+### Add Fake Data
+
+Fake Leaderboard Data:
+```
+python add_data.py
+```
+Dummy Game Data:
+```sh
+flask add-test
+```
+Dummy Game Data with Admin Account:
+```sh
+flask add-all
+```
+
 ## Testing
 
 ### Unit Tests
@@ -88,29 +105,6 @@ and then
 ```sh
 python -m selenium_test
 ```
-
-### Add Fake Data
-
-```
-python add_data.py
-```
-
-### Run Test File
-
-```
-python -m unittest test_leaderboard.py
-```
-
-
-   **To be completed:**
-   For now testing can be complete with: 
-   ```sh
-   flask add-test
-   ```
-   or to add both the admin and test data
-   ```sh
-   flask add-all
-   ```
 
 ## Updating Requirements
 Whenever you add a new dependency, update the appropriate requirements\_\*.txt file and ensure it's documented:
