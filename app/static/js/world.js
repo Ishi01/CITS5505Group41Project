@@ -54,12 +54,11 @@ $(document).ready(function () {
                         let pathClass = null;
                         $('#svg-container svg path').each(function() {
                             let currentClass = $(this).attr('class');
-                            // Assuming class might have multiple classes, split and check each
                             if (currentClass) {
                                 let classes = currentClass.split(/\s+/);
                                 if (classes.some(c => c.toLowerCase() === inputVal.toLowerCase())) {
                                     pathClass = $('#svg-container svg path.' + classes[0]);
-                                    return false; // Break the loop if a match is found
+                                    return false;
                                 }
                             }
                         });
@@ -90,12 +89,11 @@ $(document).ready(function () {
                         let pathClass = null;
                         $('#svg-container svg path').each(function() {
                             let currentClass = $(this).attr('class');
-                            // Assuming class might have multiple classes, split and check each
                             if (currentClass) {
                                 let classes = currentClass.split(/\s+/);
                                 if (classes.some(c => c.toLowerCase() === inputVal.toLowerCase())) {
                                     pathClass = $('#svg-container svg path.' + classes[0]);
-                                    return false; // Break the loop if a match is found
+                                    return false;
                                 }
                             }
                         });

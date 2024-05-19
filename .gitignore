@@ -18,6 +18,7 @@ create_venv.bat
 #Testing
 test_output.txt
 test_sessions/
+flask_session/
 
 # Database
 *.db
