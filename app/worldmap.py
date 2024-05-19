@@ -129,6 +129,7 @@ def check_answer():
         else:
             is_correct = False
             next_question = True
+
         current_time = int(time.time())
         time_spent = current_time - session['previous_time']
         if question_text not in session.get('results', {}):
@@ -138,7 +139,15 @@ def check_answer():
             session['results'][question_text][1] += time_spent
             session['results'][question_text][2] += 1
 
-        return jsonify(success=True, is_correct=is_correct, next_question=next_question)
+        # Get the number of attempts from session results
+        attempts = session['results'][question_text][2]
+
+        # Generate hint based on the number of attempts, without causing an index error
+        min_length = min(len(answer) for answer in correct_answers_set)  # Find the shortest answer length
+        hint_length = min(attempts, min_length)  # Use the smaller of attempts or the shortest answer length
+        hint = " ".join(f"{word[:hint_length].upper()}..." for word in correct_answers_set if len(word) >= hint_length)
+
+        return jsonify(success=True, is_correct=is_correct, next_question=next_question, hint=hint)
     else:
         return jsonify(error="Question not found or session invalid"), 404
 

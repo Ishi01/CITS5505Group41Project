@@ -60,7 +60,6 @@ $(document).ready(function () {
                 }
             });
             $('#answerInput').on('keypress', function (event) {
-                console.log(event.which)
                 if (event.which == 13) { // 13 is the keycode for Enter
                     let inputVal = $('#answerInput').val().replace(/ /g, '_'); // Convert spaces to underscores
                     let pathClass = $('#svg-container svg g g.top path.' + inputVal);
@@ -160,7 +159,6 @@ $(document).ready(function () {
             $(document).trigger('tabs-update');
             resetSVGStyles();
         } else {
-            console.log("removing!" + path)
             removePath(path);
         }
     }
@@ -179,7 +177,6 @@ $(document).ready(function () {
         let country = getFirstClassName(path);
         let countryId = 'tab-' + country.replace(/\s+/g, '-')
         $('#' + countryId).remove();
-        console.log($('#svg-container svg g g.top path.' + getFirstClassName(path)));
         selectedPaths = removePathFromSelected(country); // Update selectedPaths
 
         adjustTabsPosition(); // Adjust the positions of remaining tabs
@@ -336,7 +333,6 @@ $(document).ready(function () {
                         alert('Game Over or Error: ' + response.error);
                     }
                 } else {
-                    console.log(response);
                     updateGameUI('question', response);
                 }
             },
@@ -406,7 +402,6 @@ $(document).ready(function () {
                 }
             },
             error: function (error) {
-                console.log("Error ending game session:", error);
             }
         });
     }
@@ -482,7 +477,6 @@ $(document).ready(function () {
             data: JSON.stringify({ rating_type: ratingType }),
             success: function (response) {
                 if (response.success) {
-                    console.log('Rating submitted:', ratingType);
                     feedback(false, 'Rating submitted!', true);
                 } else {
                     feedback(false, 'Error: ' + response.error, true);
@@ -535,10 +529,6 @@ $(document).ready(function () {
         width: boundBox.widthMax / scaleSVG,
         height: boundBox.heightMax / scaleSVG
     }
-
-    console.log(viewBox.x, viewBox.y, viewBox.width, viewBox.height);
-
-
     $(window).resize(function () {
         adjustContainerMargin(); // Call this function to adjust margins whenever the window is resized
     });

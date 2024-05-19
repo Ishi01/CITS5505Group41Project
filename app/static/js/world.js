@@ -59,7 +59,6 @@ $(document).ready(function () {
                 }
             });
             $('#answerInput').on('keypress', function (event) {
-                console.log(event.which)
                 if (event.which == 13) { // 13 is the keycode for Enter
                     let inputVal = $('#answerInput').val().replace(/ /g, '_'); // Convert spaces to underscores
                     let pathClass = $('#svg-container svg path.' + inputVal);
@@ -177,7 +176,6 @@ $(document).ready(function () {
         let country = getFirstClassName(path);
         let countryId = 'tab-' + country.replace(/\s+/g, '-')
         $('#' + countryId).remove();
-        console.log($('#svg-container svg path.' + getFirstClassName(path)));
         selectedPaths = removePathFromSelected(country); // Update selectedPaths
 
         adjustTabsPosition(); // Adjust the positions of remaining tabs
@@ -309,7 +307,6 @@ $(document).ready(function () {
                 $('#answerInput').val('');
                 removeAllPaths();
                 attachInputHandlers();
-                console.log(data.location);
                 switch (data.location.toLowerCase()) {
                     case "europe":
                         zoneEurope();
@@ -359,7 +356,6 @@ $(document).ready(function () {
                         console.error('Game Over or Error: ' + response.error);
                     }
                 } else {
-                    console.log(response);
                     updateGameUI('question', response);
                 }
             },
@@ -403,7 +399,7 @@ $(document).ready(function () {
                 if (response.is_correct) {
                     feedback('Correct!');
                 } else {
-                    feedback('Incorrect. Try again!');
+                    feedback('Incorrect. Hint: '+response.hint);
                     // Do something here? (lives?)
                 }
                 if (response.next_question) {
@@ -429,7 +425,6 @@ $(document).ready(function () {
                 }
             },
             error: function (error) {
-                console.log("Error ending game session:", error);
             }
         });
     }
@@ -468,7 +463,6 @@ $(document).ready(function () {
 
     // Function to display feedback messages
     function feedback(message1 = false, message2 = false, endOfGame = false) {
-        console.log('Feedback function called', { message1, message2, endOfGame }); 
         $('#feedback').stop(true, true);
     
         if (message1 !== false) {
@@ -506,7 +500,6 @@ $(document).ready(function () {
             data: JSON.stringify({ rating_type: ratingType }),
             success: function (response) {
                 if (response.success) {
-                    console.log('Rating submitted:', ratingType);
                     feedback(false, 'Rating submitted! Thanks! ', true);
                 } else {
                     feedback(false, 'Error: ' + response.error, true);
@@ -638,7 +631,6 @@ $(document).ready(function () {
 
 
     function zoomToRegion(regionViewBox, regionCountries) {
-        console.log("Zooming to region");
         viewBox.x = regionViewBox.x;
         viewBox.y = regionViewBox.y;
         scaleSVG = regionViewBox.scale;
@@ -690,8 +682,6 @@ $(document).ready(function () {
         height: boundBox.heightMax / scaleSVG
     }
 
-    console.log(viewBox.x, viewBox.y, viewBox.width, viewBox.height);
-
     const zoomFactor = 0.03;
     let browserRatio = window.innerHeight / window.innerWidth;
     $(window).on('resize', updateViewBox);
@@ -722,14 +712,9 @@ $(document).ready(function () {
 
         let elements = svg.find('*');
 
-        console.log('scaleSVG:', scaleSVG);
-        console.log('viewBox:', viewBox.x, viewBox.y, viewBox.width, viewBox.height)
-
         // Bounds: Keep dimensions within bounds
         viewBox.width = Math.min(Math.max(viewBox.width, boundBox.widthMin), boundBox.widthMax);
         viewBox.height = Math.min(Math.max(viewBox.height, boundBox.heightMin), boundBox.heightMax);
-        console.log(scale, boundBox.widthMin, boundBox.widthMax, boundBox.heightMin, boundBox.heightMax);
-        console.log(viewBox.width, viewBox.height);
 
         // Calculate the maximum allowed translation in x and y directions
         let maxTranslateX = (boundBox.widthMax / minScale) * 0.8;
@@ -740,8 +725,6 @@ $(document).ready(function () {
 
         svg.attr('viewBox', `${viewBox.x} ${viewBox.y} ${viewBox.width} ${viewBox.height}`);
         elements.css('transform', `scale(1, ${scaleY}) translate(0, ${translateY}px)`);
-        console.log(`Updated viewBox: ${viewBox.x} ${viewBox.y} ${viewBox.width} ${viewBox.height}`);
-
     }
 
     // Prevent default behavior and stop propagation
@@ -799,11 +782,9 @@ $(document).ready(function () {
             //console.log('svgPoint.svgX:', svgPoint.svgX, 'svgPoint.svgY:', svgPoint.svgY, 'viewBox.x:', viewBox.x, 'viewBox.y:', viewBox.y, 'scaleSVG:', scaleSVG, 'scaleChange:', scaleChange);
         } else { // Zooming out
             // Calculate the new viewBox dimensions based on the scale change
-            console.log("Before", viewBox.width, viewBox.height);
             let newWidth = Math.min(boundBox.widthMax / scaleSVG, boundBox.widthMax / minScale);
             let newHeight = Math.min(boundBox.heightMax / scaleSVG, boundBox.heightMax / minScale);
 
-            console.log("After", viewBox.width, viewBox.height);
             // Interpolate towards the origin (0,0) for xOffset and yOffset
             if (scaleSVG === minScale) {
                 const transitionFactor = 0.25; // Adjust this value to control the transition speed
@@ -817,8 +798,6 @@ $(document).ready(function () {
             // Update the dimensions of the viewBox
             viewBox.width = newWidth;
             viewBox.height = newHeight;
-
-            console.log('Updated viewBox:', 'x:', viewBox.x, 'y:', viewBox.y, 'width:', viewBox.width, 'height:', viewBox.height);
         }
         updateViewBox();
     });
@@ -908,7 +887,6 @@ $(document).ready(function () {
             let touch = e.touches[0];
             startPanning(touch.clientX, touch.clientY);
         }
-        console.log("touchstart")
     });
 
     svg.on('touchmove', function (e) {
@@ -916,14 +894,12 @@ $(document).ready(function () {
             let touch = e.touches[0];
             movePanning(touch.clientX, touch.clientY);
         }
-        console.log("touchmove")
     });
 
     svg.on('touchend touchcancel', function (e) {
         if (isPanning) {
             endPanning();
         }
-        console.log("touchend")
     });
 
     $(window).resize(function () {
@@ -955,13 +931,11 @@ $(document).ready(function () {
 
     $('.click-helper').on('click', function () {
         var targetId = $(this).attr('data-target');
-        console.log(targetId);
         $(targetId + ':first').click();
     });
 
     $('.click-helper').on('touchend', function () {
         var targetId = $(this).attr('data-target');
-        console.log(targetId);
         $(targetId + ':first').trigger('touchend')
     });
 
