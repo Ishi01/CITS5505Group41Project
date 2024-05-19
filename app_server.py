@@ -1,13 +1,19 @@
 # app_server.py
 from sqlalchemy import text
-from config import TestConfig  # Import TestConfig from your project's configuration module
+from config import TestConfig, Config
 
 from app import create_app, db
 from flask_migrate import upgrade
 
+
+
+### Some sort of database multithreading is causing the database not to be removed
+### And sometimes the tests fail because the information already exists.
+
+
 def run_server():
     db.drop_all
-    app = create_app(TestConfig)  # Ensure that TestConfig is passed to create_app
+    app = create_app(Config)
     with app.app_context():
         db.session.remove()
         # Connect to the database and drop the view if it exists
