@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify, render_template
 from flask_login import login_required, current_user
 from app import db
-from app.models import QuizQuestion, User
+from app.models import QuizQuestion, User, UserGameHistory
 
 manage = Blueprint('manage', __name__)
 
@@ -25,13 +25,18 @@ def delete_game():
     if not current_user.is_admin:
         return jsonify({'status': 'error', 'message': 'Access denied'}), 403
     
-    game = QuizQuestion.query.filter_by(game_name=game_name).first()
-    if not game:
+    games = QuizQuestion.query.filter_by(game_name=game_name).all()
+    if not games:
         return jsonify({'status': 'error', 'message': f'Game "{game_name}" does not exist'}), 404
     
-    db.session.delete(game)
+    # Delete all quiz questions with the specified game_name
+    QuizQuestion.query.filter_by(game_name=game_name).delete()
+
+    # Delete all user game histories with the specified game_name
+    UserGameHistory.query.filter_by(game_name=game_name).delete()
+    
     db.session.commit()
-    return jsonify({'status': 'success', 'message': f'Game "{game_name}" deleted successfully!'})
+    return jsonify({'status': 'success', 'message': f'All instances of game "{game_name}" deleted successfully!'})
 
 @login_required
 @manage.route('/delete_user', methods=['POST'])
