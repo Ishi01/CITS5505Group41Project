@@ -1,0 +1,23 @@
+@import url("base.css");
+
+  .leaderboard h3 {
+      text-align: center;
+  }
+
+  .table thead th,
+  .table tbody td {
+    background-color: var(--dark_background);
+      color: white;
+  }
+
+  .leaderboard {
+      width: 100%;
+      margin-bottom: 30px;
+      /* Add space between each leaderboard */
+  }
+
+  .container-fluid, .row > [class^="col-"] {
+    background-color: var(--dark_background);
+    color: var(--color_text);
+    margin: 0%;
+}

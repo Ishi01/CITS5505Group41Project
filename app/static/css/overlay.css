@@ -1,0 +1,41 @@
+@import url("base.css");
+
+/* Overlay CSS - Overlay CSS - Overlay CSS */
+/* Overlay CSS - Overlay CSS - Overlay CSS */
+/* Overlay CSS - Overlay CSS - Overlay CSS */
+
+#overlay {
+    display: flex;
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    width: 80%;
+    height: 50%;
+    overflow-y: scroll;
+    background-color: rgba(255, 255, 255, 0.8);
+    z-index: 100;
+  }
+  
+  .info-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .info-table th,
+  .info-table td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .info-table tbody > tr:hover {
+    background-color: #89fce9;
+  }
+  
+  .location-row:nth-child(odd) {
+    background-color: #f9f9f9;
+  }
+  
+  .location-row:nth-child(even) {
+    background-color: #eff2f5;
+  }

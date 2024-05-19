@@ -42,6 +42,7 @@ def submit_game():
             return jsonify({'status': 'error', 'message': 'No data provided'}), 400
 
         try:
+            game_category = data['category']
             game_name = data['game_name']
             description = data['description']
             questions = data['questions']  # This should be an array of question objects
@@ -52,25 +53,27 @@ def submit_game():
 
             for question in questions:
                 question_text = question['question_text']
-                location = question['location']
-                countries = question['countries']  # Already a list from JSON, no need to load
+                answers = question['data']
 
-                # Remove empty countries and duplicates
-                countries = [country.replace('_', ' ') for country in countries if country]
-                countries = list(set(countries))
-
-                # Debug print to check what's being processed
-                print(f"Processing question: {question_text}, Location: {location}, Countries: {countries}")
+                # Generalize handling for different categories
+                if game_category == 'countries':
+                    location = question['location']
+                    answers = [answer.replace('_', ' ') for answer in answers if answer]
+                    answers = list(set(answers))  # Eliminate duplicates
+                    print(f"Processing question: {question_text}, Location: {location}, Countries: {answers}")
+                elif game_category == 'elements':
+                    answers = list(set(answers))  # Eliminate duplicates
+                    print(f"Processing question: {question_text}, Elements: {answers}")
 
                 try:
                     question = QuizQuestion(
-                        category="countries",
+                        category=game_category,
                         game_name=game_name,
                         description=description,
-                        user_id=current_user.id if current_user.is_authenticated else 0,
+                        user_id=current_user.id,
                         question_text=question_text,
-                        answer=json.dumps(countries),  # Store countries as JSON
-                        location=location
+                        answer=json.dumps(answers),
+                        location=location if game_category == 'countries' else None
                     )
                     db.session.add(question)
                 except Exception as e:
@@ -92,14 +95,22 @@ def check_game_name():
     game_exists = QuizQuestion.query.filter_by(game_name=game_name).first() is not None
     return jsonify({'is_unique': not game_exists})
 
-@creategame.route('/get-countries')
-def get_countries():
-    svg_path = os.path.join(current_app.root_path, 'static', 'world.svg')
+@creategame.route('/get-data/<string:category>')
+def get_data(category):
+    if category == 'countries':
+        svg_path = os.path.join(current_app.root_path, 'static', 'world.svg')
+        path_selector = r'<path[^>]*?\bclass="([^"\s]*)'
+    elif category == 'elements':
+        svg_path = os.path.join(current_app.root_path, 'static', 'pt.svg')
+        path_selector = r'<path[^>]*?\bclass="([^"\s]*)'
+    else:
+        return jsonify([])  # Return empty list if category is not recognized
+
     with open(svg_path, 'r') as file:
         svg_content = file.read()
 
-    pattern = re.compile(r'<path.*?class="(.*?)"')
-    class_names = pattern.findall(svg_content)
-    country_names = sorted(set(class_names))
 
-    return jsonify(country_names)
+    pattern = re.compile(path_selector)
+    data_names = pattern.findall(svg_content)
+    print(data_names)
+    return jsonify(sorted(set(data_names)))

@@ -1,0 +1,139 @@
+@import url("base.css");
+@import url("overlay.css");
+@import url("bottombar.css");
+@import url("feedback.css");
+
+html,
+body {
+  background-color: var(--dark_background);
+}
+
+svg * {
+    user-select: none;
+}
+
+svg g text {
+    pointer-events: none;
+}
+
+#svg-container {
+    will-change: transform;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 85vh;
+  }
+
+svg {
+    max-width: 100%;
+    max-height: 88%;
+}
+
+#tabsContainer {
+    position: fixed;
+    bottom: 60px;
+    left: 0;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0);
+    padding: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    z-index: 1000;
+    pointer-events: none;
+}
+
+.country-tab {
+    margin: 5px;
+    padding: 5px 10px;
+    background-color: #007BFF;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    /* Animate the transform and opacity */
+    pointer-events: all;
+}
+
+.country-tab:hover {
+    background-color: #0056b3;
+}
+#NonMetals > path{
+    fill: rgb(86, 189, 223);
+}
+
+#AlkaliMetals > path{
+    fill: rgb(255, 50, 50);
+}
+
+#EarthMetals > path{
+    fill: rgb(255, 100, 100);
+}
+
+#SemiMetals > path{
+    fill: lightseagreen;
+}
+
+#Halogens > path{
+    fill: lightskyblue;
+}
+
+#InertGases > path{
+    fill: rgb(173, 240, 255);
+}
+
+#PTMetals > path{
+    fill: rgb(71, 226, 71);
+}
+
+#Unclass > path{
+    fill: rgb(3, 179, 3);
+}
+
+#TransMetals > path{
+    fill: green;
+}
+
+#Lanths > path{
+    fill: rgb(255, 187, 61);
+}
+
+#Actins > path{
+    fill: rgb(246, 160, 0);
+}
+
+#titleText{
+    fill: #c5c6c7!important;
+}
+
+#elementText > text {
+    fill: #000000;
+}
+
+#empty{
+    fill: #0b0c10;
+}
+
+g > text {
+    font-size: 1.5rem;
+    fill: var(--color_text);
+}
+
+g > path {
+    fill: var(--color_text);
+}
+
+g.top {
+    fill: var(--color_title);
+}
+
+.st1 {
+    color: var(--dark_background)!important;
+}
+
+#Layer_1{
+    background-color: var(--dark_background);
+}
+

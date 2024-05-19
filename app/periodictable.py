@@ -11,41 +11,44 @@ from flask import (
     request,
     session,
 )
-from app.models import QuizQuestion, User, UserGameHistory, Feedback
+from app.models import QuizQuestion, User, Feedback
 from flask_session import Session
 from app import db, login
 
-worldmap = Blueprint('worldmap', __name__)
+periodictable = Blueprint('periodictable', __name__)
 
 import random
 from flask import render_template, current_app
 from os import path
+
 from flask_login import LoginManager, current_user
 
 @login.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
 
+@periodictable.route('/periodictable')
+def periodic_table():
 
-@worldmap.route('/world')
-def world():
-    svg_path = path.join(current_app.root_path, 'static', 'world.svg')
+    svg_path = path.join(current_app.root_path, 'static', 'pt.svg')
     with open(svg_path, 'r') as file:
         svg_content = file.read()
 
     # Fetch location and question count from the database
     game_info = QuizQuestion.query \
-        .filter(QuizQuestion.category == 'countries') \
+        .filter(QuizQuestion.category == 'elements') \
         .with_entities(
             QuizQuestion.game_name,
             QuizQuestion.location,
             QuizQuestion.user_id,
             QuizQuestion.description,
-            db.func.count(QuizQuestion.question_id).label('question_count')  # Assuming the primary key is named 'question_id'
+            sa.func.count(QuizQuestion.question_id).label('question_count')  # Assuming the primary key is named 'question_id'
         ) \
         .group_by(QuizQuestion.game_name) \
         .all()
-
+    print("fgdfgf")
+    print(game_info)
+    # Generate dummy data for the average rating
     # Calculate the average rating based on feedback
     locations = []
     for game in game_info:
@@ -73,16 +76,17 @@ def world():
     # Sort locations by average rating in descending order, handle None values appropriately
     locations.sort(key=lambda x: x['average_rating'] if x['average_rating'] is not None else -1, reverse=True)
 
-    return render_template('world.html', svg_content=svg_content, script="game", locations=locations)
 
-@worldmap.route('/set-location', methods=['POST'])
+    return render_template('periodic_table.html', svg_content=svg_content, locations=locations)
+
+@periodictable.route('/set-location', methods=['POST'])
 def set_location():
     data = request.get_json()
     print(data)
     session['game_name'] = data['game_name']
     return jsonify(success=True)
 
-@worldmap.route('/start-game-session')
+@periodictable.route('/start-game-session')
 def start_game_session():
     game_name = session.get('game_name')
     questions = QuizQuestion.query.filter_by(game_name=game_name).order_by(sa.func.random()).all()
@@ -96,7 +100,7 @@ def start_game_session():
     return jsonify(success=True, start_time=start_time)
 
 
-@worldmap.route('/get-next-question')
+@periodictable.route('/get-next-question')
 def get_next_question():
     if 'questions' not in session or session['current_index'] >= len(session['questions']):
         return jsonify(success=True, error="No more questions or session not started")
@@ -112,7 +116,7 @@ def get_next_question():
 
     return jsonify(success=True, question=question_text, is_multiple_choice=is_multiple_choice, location=current_location)
 
-@worldmap.route('/game-answer', methods=['POST'])
+@periodictable.route('/game-answer', methods=['POST'])
 def check_answer():
     data = request.json
     question_text = data['question']
@@ -143,13 +147,13 @@ def check_answer():
         return jsonify(error="Question not found or session invalid"), 404
 
 
-@worldmap.route('/skip-question', methods=['POST'])
+@periodictable.route('/skip-question', methods=['POST'])
 def skip_question():
     if 'questions' not in session or 'current_index' not in session:
         return jsonify(error="Session not started or invalid"), 400
     return jsonify(success=True, current_index=session['current_index'])
 
-@worldmap.route('/end-game-session')
+@periodictable.route('/end-game-session')
 def end_game_session():
     if 'questions' not in session or 'start_time' not in session:
         return jsonify(error="Session not started or invalid"), 400
@@ -163,35 +167,19 @@ def end_game_session():
     # Assuming each correct answer is stored as True in a list of results.
     score = sum(result[0] for result in session.get('results', {}).values())
     total_questions = len(session['questions'])
-    attempts = sum(result[2] for result in session.get('results', {}).values())
 
     print( session.get('results', {}).values())
     print( session.get('results'))
     print(score, total_questions)
-
     #### Write to leaderboard / database here ####
-    if current_user.is_authenticated:
-        new_history = UserGameHistory(
-            user_id=current_user.id,
-            game_name=session.get('game_name'),
-            correct_answers=score,
-            attempts=attempts,
-            completion_time=total_time_spent
-        )
-        # Add the record to the session and commit to the database
-        db.session.add(new_history)
-        db.session.commit()
-    else:
-        ### Make some kind of function here that tells the user to login to save
-        pass
-    
+
     # Clear game-specific session variables
     keys_to_clear = ['questions', 'locations', 'answers', 'current_index', 'results', 'start_time', 'previous_time']
     for key in keys_to_clear:
-        session.pop(key, None)
+        session.pop(key, None)  # Remove each key safely
     return jsonify(success=True, total_time_spent=round(total_time_spent,2), score=score, total_questions=total_questions)
 
-@worldmap.route('/submit-rating', methods=['POST'])
+@periodictable.route('/submit-rating', methods=['POST'])
 def submit_rating():
     if current_user.is_authenticated:
         data = request.get_json()

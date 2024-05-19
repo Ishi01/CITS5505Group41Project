@@ -1,8 +1,8 @@
 $(document).ready(function () {
 
     var selectedPaths = []; // Array to store the currently selected paths
-    var currentMode = 0; // Single Click Mode
-    var selectOnly = [];
+    var currentMode = 0; // Single Click Mode, 1 is Multi-Select Mode
+    var selectOnly = []; // Restricts selection to only these countries
     let lastTouchTime = 0; // to store the time of the last touch
 
     attachInputHandlers();
@@ -30,7 +30,7 @@ $(document).ready(function () {
         }
         if (currentMode === 0) {
             $('#answerInput').on('input', function () {
-                if (event.which != 13) { 
+                if (event.which != 13) {
                     highlightPathFromInput(currentMode); // Highlight country if text matches input
                 }
             });
@@ -53,7 +53,7 @@ $(document).ready(function () {
         }
         else if (currentMode === 1) {
             $('#answerInput').on('input', function () {
-                if (event.which != 13) { 
+                if (event.which != 13) {
                     highlightPathFromInput(currentMode); // Highlight country if text matches input
                 }
             });
@@ -76,7 +76,7 @@ $(document).ready(function () {
     // Function to reset SVG path styles to only the paths contained in selectedPaths
     function resetSVGStyles() {
         $('#svg-container svg path').each(function () {
-            if(isPathAllowed(getFirstClassName(this))) {
+            if (isPathAllowed(getFirstClassName(this))) {
                 $(this).css({
                     'fill': '',
                     'stroke': '',
@@ -114,7 +114,7 @@ $(document).ready(function () {
     // Apply selected style to a path
     function selectPathMode0(path) {
         let className = getFirstClassName(path);
-        if(isPathAllowed(className)) {
+        if (isPathAllowed(className)) {
             if (className) {
                 className = className.replace(/_/g, ' '); // Replace all underscores with spaces
                 $('#answerInput').val(className);
@@ -125,14 +125,14 @@ $(document).ready(function () {
     }
 
     function selectPathMode1(path) {
-        if(isPathAllowed(getFirstClassName(path))) {
+        if (isPathAllowed(getFirstClassName(path))) {
             updateSelectedCountriesDisplay(path);
         }
     }
 
     function updateSelectedCountriesDisplay(path) {
         let country = $(path).attr('class').split(/\s+/)[0];
-        let countryId = 'tab-' + country.replace(/\s+/g, '-') 
+        let countryId = 'tab-' + country.replace(/\s+/g, '-')
         let countryTab = $('#' + countryId);
         if (!countryTab.length) {
             // No existing tab for the country, add a new one
@@ -141,7 +141,7 @@ $(document).ready(function () {
                 class: 'country-tab',
                 text: country.replace(/_/g, ' '),
                 click: function () {
-                    removePath(path); 
+                    removePath(path);
                 }
             }).css({
                 transform: 'scale(0)',
@@ -153,15 +153,15 @@ $(document).ready(function () {
                     opacity: 1
                 });
             }, 10);
-            selectedPaths.push($('#svg-container svg path.' + getFirstClassName(path)));            
+            selectedPaths.push($('#svg-container svg path.' + getFirstClassName(path)));
             adjustTabsPosition();
-            $(document).trigger('tabs-update'); 
+            $(document).trigger('tabs-update');
             resetSVGStyles();
         } else {
             removePath(path);
         }
     }
-    
+
     function adjustTabsPosition() {
         // This function will adjust the flex positioning of the tabs
         var tabsCount = $('.country-tab').length;
@@ -178,7 +178,7 @@ $(document).ready(function () {
         $('#' + countryId).remove();
         console.log($('#svg-container svg path.' + getFirstClassName(path)));
         selectedPaths = removePathFromSelected(country); // Update selectedPaths
-       
+
         adjustTabsPosition(); // Adjust the positions of remaining tabs
         $(document).trigger('tabs-update'); // Notify the document about the update
         resetSVGStyles();
@@ -224,11 +224,11 @@ $(document).ready(function () {
         } catch (error) {
         }
     }
-    
+
 
     function getFirstClassName(element) {
         return $(element).attr('class').split(/\s+/)[0];
-    }    
+    }
 
     function isPathAllowed(className) {
         return selectOnly.includes(className) || selectOnly.length === 0;
@@ -236,19 +236,19 @@ $(document).ready(function () {
 
     function isPathSelected(className) {
         return selectedPaths.some(pathObj =>
-            Object.values(pathObj).some(path => 
+            Object.values(pathObj).some(path =>
                 path.classList && path.classList.contains(className)
             )
         );
     }
-    
+
     function removePathFromSelected(className) {
         // Filter the selectedPaths array to exclude any paths that have the specified class
         return selectedPaths.filter(path => {
             return !path.hasClass(className);
         });
     }
-    
+
     //////////////////////////////////////
     //              Buttons             //
     //////////////////////////////////////
@@ -287,10 +287,10 @@ $(document).ready(function () {
     function updateGameUI(action, data) {
         switch (action) {
             case 'start':
-                $('#pass').show();
                 $('#answerInput').prop('disabled', false);
                 $('#submitAnswerButton').prop('disabled', false);
-                $('#overlay').hide(); 
+                $('#overlay').hide();
+                $('#feedback').hide();
                 // Start the timer
                 var serverStartTime = data.start_time * 1000; // Convert to milliseconds
                 window.timerInterval = setInterval(function () {
@@ -299,6 +299,7 @@ $(document).ready(function () {
                     var seconds = Math.floor(elapsedTime / 1000); // Convert milliseconds to seconds
                     $('#timer').text(seconds + 's');
                 }, 1000); // Update the timer every second
+
                 break;
             case 'question':
                 // Update the UI with the new question and reset necessary fields
@@ -309,58 +310,59 @@ $(document).ready(function () {
                 attachInputHandlers();
                 console.log(data.location);
                 switch (data.location.toLowerCase()) {
-                  case "europe":
-                    zoneEurope();
-                    break;
-                  case "east asia":
-                    zoneEastAsia();
-                    break;
-                  case "north america":
-                    zoneNorthAmerica();
-                    break;
-                  case "south america":
-                    zoneSouthAmerica();
-                    break;
-                  case "middle east":
-                    zoneMiddleEast();
-                    break;
-                  default:
-                    zoneGlobal();
-                    break;
-                }                
+                    case "europe":
+                        zoneEurope();
+                        break;
+                    case "east asia":
+                        zoneEastAsia();
+                        break;
+                    case "north america":
+                        zoneNorthAmerica();
+                        break;
+                    case "south america":
+                        zoneSouthAmerica();
+                        break;
+                    case "middle east":
+                        zoneMiddleEast();
+                        break;
+                    default:
+                        zoneGlobal();
+                        break;
+                }
                 break;
             case 'end':
                 // Stop the timer and display results
                 clearInterval(window.timerInterval); // Stop the timer
-                feedback(`Game Over!<br>Total Time: ${data.total_time_spent}s<br>Score: ${data.score} out of ${data.total_questions}`);
-
-                $('#pass').hide(); // Hide the pass button
+                feedback(`Game Over!<br>Total Time: ${data.total_time_spent}s<br>Score: ${data.score} out of ${data.total_questions}`, false, true);
                 $('#submitAnswerButton').prop('disabled', true);
                 $('#endGame').hide(); // Hide the end game button
                 $('#answerInput').prop('disabled', true);
-                $('#overlay').show(); 
+                $('#overlay').show();
+                removeAllPaths();
                 break;
         }
     }
+
+
 
     // Function to fetch the next question from the server
     function getNextQuestion() {
         $.ajax({
             url: '/get-next-question',
             type: 'GET',
-            success: function(response) {
+            success: function (response) {
                 if (response.error) {
                     if (response.error === "No more questions or session not started") {
                         endGame();  // Call the function to handle end of the game
                     } else {
-                        alert('Game Over or Error: ' + response.error);
+                        console.error('Game Over or Error: ' + response.error);
                     }
                 } else {
                     console.log(response);
                     updateGameUI('question', response);
                 }
             },
-            error: function(error) {
+            error: function (error) {
                 console.error("Error fetching next question:", error);
             }
         });
@@ -369,10 +371,15 @@ $(document).ready(function () {
     function submitAnswer() {
         var answerData;
         if (currentMode === 0) {
-            answerData = {
-                answer: [getCountryNameFromPath(selectedPaths[0]).replace(/_/g, ' ')],
-                question: $('#question').text()
-            };
+            if (selectedPaths.length > 0) {
+                answerData = {
+                    answer: [getCountryNameFromPath(selectedPaths[0]).replace(/_/g, ' ')],
+                    question: $('#question').text()
+                };
+            } else {
+                feedback('No country selected!');
+                return;
+            }
         } else {
             let selectedAnswerCountries = selectedPaths.map(function (path) {
                 if ($(path).length) {
@@ -392,15 +399,15 @@ $(document).ready(function () {
             contentType: 'application/json',
             data: JSON.stringify(answerData),
             success: function (response) {
-            if (response.is_correct) {
-                feedback('Correct!');
-            } else {
-                feedback('Incorrect. Try again!');
-                // Do something here? (lives?)
-            }
-            if (response.next_question) {
-                getNextQuestion();  // Fetch next question only on correct answer
-            }
+                if (response.is_correct) {
+                    feedback('Correct!');
+                } else {
+                    feedback('Incorrect. Try again!');
+                    // Do something here? (lives?)
+                }
+                if (response.next_question) {
+                    getNextQuestion();  // Fetch next question only on correct answer
+                }
             },
             error: function (error) {
                 console.error("Error checking answer:", error);
@@ -439,7 +446,7 @@ $(document).ready(function () {
                 if (response.success) {
                     getNextQuestion();  // Get the next question if skip was successful
                 } else {
-                    alert('Error: ' + response.error);
+                    console.error('Error: ' + response.error);
                 }
             },
             error: function (error) {
@@ -458,28 +465,74 @@ $(document).ready(function () {
         }
     }
 
-    function feedback(message) {
+    // Function to display feedback messages
+    function feedback(message1 = false, message2 = false, endOfGame = false) {
+        console.log('Feedback function called', { message1, message2, endOfGame }); 
         $('#feedback').stop(true, true);
-        $('#feedback').html(message);
-        $('#feedback').show().delay(5000).fadeOut(5000);
+    
+        if (message1 !== false) {
+            $('#feedback span#feedback1').html(message1);
+        }
+        
+        if (message2 !== false) {
+            $('#feedback span#feedback2').html(message2).show();
+        } else {
+            $('#feedback span#feedback2').hide();
+        }
+    
+        if (endOfGame) {
+            $('#feedback').show();
+            $('.thumbs-up, .thumbs-down').show();
+        } else {
+            $('#feedback').show().delay(3000).fadeOut(5000);
+            $('.thumbs-up, .thumbs-down').hide();
+        }
     }
 
-    $('.location-row').click(function() {
+    $('.thumbs-up').click(function () {
+        submitRating('positive');
+    });
+
+    $('.thumbs-down').click(function () {
+        submitRating('negative');
+    });
+
+    function submitRating(ratingType) {
+        $.ajax({
+            url: '/submit-rating',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({ rating_type: ratingType }),
+            success: function (response) {
+                if (response.success) {
+                    console.log('Rating submitted:', ratingType);
+                    feedback(false, 'Rating submitted! Thanks! ', true);
+                } else {
+                    feedback(false, 'Error: ' + response.error, true);
+                }
+            },
+            error: function (error) {
+                console.error("Error submitting rating:", error);
+            }
+        });
+    }
+
+    $('.location-row').click(function () {
         var selectedLocation = $(this).children('td').first().text();
         $.ajax({
             url: '/set-location',
             type: 'POST',
             data: JSON.stringify({ game_name: selectedLocation }),
             contentType: 'application/json;charset=UTF-8',
-            success: function(response) {
+            success: function (response) {
                 if (response.success) {
                     startGameSession();
                 }
             }
         });
     });
-    
-    
+
+
 
     //////////////////////////////////////
     //    Zone and Area lock functions  //
@@ -546,7 +599,7 @@ $(document).ready(function () {
         let browserRatioOffset = browserRatio > 1 ? 50 : 0;
         let northAmericaViewBox = { x: 1015 + browserRatioOffset, y: 230, scale: Math.min(maxScale, browserRatio > 1 ? 1.2 * browserRatio * 4 : 4) };
         const northAmericanCountries = [
-            "Canada", "United_States", "Mexico", "Guatemala", "Belize", 
+            "Canada", "United_States", "Mexico", "Guatemala", "Belize",
             "Honduras", "El_Salvador", "Nicaragua", "Costa_Rica", "Panama"
         ];
         zoomToRegion(northAmericaViewBox, northAmericanCountries);
@@ -554,10 +607,10 @@ $(document).ready(function () {
 
     function zoneSouthAmerica() {
         let browserRatioOffset = browserRatio > 1 ? 50 : 0;
-        let southAmericaViewBox = { x: 1140 + browserRatioOffset, y: 575, scale: Math.min(maxScale, browserRatio > 1 ? 1.2 * browserRatio * 3.75 : 3.75) };
+        let southAmericaViewBox = { x: 1140 + browserRatioOffset, y: 525, scale: Math.min(maxScale, browserRatio > 1 ? 1.2 * browserRatio * 3.75 : 3.75) };
         const southAmericanCountries = [
-            "Argentina", "Bolivia", "Brazil", "Chile", "Colombia", 
-            "Ecuador", "Guyana", "Paraguay", "Peru", "Suriname", 
+            "Argentina", "Bolivia", "Brazil", "Chile", "Colombia",
+            "Ecuador", "Guyana", "Paraguay", "Peru", "Suriname",
             "Uruguay", "Venezuela"
         ];
         zoomToRegion(southAmericaViewBox, southAmericanCountries);
@@ -573,14 +626,14 @@ $(document).ready(function () {
 
     function zoneMiddleEast() {
         let browserRatioOffset = browserRatio > 1 ? 50 : 0;
-        let middleEastViewBox = { x: 440 + browserRatioOffset, y: 290, scale: Math.min(maxScale, browserRatio > 1 ? 1.2 * browserRatio * 7.5 : 7.5) };
+        let middleEastViewBox = { x: 440 + browserRatioOffset, y: 310, scale: Math.min(maxScale, browserRatio > 1 ? 1.2 * browserRatio * 7.5 : 7.5) };
         const middleEasternCountries = [
-            "Saudi_Arabia", "Iran", "Turkey", "Iraq", "United_Arab_Emirates", 
+            "Saudi_Arabia", "Iran", "Turkey", "Iraq", "United_Arab_Emirates", "Palestine",
             "Israel", "Jordan", "Lebanon", "Oman", "Kuwait", "Qatar", "Bahrain", "Yemen", "Syria"
         ];
         zoomToRegion(middleEastViewBox, middleEasternCountries);
     }
-    
+
 
     function zoomToRegion(regionViewBox, regionCountries) {
         console.log("Zooming to region");
@@ -615,8 +668,8 @@ $(document).ready(function () {
 
     let svg = $('#svg-container svg');
 
-    let scaleSVG = 2.74;
-    let minScale = 2.74;
+    let scaleSVG = 2.48;
+    let minScale = 2.48;
     let maxScale = 14;
 
     let boundBox = {
@@ -878,7 +931,7 @@ $(document).ready(function () {
     // Function to adjust margins dynamically based on the number of tabs
     function adjustContainerMargin() {
         var tabsHeight = $('#tabsContainer').outerHeight(true); // true includes margin in the calculation
-        $('.container').css('margin-top', tabsHeight + 'px'); // Apply bottom margin to '.container'
+        $('.bottom-container').css('margin-top', tabsHeight + 'px'); // Apply bottom margin to '.bottom-container'
     }
 
     // Trigger this adjustment when tabs are added or removed
@@ -891,31 +944,31 @@ $(document).ready(function () {
     var smallCountries = [
         'Luxembourg', 'Brunei', 'Burundi', 'Swaziland', 'Lesotho', 'Rwanda',
         'Belize', 'El-Salvador', 'Jamaica', 'Dominican_Republic', 'Dominica',
-        'Trinidad_and_Tobago' 
+        'Trinidad_and_Tobago'
     ];
 
-    var selector = smallCountries.map(function(country) {
+    var selector = smallCountries.map(function (country) {
         return '.' + country;
     }).join(', ');
 
-    $('.click-helper').on('click', function() {
+    $('.click-helper').on('click', function () {
         var targetId = $(this).attr('data-target');
         console.log(targetId);
         $(targetId + ':first').click();
     });
 
-    $('.click-helper').on('touchend', function() {
+    $('.click-helper').on('touchend', function () {
         var targetId = $(this).attr('data-target');
         console.log(targetId);
         $(targetId + ':first').trigger('touchend')
     });
 
-    $('.click-helper').on('mouseover', function() {
+    $('.click-helper').on('mouseover', function () {
         var targetId = $(this).attr('data-target');
         $(targetId).mouseover();
     });
 
-    $('.click-helper').on('mouseleave', function() {
+    $('.click-helper').on('mouseleave', function () {
         var targetId = $(this).attr('data-target');
         $(targetId).mouseleave();
     });
